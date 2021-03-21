@@ -2,6 +2,13 @@
 
 namespace generic;
 
+/**
+ * The class serves as the entry point of a user to the website.
+ * 
+ * This handles rerouting to the desired page and also performs URL rewrites.
+ * 
+ * @since 1.0.0
+ */
 class EntryPoint
 {
     public function __construct(
@@ -13,6 +20,15 @@ class EntryPoint
         $this->checkUrl();
     }
 
+    /**
+     * Loads the desired page for the user.
+     * 
+     * It loads the desired controller and the action, then loads the desired webpage.
+     * 
+     * @since 1.0.0
+     * 
+     * @see Route
+     */
     public function run()
     {
         $routes = $this->routes->getRoutes();
@@ -31,6 +47,14 @@ class EntryPoint
         include __DIR__ . '/../../templates/layout.html.php';
     }
 
+    /**
+     * Verifies the URL.
+     * 
+     * If the URL is not in lowercase, it performs a permanent redirection to
+     * the lowercase version of the URL.
+     * 
+     * @since 1.0.0
+     */
     private function checkUrl()
     {
         if ($this->route !== strtolower($this->route)) {
