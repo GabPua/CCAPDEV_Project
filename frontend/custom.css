@@ -1,0 +1,55 @@
+/* image customization */
+.white {
+    color: white !important;
+}
+
+.fill {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+
+.fill img {
+    object-fit: cover;
+}
+
+.img-darken {
+    filter: brightness(50%);
+}
+
+.page-height {
+    height:calc(100vh - 50px);
+}
+
+.footer p {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.footer .icon a {
+    color: gray;
+}
+
+#homebg {
+    background-position: center;
+    background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('./resources/Vegetables.jpg');
+    background-repeat: no-repeat;
+
+}
+
+header .navbar {
+    font-size: 1.25em;
+}
+
+header .navbar .button {
+    font-size: 0.9em;
+}
+
+header .navbar-brand img {
+    width: 120px;
+}
+
+header .navbar-brand .navbar-item {
+    padding-top: 0;
+}
