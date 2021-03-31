@@ -23,7 +23,7 @@
 }
 
 .page-height {
-    height:calc(100vh - 50px);
+    height: calc(100vh - 80px);
 }
 
 .footer p {
@@ -70,4 +70,12 @@ header .navbar-brand .navbar-item {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+#signup-box {
+    width: 450px;
+    max-width: 450px;
+    padding: 30px 40px;
+    /* margin-bottom: 100px; */
+    min
 }

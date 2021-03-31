@@ -994,13 +994,13 @@ fieldset[disabled] .button.is-dark.is-inverted.is-outlined {
 }
 
 .button.is-primary {
-  background-color: #00d1b2;
+  background-color: green;
   border-color: transparent;
   color: #fff;
 }
 
 .button.is-primary:hover, .button.is-primary.is-hovered {
-  background-color: #00c4a7;
+  background-color: darkgreen; /*  #00c4a7; */
   border-color: transparent;
   color: #fff;
 }
@@ -1117,13 +1117,13 @@ fieldset[disabled] .button.is-primary.is-inverted.is-outlined {
 }
 
 .button.is-link {
-  background-color: #3273dc;
+  background-color: green; /*  #3273dc; */
   border-color: transparent;
   color: #fff;
 }
 
 .button.is-link:hover, .button.is-link.is-hovered {
-  background-color: #276cda;
+  background-color: darkgreen; /* #276cda; */
   border-color: transparent;
   color: #fff;
 }
@@ -4243,6 +4243,7 @@ fieldset[disabled] .select select:hover {
   display: block;
   font-size: 0.75rem;
   margin-top: 0.25rem;
+  min-height: 18px;
 }
 
 .help.is-white {
