@@ -79,6 +79,16 @@ header .navbar-brand .navbar-item {
     font-family: 'Montserrat', sans-serif;
 }
 
+#about-us {
+    max-width: 1000px;
+    padding: 5vh 2vw;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#about-us p {
+    font-size: 20px;
+}
+
 #signup-box {
     width: 450px;
     max-width: 450px;
