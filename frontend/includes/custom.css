@@ -28,29 +28,15 @@
     height: calc(100vh);
 }
 
-.footer p {
-    margin-top: 15px;
-    font-size: 18px;
-}
-
-.footer .icon a {
-    color: gray;
-}
-
-.vegetable-bg {
+.parallax { 
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
     background-position: center;
-    background-image:  linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),  url('./resources/Vegetables.jpg');
     background-repeat: no-repeat;
+    background-size: cover;
 }
 
-#index-main .box {
-    width: 50vw;
-    margin-left: 5vw;
-    max-width: 50vw;
-    padding: 9vh 2vw;
-    font-family: 'Montserrat', sans-serif;
-}
-
+/* header design */
 header .navbar {
     font-size: 1.25em;
 }
@@ -67,12 +53,30 @@ header .navbar-brand .navbar-item {
     padding-top: 0;
 }
 
-.parallax { 
-    /* Create the parallax scrolling effect */
-    background-attachment: fixed;
+/* footer design */
+.footer p {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.footer .icon a {
+    color: gray;
+}
+
+/* usual vegetable background */
+.vegetable-bg {
     background-position: center;
+    background-image:  linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) ),  url('./resources/Vegetables.jpg');
     background-repeat: no-repeat;
-    background-size: cover;
+}
+
+/* page-specific designs */
+#index-main .box {
+    width: 50vw;
+    margin-left: 5vw;
+    max-width: 50vw;
+    padding: 9vh 2vw;
+    font-family: 'Montserrat', sans-serif;
 }
 
 #signup-box {
