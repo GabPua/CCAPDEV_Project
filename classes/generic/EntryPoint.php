@@ -1,6 +1,7 @@
 <?php
 
 namespace generic;
+include_once __DIR__ . '/../../includes/autoload.php';
 
 /**
  * The class serves as the entry point of a user to the website.
@@ -60,5 +61,8 @@ class EntryPoint
         if ($this->route !== strtolower($this->route)) {
             header('location: /' . strtolower($this->route), response_code: 301);
         }
+
+        // if valid route, remove the first two subdomains from the string
+        $this->route = explode('/', $this->route, 3)[2];
     }
 }
