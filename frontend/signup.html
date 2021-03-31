@@ -9,8 +9,10 @@
         <link rel='stylesheet' href='bulma.css'>
         <link rel='stylesheet' href='custom.css'>
         <link rel='stylesheet' href='./resources/fontawesome/css/all.css'>
+
         <script src='jquery-3.6.0.js'></script>
-        </script>
+        <script src='script.js'></script>
+        <script src='signup.js'></script>
     </head>
 
     <body>
@@ -50,11 +52,74 @@
         </header>
 
         <main class='is-fullhd fill page-height parallax vegetable-bg'>
-            <div class='container content is-large box'>
+            <div class='container content box' id='signup-box'>
                 <h1 class='title'>Sign Up</h1>
-                <p class=''>Explore thousands of simple yet delicious recipes from our large community
-                    that you can do within the comfort of your home!</p>
+                <h5 class='subtitle'>Join our community today!</h5>
 
+                <form method='POST' id='signup-form'>
+
+                    <div class='field'>
+                        <label class='label'>Email</label>
+                            <div class='control has-icons-left has-icons-right'>
+                                <input class='input' type='email' placeholder='Email' name='email'>
+                                <span class='icon is-small is-left'>
+                                    <i class='fas fa-envelope'></i>
+                                </span>
+                                <span class='icon is-small is-right'>
+                                    <i id='email-help-icon'></i>
+                                </span>
+                            </div>
+                        <p class='help' id='email-help'></p>
+                    </div>
+
+                    <div class='field'>
+                        <label class='label'>Username</label>
+                        <div class='control has-icons-left has-icons-right'>
+                          <input class='input' type='text' placeholder='Username' name='name'>
+                          <span class='icon is-small is-left'>
+                                <i class='fas fa-user'></i>
+                          </span>
+                          <span class='icon is-small is-right'>
+                                <i id='name-help-icon'></i>
+                          </span>
+                        </div>
+                        <p class='help' id='name-help'></p>
+                    </div>
+
+                    <div class='field'>
+                        <label class='label'>Password</label>
+                            <div class='control has-icons-left has-icons-right'>
+                                <input class='input' type='password' placeholder='Password' value='' name='password'>
+                                <span class='icon is-small is-left'>
+                                    <i class='fas fa-lock'></i>
+                                </span>
+                                <span class='icon is-small is-right'>
+                                    <i id='pw-help-icon'></i>
+                                </span>
+                            </div>
+                        <p class='help' id='pw-help'></p>
+                    </div>
+
+                    <div class='field'>
+                        <div class='control'>
+                            <label class='checkbox'>
+                                <input type='checkbox'>
+                                I agree to the <a href='#'>terms and conditions</a>
+                            </label>
+                        </div>
+                        <p class='help is-danger' id='tandc-help'></p>
+                    </div>
+
+                    <div class='field is-grouped'>
+                        <div class='control'>
+                            <input type='submit' class='button is-link' id='submit-signup'>
+                        </div>
+                        <div class='control'>
+                            <button class='button is-link is-light' id='cancel-signup'>Cancel</button>
+                        </div>
+                    </div>
+                </form>
+                <br>
                 <p>Already Registered? <a href='login.html'>Log in</a></p>
             </div>
         </main>
