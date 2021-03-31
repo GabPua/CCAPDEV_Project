@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
 /* image customization */
 .white {
     color: white !important;
@@ -46,6 +48,7 @@
     margin-left: 5vw;
     max-width: 50vw;
     padding: 9vh 2vw;
+    font-family: 'Montserrat', sans-serif;
 }
 
 header .navbar {

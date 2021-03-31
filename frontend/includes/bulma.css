@@ -1011,11 +1011,11 @@ fieldset[disabled] .button.is-dark.is-inverted.is-outlined {
 }
 
 .button.is-primary:focus:not(:active), .button.is-primary.is-focused:not(:active) {
-  box-shadow: 0 0 0 0.125em rgba(0, 209, 178, 0.25);
+  box-shadow: 0 0 0 0.125em /rgba(0, 77, 0, 0.25 /*0, 209, 178, 0.25*/);
 }
 
 .button.is-primary:active, .button.is-primary.is-active {
-  background-color: #00b89c;
+  background-color: rgb(0, 77, 0)/* #00b89c */;
   border-color: transparent;
   color: #fff;
 }
@@ -1138,7 +1138,7 @@ fieldset[disabled] .button.is-primary.is-inverted.is-outlined {
 }
 
 .button.is-link:active, .button.is-link.is-active {
-  background-color: #2366d1;
+  background-color: rgb(0, 77, 0)/* #2366d1 */;
   border-color: transparent;
   color: #fff;
 }
