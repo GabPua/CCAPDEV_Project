@@ -25,7 +25,8 @@
 }
 
 .page-height {
-    height: calc(100vh);
+    height: calc(120vh);
+    max-height: 900px;
 }
 
 .parallax { 
@@ -100,5 +101,27 @@ header .navbar-brand .navbar-item {
 }
 
 #profile-box {
-    
+    max-width: 1100px;
+    padding: 40px;
+}
+
+#profile-box .field {
+    margin-bottom: 0;
+
+}
+
+#profile-box .form-buttons {
+    margin-top: 20px;
+}
+
+#profile-box .column {
+    padding-bottom: 0;
+}
+
+#profile-box .columns {
+    margin-bottom: 0;
+}
+
+#profile-box .file {
+    margin-top: 20px;
 }

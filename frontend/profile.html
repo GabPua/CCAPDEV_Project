@@ -56,7 +56,19 @@
 
                     <div class='column is-one-quarter'>
                         <img class='profile-picture' src='./includes/resources/default_dp.jpg'>
-                        <input type='file' id='dp' name='dp' accept='image/*'>
+                        <div class="file is-small is-centered">
+                            <label class="file-label">
+                                <input class="file-input" type="file" name="resume">
+                                <span class="file-cta">
+                                    <span class="file-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="file-label">
+                                        Choose a profile picture
+                                    </span>
+                                </span>
+                            </label>
+                          </div>
                     </div>
 
                     <div class='column'>
@@ -71,9 +83,6 @@
                                         <input class='input' type='text' placeholder='Username' name='name'>
                                         <span class='icon is-small is-left'>
                                                 <i class='fas fa-user'></i>
-                                        </span>
-                                        <span class='icon is-small is-right'>
-                                                <i id='name-help-icon'></i>
                                         </span>
                                         </div>
                                         <p class='help' id='name-help'></p>
@@ -99,18 +108,39 @@
 
                                 <div class='field'>
                                     <label class='label'>Password</label>
-                                        <div class='control has-icons-left has-icons-right'>
-                                            <input class='input' type='password' placeholder='Password' value='' name='password'>
-                                            <span class='icon is-small is-left'>
-                                                <i class='fas fa-lock'></i>
-                                            </span>
-                                            <span class='icon is-small is-right'>
-                                                <i id='pw-help-icon'></i>
-                                            </span>
-                                        </div>
+                                    <div class='control has-icons-left has-icons-right'>
+                                        <input class='input' type='password' placeholder='Password' name='password'>
+                                        <span class='icon is-small is-left'>
+                                            <i class='fas fa-lock'></i>
+                                        </span>
+                                        <span class='icon is-small is-right'>
+                                            <i id='pw-help-icon'></i>
+                                        </span>
+                                    </div>
                                     <p class='help' id='pw-help'></p>
                                 </div>
+
+                                <div class='field'>
+                                    <label class='label'>Profession in Cooking</label>
+                                    <div class='control has-icons-left'>
+                                        <input class='input' type='text' placeholder='(Optional)' value='Chef' name='profession'>
+                                        <span class='icon is-small is-left'>
+                                            <i class='fas fa-briefcase'></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+
+                        <div class='field'>
+                            <label class='label'>Workplace</label>
+                                <div class='control has-icons-left has-icons-right'>
+                                    <input class='input' type='text' placeholder='(Optional)' value='Pepper Lunch' name='workplace'>
+                                    <span class='icon is-small is-left'>
+                                        <i class='fas fa-building'></i>
+                                    </span>
+                                </div>
+                            <p class='help' id='pw-help'></p>
                         </div>
 
                         <div class="field">
@@ -122,9 +152,10 @@
                                     </div>
                                 </div>
                             </div>
-                          </div>
+                        </div>
+
                         <!-- Buttons -->
-                        <div class='field is-grouped is-grouped-right'>
+                        <div class='field is-grouped is-grouped-right form-buttons'>
                             <div class='control'>
                                 <input type='submit' class='button is-link' id='submit-signup' value='Update Profile'>
                             </div>
