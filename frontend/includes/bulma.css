@@ -1145,7 +1145,7 @@ fieldset[disabled] .button.is-primary.is-inverted.is-outlined {
 
 .button.is-link[disabled],
 fieldset[disabled] .button.is-link {
-  background-color: #3273dc;
+  background-color: /* #3273dc */ rgb(77, 139, 77);
   border-color: transparent;
   box-shadow: none;
 }
