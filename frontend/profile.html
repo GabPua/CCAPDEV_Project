@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+        <title>Free Recipes & More</title>
+        <link rel='icon' href='./includes/resources/icon.png'>
+
+        <link rel='stylesheet' href='./includes/bulma.css'>
+        <link rel='stylesheet' href='./includes/custom.css'>
+        <link rel='stylesheet' href='./includes/resources/fontawesome/css/all.css'>
+    </head>
+
+    <body>
+        <header>
+            <nav class='navbar' role='navigation' aria-label='main navigation'>
+                <div class='navbar-brand'>
+                    <a class='navbar-item' href='index.html'>
+                        <img src='./includes/resources/Logo.png'>
+                    </a>
+                
+                    <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
+                        <span aria-hidden='true'></span>
+                        <span aria-hidden='true'></span>
+                        <span aria-hidden='true'></span>
+                    </a>
+                </div>
+              
+                <div id='navbarBasicExample' class='navbar-menu'>
+                    <div class='navbar-start'>
+                        <a href='index.html' class='navbar-item'>Home</a>
+              
+                        <a href='about.html' class='navbar-item'>About</a>
+              
+                        <a href='explore.html' class='navbar-item'>Explore</a>
+                    </div>
+              
+                    <div class='navbar-end'>
+                        <div class='navbar-item'>
+                            <div class='buttons'>
+                                <a class='button is-light' href='index.html'>Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <main class='is-fullhd fill page-height parallax vegetable-bg'>
+            <div class='container content box' id='profile-box'>
+                <h1 class='title'>Profile</h1>
+
+                <form method='POST' id='profile-form' action='profile.html'></form>
+                <div class='columns'>
+
+                    <div class='column is-one-quarter'>
+                        <img class='profile-picture' src='./includes/resources/default_dp.jpg'>
+                        <input type='file' id='dp' name='dp' accept='image/*'>
+                    </div>
+
+                    <div class='column'>
+                        <!-- Inner columns -->
+                        <div class='columns'>
+                            <div class='column'>
+
+                                <fieldset disabled>
+                                    <div class='field'>
+                                        <label class='label'>Username</label>
+                                        <div class='control has-icons-left has-icons-right'>
+                                        <input class='input' type='text' placeholder='Username' name='name'>
+                                        <span class='icon is-small is-left'>
+                                                <i class='fas fa-user'></i>
+                                        </span>
+                                        <span class='icon is-small is-right'>
+                                                <i id='name-help-icon'></i>
+                                        </span>
+                                        </div>
+                                        <p class='help' id='name-help'></p>
+                                    </div>
+                                </fieldset>
+                            
+                                <div class='field'>
+                                    <label class='label'>Email</label>
+                                        <div class='control has-icons-left has-icons-right'>
+                                            <input class='input' type='email' placeholder='Email' name='email'>
+                                            <span class='icon is-small is-left'>
+                                                <i class='fas fa-envelope'></i>
+                                            </span>
+                                            <span class='icon is-small is-right'>
+                                                <i id='email-help-icon'></i>
+                                            </span>
+                                        </div>
+                                    <p class='help' id='email-help'></p>
+                                </div>
+                            </div>
+
+                            <div class='column'>
+
+                                <div class='field'>
+                                    <label class='label'>Password</label>
+                                        <div class='control has-icons-left has-icons-right'>
+                                            <input class='input' type='password' placeholder='Password' value='' name='password'>
+                                            <span class='icon is-small is-left'>
+                                                <i class='fas fa-lock'></i>
+                                            </span>
+                                            <span class='icon is-small is-right'>
+                                                <i id='pw-help-icon'></i>
+                                            </span>
+                                        </div>
+                                    <p class='help' id='pw-help'></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Short Description</label>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <textarea class="textarea" placeholder="(Optional)"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        <!-- Buttons -->
+                        <div class='field is-grouped is-grouped-right'>
+                            <div class='control'>
+                                <input type='submit' class='button is-link' id='submit-signup' value='Update Profile'>
+                            </div>
+                            <div class='control'>
+                                <button class='button is-link is-light' id='cancel-signup'>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </main>
+        
+        <footer class='footer'>
+            <div class='content has-text-centered'>
+                <span class='icon is-large'>
+                    <a href='https://facebook.com/'><i class='fab fa-facebook fa-2x'></i></a>
+                </span>
+                <span class='icon is-large'>
+                    <a href='https:/twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
+                </span>
+                <span class='icon is-large'>
+                    <a href='https:/linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
+                </span>
+                <p>
+                    <strong>ShefHub</strong> by The Team.<br>
+                    &copy; Copyright <script>document.write(new Date().getFullYear())</script>, The Team. All Rights Reserved.
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>
