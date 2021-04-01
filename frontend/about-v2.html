@@ -1,19 +1,15 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html>
     <head>
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-        
+
         <title>Free Recipes & More</title>
         <link rel='icon' href='./includes/resources/icon.png'>
 
         <link rel='stylesheet' href='./includes/bulma.css'>
         <link rel='stylesheet' href='./includes/custom.css'>
         <link rel='stylesheet' href='./includes/resources/fontawesome/css/all.css'>
-
-        <script src='./includes/jquery-3.6.0.js'></script>
-        <script src='./includes/script.js'></script>
-        <script src='./includes/login.js'></script>
     </head>
 
     <body>
@@ -33,9 +29,9 @@
               
                 <div id='navbarBasicExample' class='navbar-menu'>
                     <div class='navbar-start'>
-                        <a href='index.html' class='navbar-item'>Home</a>
+                        <a href='profile.html' class='navbar-item'>Home</a>
               
-                        <a href='about.html' class='navbar-item'>About</a>
+                        <a href='about-v2.html' class='navbar-item'>About</a>
               
                         <a href='explore.html' class='navbar-item'>Explore</a>
                     </div>
@@ -43,58 +39,37 @@
                     <div class='navbar-end'>
                         <div class='navbar-item'>
                             <div class='buttons'>
-                                <a class='button is-primary' href='signup.html'><strong>Sign up</strong></a>
-                                <!-- <a class='button is-primary' href='login.html'><strong>Log in</strong></a> -->
+                                <a class='button is-light' href='index.html'>Log out</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </nav>
         </header>
-
+        
         <main class='is-fullhd fill page-height parallax vegetable-bg'>
-            <div class='container content box' id='login-box'>
-                <h1 class='title'>Log In</h1>
-                <h5 class='subtitle'>See the newest recipes Today!</h5>
+            <div class='container content is-large box' id='about-us'>
+                <h1 class='title'>About Us</h1>
+                <p>
+                    During the seemingly non-ending COVID-19 pandemic, people all around the world found themselves
+                    quarantined within their own homes. Some were just bored out of their lives,
+                    while some were anxious and worried about the future. People needed something to do, 
+                    and what better way to pass the time than cooking?
+                </p>
+                <p>
+                    <strong>ShefHub</strong> was created exactly for this reason. This site hosts
+                    thousands of recipes contributed by a growing community of professional chefs, home cooks, 
+                    and food enthusiasts. Whether you are learning to cook, mastering your technique, or
+                    exploring different flavors, all of these recipes can help you attain your goal, so 
+                    <a href='profile.html'>register</a> now!
+                </p>
+                <p>
 
-                <form method='POST' id='login-form' action='profile.html'>
-
-                    <div class='field'>
-                        <label for='username' class='label'>Username</label>
-                        <div class='control has-icons-left'>
-                            <input type='text' id='username' placeholder='Username' class='input' required>
-                            <span class='icon is-small is-left'>
-                                <i class='fas fa-user'></i>
-                            </span>
-                        </div>
-                        <p class='help' id='username-help'></p>
-                    </div>
-
-                    <div class='field'>
-                        <label for='password' class='label'>Password</label>
-                        <div class='control has-icons-left'>
-                            <input type='password' id='password' placeholder='Password' class='input' required>
-                            <span class='icon is-small is-left'>
-                                <i class='fas fa-lock'></i>
-                            </span>
-                        </div>
-                        <p class='help' id='password-help'></p>
-                    </div>
-
-                    <div class='field is-grouped'>
-                        <div class='control'>
-                            <input type='submit' class='button is-link' id='submit-login'>
-                        </div>
-                        <div class='control'>
-                            <button class='button is-link is-light' id='cancel-login'>Cancel</button>
-                        </div>
-                    </div>
-                </form>
-
-                <p>Haven't Registered Yet? <a href='signup.html'>Sign Up</a></p>
+                </p>
+                    
             </div>
         </main>
-
+        
         <footer class='footer'>
             <div class='content has-text-centered'>
                 <span class='icon is-large'>

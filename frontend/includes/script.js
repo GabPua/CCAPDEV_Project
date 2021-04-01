@@ -12,7 +12,7 @@ function isValidUsername(name) {
     if (name === '') {
         return 'Cannot be left blank';
     } else if (name == null) { // TODO: Additional check stuff
-        return 'Cannot be let blank';
+        return 'Cannot be left blank';
     } else {
         return '';
     }
@@ -38,8 +38,10 @@ function updateInputFields(isValid, field, help, icon, helpText) {
         help.removeClass('is-danger');
         help.addClass('is-success');
 
-        icon.removeClass('fas fa-exclamation-triangle');
-        icon.addClass('fas fa-check');
+        if (icon !== null) {
+            icon.removeClass('fas fa-exclamation-triangle');
+            icon.addClass('fas fa-check');
+        }
     } else {
         field.removeClass('is-success');
         field.addClass('is-danger');
@@ -47,7 +49,9 @@ function updateInputFields(isValid, field, help, icon, helpText) {
         help.removeClass('is-success');
         help.addClass('is-danger');
 
-        icon.removeClass('fas fa-check');
-        icon.addClass('fas fa-exclamation-triangle');
+        if (icon !== null) {
+            icon.removeClass('fas fa-check');
+            icon.addClass('fas fa-exclamation-triangle');
+        }
     }
 }
