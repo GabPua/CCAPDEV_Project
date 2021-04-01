@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    var name = $("input[type='text']");
-    var name_help = $('#username-help');
+    const name = $("input[type='text']");
+    const name_help = $('#username-help');
 
-    var pw = $("input[type='password']");
-    var pw_help = $('#password-help');
+    const pw = $("input[type='password']");
+    const pw_help = $('#password-help');
 
     $('#cancel-login').on('click', function(event) {
         event.preventDefault();
@@ -16,15 +16,15 @@ $(document).ready(function () {
         name.trigger('focusout');
         pw.trigger('focusout');
 
-        valid = name.hasClass('is-success') && pw.hasClass('is-success');
+        let valid = name.hasClass('is-success') && pw.hasClass('is-success');
 
         if (valid) {
             $('#login-form').submit();
         }
     });
 
-    name.on('focusout', function(event) {
-        help_text = isValidUsername(name.val());
+    name.on('focusout', function() {
+        let help_text = isValidUsername(name.val());
 
         if (help_text === '') {
             updateInputFields(true, name, name_help, null, help_text);
@@ -33,8 +33,8 @@ $(document).ready(function () {
         }
     });
 
-    pw.on('focusout', function(event) {
-        help_text = isValidPassword(pw.val());
+    pw.on('focusout', function() {
+        let help_text = isValidPassword(pw.val());
 
         if (help_text === '') {
             updateInputFields(true, pw, pw_help, null, help_text);

@@ -21,7 +21,7 @@
             <nav class='navbar' role='navigation' aria-label='main navigation'>
                 <div class='navbar-brand'>
                     <a class='navbar-item' href='index.html'>
-                        <img src='./includes/resources/Logo.png'>
+                        <img src='./includes/resources/Logo.png' alt='brand'>
                     </a>
                 
                     <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
@@ -60,9 +60,9 @@
                 <form method='POST' id='signup-form' action='profile.html'>
 
                     <div class='field'>
-                        <label class='label'>Email</label>
+                        <label class='label' for='email'>Email</label>
                             <div class='control has-icons-left has-icons-right'>
-                                <input class='input' type='email' placeholder='Email' name='email'>
+                                <input class='input' type='email' placeholder='Email' name='email' id='email'>
                                 <span class='icon is-small is-left'>
                                     <i class='fas fa-envelope'></i>
                                 </span>
@@ -74,9 +74,9 @@
                     </div>
 
                     <div class='field'>
-                        <label class='label'>Username</label>
+                        <label class='label' for='name'>Username</label>
                         <div class='control has-icons-left has-icons-right'>
-                          <input class='input' type='text' placeholder='Username' name='name'>
+                          <input class='input' type='text' placeholder='Username' name='name' id='name'>
                           <span class='icon is-small is-left'>
                                 <i class='fas fa-user'></i>
                           </span>
@@ -88,9 +88,9 @@
                     </div>
 
                     <div class='field'>
-                        <label class='label'>Password</label>
+                        <label class='label' for='password'>Password</label>
                             <div class='control has-icons-left has-icons-right'>
-                                <input class='input' type='password' placeholder='Password' value='' name='password'>
+                                <input class='input' type='password' placeholder='Password' value='' name='password' id='password'>
                                 <span class='icon is-small is-left'>
                                     <i class='fas fa-lock'></i>
                                 </span>
@@ -131,14 +131,14 @@
                     <a href='https://facebook.com/'><i class='fab fa-facebook fa-2x'></i></a>
                 </span>
                 <span class='icon is-large'>
-                    <a href='https:/twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
+                    <a href='https://twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
                 </span>
                 <span class='icon is-large'>
-                    <a href='https:/linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
+                    <a href='https://linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
                 </span>
                 <p>
                     <strong>ShefHub</strong> by The Team.<br>
-                    &copy; Copyright <script>document.write(new Date().getFullYear())</script>, The Team. All Rights Reserved.
+                    &copy; Copyright <script>document.write(new Date().getFullYear().toString())</script>, The Team. All Rights Reserved.
                 </p>
             </div>
         </footer>

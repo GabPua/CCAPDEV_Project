@@ -1,25 +1,25 @@
 $(document).ready(function () {
-    var dp = $('.profile-picture');
-    var sub = $("input[type='file']");
-    
-    var cancel = $('#cancel-edit-profile');
-    var submit = $('#submit-edit-profile');
+    const dp = $('.profile-picture');
+    const sub = $("input[type='file']");
 
-    var email = $('input[type="email"]');
-    var pw = $('input[type="password"]');
-    var prof = $('#profession');
-    var place = $('#workplace');
-    var desc = $('textarea');
+    const cancel = $('#cancel-edit-profile');
+    const submit = $('#submit-edit-profile');
 
-    var email_help = $('#email-help');
-    var email_help_icon = $('#email-help-icon');
+    const email = $('input[type="email"]');
+    const pw = $('input[type="password"]');
+    const prof = $('#profession');
+    const place = $('#workplace');
+    const desc = $('textarea');
 
-    var pw_help = $('#pw-help');
-    var pw_help_icon = $('#pw-help-icon');
+    const email_help = $('#email-help');
+    const email_help_icon = $('#email-help-icon');
+
+    const pw_help = $('#pw-help');
+    const pw_help_icon = $('#pw-help-icon');
 
     // Validators
-    email.on('focusout', function(event) {
-        help_text = isValidEmail(email.val());
+    email.on('focusout', function() {
+        let help_text = isValidEmail(email.val());
 
         if (help_text === '') {
             updateInputFields(true, email, email_help, email_help_icon, 'Valid email address');
@@ -28,8 +28,8 @@ $(document).ready(function () {
         }
     });
 
-    pw.on('focusout', function(event) {
-        help_text = isValidPassword(pw.val());
+    pw.on('focusout', function() {
+        let help_text = isValidPassword(pw.val());
 
         if (help_text === '') {
             updateInputFields(true, pw, pw_help, pw_help_icon, 'Valid password');
@@ -40,12 +40,12 @@ $(document).ready(function () {
 
     // Profile picture updating
     sub.change(function() {
-        var input = this;
-        var url = $(this).val();
-        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        let input = this;
+        let url = $(this).val();
+        let ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
 
-        if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
-            var reader = new FileReader();
+        if (input.files && input.files[0] && (ext === 'gif' || ext === 'png' || ext === 'jpeg' || ext === 'jpg')) {
+            let reader = new FileReader();
     
             reader.onload = function (e) {
                 dp.attr('src', e.target.result);
@@ -63,7 +63,7 @@ $(document).ready(function () {
         email.trigger('focusout');
         pw.trigger('focusout');
 
-        valid = email.hasClass('is-success') && pw.hasClass('is-success');
+        let valid = email.hasClass('is-success') && pw.hasClass('is-success');
 
         if (valid) {
             $('#profile-form').submit();

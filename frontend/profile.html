@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
     <head>
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
@@ -21,7 +21,7 @@
             <nav class='navbar' role='navigation' aria-label='main navigation'>
                 <div class='navbar-brand'>
                     <a class='navbar-item' href='index.html'>
-                        <img src='./includes/resources/Logo.png'>
+                        <img src='./includes/resources/Logo.png' alt='brand'>
                     </a>
                 
                     <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
@@ -52,14 +52,16 @@
         </header>
         
         <main class='is-fullhd fill page-height parallax vegetable-bg'>
+            
+
             <div class='container content box' id='profile-box'>
                 <h1 class='title'>Profile</h1>
 
-                <form method='POST' id='profile-form' action='profile.html'></form>
+                <form method='POST' id='profile-form' action='profile.html'>
                 <div class='columns'>
 
                     <div class='column is-one-quarter'>
-                        <img class='profile-picture' src='./includes/resources/default_dp.jpg'>
+                        <img class='profile-picture' src='./includes/resources/default_dp.jpg' alt='profile_picture'>
                         <div class="file is-small is-centered">
                             <label class="file-label">
                                 <input class="file-input" type="file">
@@ -82,9 +84,9 @@
 
                                 <fieldset disabled>
                                     <div class='field'>
-                                        <label class='label'>Username</label>
+                                        <label class='label' for='name'>Username</label>
                                         <div class='control has-icons-left has-icons-right'>
-                                        <input class='input' type='text' placeholder='Username' name='name' value='MasterChef1001'>
+                                        <input class='input' type='text' name='name' value='MasterChef1001' id='name'>
                                         <span class='icon is-small is-left'>
                                             <i class='fas fa-user'></i>
                                         </span>
@@ -94,9 +96,9 @@
                                 </fieldset>
                             
                                 <div class='field'>
-                                    <label class='label'>Email</label>
+                                    <label class='label' for='email'>Email</label>
                                         <div class='control has-icons-left has-icons-right'>
-                                            <input class='input' type='email' placeholder='Email' value='jared_sy@dlsu.edu.ph' name='email'>
+                                            <input class='input' type='email' placeholder='Email' value='jared_sy@dlsu.edu.ph' name='email' id='email'>
                                             <span class='icon is-small is-left'>
                                                 <i class='fas fa-envelope'></i>
                                             </span>
@@ -111,9 +113,9 @@
                             <div class='column'>
 
                                 <div class='field'>
-                                    <label class='label'>Password</label>
+                                    <label class='label' for='password'>Password</label>
                                     <div class='control has-icons-left has-icons-right'>
-                                        <input class='input' type='password' placeholder='Password' value='Hello1234' name='password'>
+                                        <input class='input' type='password' placeholder='Password' value='Hello1234' name='password' id='password'>
                                         <span class='icon is-small is-left'>
                                             <i class='fas fa-lock'></i>
                                         </span>
@@ -125,7 +127,7 @@
                                 </div>
 
                                 <div class='field'>
-                                    <label class='label'>Profession in Cooking</label>
+                                    <label class='label' for='profession'>Profession in Cooking</label>
                                     <div class='control has-icons-left'>
                                         <input class='input' type='text' placeholder='(Optional)' value='Chef' name='profession' id='profession'>
                                         <span class='icon is-small is-left'>
@@ -137,22 +139,21 @@
                         </div>
 
                         <div class='field'>
-                            <label class='label'>Workplace</label>
-                                <div class='control has-icons-left has-icons-right'>
-                                    <input class='input' type='text' placeholder='(Optional)' value='Pepper Lunch' name='workplace' id='workplace'>
-                                    <span class='icon is-small is-left'>
-                                        <i class='fas fa-building'></i>
-                                    </span>
-                                </div>
-                            <p class='help' id='pw-help'></p>
+                            <label class='label' for='workplace'>Workplace</label>
+                            <div class='control has-icons-left has-icons-right'>
+                                <input class='input' type='text' placeholder='(Optional)' value='Pepper Lunch' name='workplace' id='workplace'>
+                                <span class='icon is-small is-left'>
+                                    <i class='fas fa-building'></i>
+                                </span>
+                            </div>
                         </div>
 
-                        <div class="field">
-                            <label class="label">Short Description</label>
-                            <div class="field-body">
-                                <div class="field">
-                                    <div class="control">
-                                        <textarea class="textarea" placeholder="(Optional)">A househusband who loves cooking for his family.</textarea>
+                        <div class='field'>
+                            <label class='label' for='desc'>Short Description</label>
+                            <div class='field-body'>
+                                <div class='field'>
+                                    <div class='control'>
+                                        <textarea class='textarea' placeholder='(Optional)' id='desc'>A househusband who loves cooking for his family.</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -168,7 +169,6 @@
                             </div>
                         </div>
                     </div>
-                    </div>
                 </div>
                 </form>
             </div>
@@ -180,14 +180,14 @@
                     <a href='https://facebook.com/'><i class='fab fa-facebook fa-2x'></i></a>
                 </span>
                 <span class='icon is-large'>
-                    <a href='https:/twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
+                    <a href='https://twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
                 </span>
                 <span class='icon is-large'>
-                    <a href='https:/linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
+                    <a href='https://linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
                 </span>
                 <p>
                     <strong>ShefHub</strong> by The Team.<br>
-                    &copy; Copyright <script>document.write(new Date().getFullYear())</script>, The Team. All Rights Reserved.
+                    &copy; Copyright <script>document.write(new Date().getFullYear().toString())</script>, The Team. All Rights Reserved.
                 </p>
             </div>
         </footer>
