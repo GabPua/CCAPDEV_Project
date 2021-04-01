@@ -100,6 +100,12 @@ header .navbar-brand .navbar-item {
     padding: 30px 40px;
 }
 
+#login-box {
+    width: 350px;
+    max-width: 350px;
+    padding: 30px 40px;
+}
+
 #profile-box {
     max-width: 1100px;
     padding: 40px;

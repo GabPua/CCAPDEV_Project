@@ -12,6 +12,8 @@
         <link rel='stylesheet' href='./includes/resources/fontawesome/css/all.css'>
 
         <script src='./includes/jquery-3.6.0.js'></script>
+        <script src='./includes/script.js'></script>
+        <script src='./includes/login.js'></script>
     </head>
 
     <body>
@@ -51,29 +53,41 @@
         </header>
 
         <main class='is-fullhd fill page-height parallax vegetable-bg'>
-            <div class='content is-medium box'>
-                <h3 class='title has-text-centered'>Log In</h3>
-                <form>
+            <div class='container content box' id='login-box'>
+                <h1 class='title'>Log In</h1>
+                <h5 class='subtitle'>See the newest recipes Today!</h5>
+
+                <form method='POST' id='login-form' action='profile.html'>
+
                     <div class='field'>
                         <label for='username' class='label'>Username</label>
                         <div class='control has-icons-left'>
-                            <input type='text' id='username' placeholder='e.g. AdM1n' class='input' required>
+                            <input type='text' id='username' placeholder='Username' class='input' required>
                             <span class='icon is-small is-left'>
-                                <i class='fa fa-user'></i>
+                                <i class='fas fa-user'></i>
                             </span>
                         </div>
+                        <p class='help' id='username-help'></p>
                     </div>
-                    <div class="field">
-                        <label for="password" class="label">Password</label>
-                        <div class="control has-icons-left">
-                            <input type="password" id='password' placeholder="*******" class="input" required>
-                            <span class="icon is-small is-left">
-                                <i class="fa fa-lock"></i>
+
+                    <div class='field'>
+                        <label for='password' class='label'>Password</label>
+                        <div class='control has-icons-left'>
+                            <input type='password' id='password' placeholder='Password' class='input' required>
+                            <span class='icon is-small is-left'>
+                                <i class='fas fa-lock'></i>
                             </span>
                         </div>
+                        <p class='help' id='password-help'></p>
                     </div>
-                    <div class="field">
-                        <button class="button is-success">Login</button>
+
+                    <div class='field is-grouped'>
+                        <div class='control'>
+                            <input type='submit' class='button is-link' id='submit-login'>
+                        </div>
+                        <div class='control'>
+                            <button class='button is-link is-light' id='cancel-login'>Cancel</button>
+                        </div>
                     </div>
                 </form>
 
