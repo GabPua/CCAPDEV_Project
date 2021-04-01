@@ -10,6 +10,10 @@
         <link rel='stylesheet' href='./includes/bulma.css'>
         <link rel='stylesheet' href='./includes/custom.css'>
         <link rel='stylesheet' href='./includes/resources/fontawesome/css/all.css'>
+
+        <script src='./includes/jquery-3.6.0.js'></script>
+        <script src='./includes/script.js'></script>
+        <script src='./includes/profile.js'></script>
     </head>
 
     <body>
@@ -58,7 +62,7 @@
                         <img class='profile-picture' src='./includes/resources/default_dp.jpg'>
                         <div class="file is-small is-centered">
                             <label class="file-label">
-                                <input class="file-input" type="file" name="resume">
+                                <input class="file-input" type="file">
                                 <span class="file-cta">
                                     <span class="file-icon">
                                         <i class="fas fa-upload"></i>
@@ -80,9 +84,9 @@
                                     <div class='field'>
                                         <label class='label'>Username</label>
                                         <div class='control has-icons-left has-icons-right'>
-                                        <input class='input' type='text' placeholder='Username' name='name'>
+                                        <input class='input' type='text' placeholder='Username' name='name' value='MasterChef1001'>
                                         <span class='icon is-small is-left'>
-                                                <i class='fas fa-user'></i>
+                                            <i class='fas fa-user'></i>
                                         </span>
                                         </div>
                                         <p class='help' id='name-help'></p>
@@ -92,7 +96,7 @@
                                 <div class='field'>
                                     <label class='label'>Email</label>
                                         <div class='control has-icons-left has-icons-right'>
-                                            <input class='input' type='email' placeholder='Email' name='email'>
+                                            <input class='input' type='email' placeholder='Email' value='jared_sy@dlsu.edu.ph' name='email'>
                                             <span class='icon is-small is-left'>
                                                 <i class='fas fa-envelope'></i>
                                             </span>
@@ -109,7 +113,7 @@
                                 <div class='field'>
                                     <label class='label'>Password</label>
                                     <div class='control has-icons-left has-icons-right'>
-                                        <input class='input' type='password' placeholder='Password' name='password'>
+                                        <input class='input' type='password' placeholder='Password' value='Hello1234' name='password'>
                                         <span class='icon is-small is-left'>
                                             <i class='fas fa-lock'></i>
                                         </span>
@@ -123,7 +127,7 @@
                                 <div class='field'>
                                     <label class='label'>Profession in Cooking</label>
                                     <div class='control has-icons-left'>
-                                        <input class='input' type='text' placeholder='(Optional)' value='Chef' name='profession'>
+                                        <input class='input' type='text' placeholder='(Optional)' value='Chef' name='profession' id='profession'>
                                         <span class='icon is-small is-left'>
                                             <i class='fas fa-briefcase'></i>
                                         </span>
@@ -135,7 +139,7 @@
                         <div class='field'>
                             <label class='label'>Workplace</label>
                                 <div class='control has-icons-left has-icons-right'>
-                                    <input class='input' type='text' placeholder='(Optional)' value='Pepper Lunch' name='workplace'>
+                                    <input class='input' type='text' placeholder='(Optional)' value='Pepper Lunch' name='workplace' id='workplace'>
                                     <span class='icon is-small is-left'>
                                         <i class='fas fa-building'></i>
                                     </span>
@@ -148,7 +152,7 @@
                             <div class="field-body">
                                 <div class="field">
                                     <div class="control">
-                                        <textarea class="textarea" placeholder="(Optional)"></textarea>
+                                        <textarea class="textarea" placeholder="(Optional)">A househusband who loves cooking for his family.</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -157,10 +161,10 @@
                         <!-- Buttons -->
                         <div class='field is-grouped is-grouped-right form-buttons'>
                             <div class='control'>
-                                <input type='submit' class='button is-link' id='submit-signup' value='Update Profile'>
+                                <input type='submit' class='button is-link' id='submit-edit-profile' value='Update Profile' disabled>
                             </div>
                             <div class='control'>
-                                <button class='button is-link is-light' id='cancel-signup'>Cancel</button>
+                                <button class='button is-link is-light' id='cancel-edit-profile'>Cancel</button>
                             </div>
                         </div>
                     </div>
