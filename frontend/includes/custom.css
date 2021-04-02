@@ -76,6 +76,15 @@ header .navbar-brand .navbar-item {
     background-repeat: no-repeat;
 }
 
+/* for tabs */
+.tab-content section {
+    display: none;
+}
+
+.tab-content section.is-active {
+    display: block;
+}
+
 /* page-specific designs */
 #index-main .box {
     width: 50vw;
