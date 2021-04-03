@@ -17,6 +17,12 @@ $(document).ready(function () {
     const pw_help = $('#pw-help');
     const pw_help_icon = $('#pw-help-icon');
 
+    let def_email = email.val();
+    let def_pw = pw.val();
+    let def_prof = prof.val();
+    let def_place = place.val();
+    let def_desc = desc.val();
+
     // Validators
     email.on('focusout', function() {
         let help_text = isValidEmail(email.val());
@@ -73,11 +79,11 @@ $(document).ready(function () {
     cancel.on('click', function() {
         // refresh data
         submit.prop('disabled', true);
-        email.val('jared_sy@dlsu.edu.ph');
-        pw.val('Hello1234');
-        prof.val('Chef');
-        place.val('Pepper Lunch');
-        desc.val("A househusband who loves cooking for his family.");
+        email.val(def_email);
+        pw.val(def_pw);
+        prof.val(def_prof);
+        place.val(def_place);
+        desc.val(def_desc);
 
         // remove validations
         email.removeClass('is-danger is-success');
