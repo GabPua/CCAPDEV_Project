@@ -83,6 +83,16 @@ header .navbar-brand .navbar-item {
     padding-top: 0;
 }
 
+header .navbar-link:not(.is-arrowless) {
+    padding-right: 45px;
+}
+
+#header-dp {
+    width: 40px;
+    max-height: 40px;
+    border-radius: 50%;
+}
+
 /* footer design */
 .footer p {
     margin-top: 15px;
