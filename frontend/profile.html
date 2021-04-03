@@ -51,31 +51,45 @@
             </nav>
         </header>
         
-        <main class='is-fullhd fill page-height parallax vegetable-bg'>
-            
+        <main class='is-fullhd fill page-height parallax vegetable-bg flex-col'>
+            <div class='tabs is-centered is-boxed is-large profile-tab'>
+                <ul>
+                    <li class='is-active'>
+                        <a>
+                            <span class='icon is-small'><i class='fas fa-user' aria-hidden='true'></i></span>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='myposts.html'>
+                            <span class='icon is-small'><i class='fas fa-hamburger' aria-hidden='true'></i></span>
+                            <span>My Recipes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='likes.html'>
+                            <span class='icon is-small'><i class='fas fa-heart' aria-hidden='true'></i></span>
+                            <span>Liked Recipes</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-            <div class='container content box' id='profile-box'>
-                <div class='tabs is-medium is-boxed'>
-                    <ul>
-                        <li class='is-active'><a>Profile</a></li>
-                        <li><a href='myposts.html'>My Recipes</a></li>
-                        <li><a href='likes.html'>Liked Recipes</a></li>
-                    </ul>
-                </div>
+            <div class='container content box profile-box' id='profile'>
 
                 <form method='POST' id='profile-form' action='profile.html'>
                 <div class='columns'>
 
                     <div class='column is-one-quarter'>
                         <img class='profile-picture' src='./includes/resources/default_dp.jpg' alt='profile_picture'>
-                        <div class="file is-small is-centered">
-                            <label class="file-label">
-                                <input class="file-input" type="file">
-                                <span class="file-cta">
-                                    <span class="file-icon">
-                                        <i class="fas fa-upload"></i>
+                        <div class='file is-small is-centered'>
+                            <label class='file-label'>
+                                <input class='file-input' type='file'>
+                                <span class='file-cta'>
+                                    <span class='file-icon'>
+                                        <i class='fas fa-upload'></i>
                                     </span>
-                                    <span class="file-label">
+                                    <span class='file-label'>
                                         Choose a profile picture
                                     </span>
                                 </span>

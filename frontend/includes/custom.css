@@ -1,4 +1,33 @@
+/*noinspection CssUnknownTarget*/
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+.flex-col {
+    flex-direction: column;
+    padding: 12vh;
+}
+
+.page-height {
+    height: calc(120vh);
+    max-height: 900px;
+    min-height: 900px;
+}
+
+.profile-tab.tabs.is-boxed {
+    margin-bottom: 0 ;
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.profile-tab.tabs.is-boxed li.is-active a {
+    color: white;
+    background-color: #3273dc;
+}
+
+.tabs.is-boxed.profile-tab ul a {
+    border-width: 0;
+    border-bottom-width: 1px;
+}
 
 /* image customization */
 .white {
@@ -22,11 +51,6 @@
 
 .darken-bg {
     background-color: rgba(0, 0, 0, 0.5);
-}
-
-.page-height {
-    height: calc(120vh);
-    max-height: 900px;
 }
 
 .parallax { 
@@ -116,28 +140,31 @@ header .navbar-brand .navbar-item {
     padding: 30px 40px;
 }
 
-#profile-box {
+.profile-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     max-width: 1100px;
     padding: 40px;
 }
 
-#profile-box .field {
+#profile .field {
     margin-bottom: 0;
 
 }
 
-#profile-box .form-buttons {
+#profile .form-buttons {
     margin-top: 20px;
 }
 
-#profile-box .column {
+#profile .column {
     padding-bottom: 0;
 }
 
-#profile-box .columns {
+#profile .columns {
     margin-bottom: 0;
 }
 
-#profile-box .file {
+#profile .file {
     margin-top: 20px;
 }
