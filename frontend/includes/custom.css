@@ -154,8 +154,14 @@ header .navbar-link:not(.is-arrowless) {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 1100px;
     max-width: 1100px;
     padding: 40px;
+}
+
+.profile-box .no-posts {
+    align-self: center;
+    color: gray;
 }
 
 #profile .field {
