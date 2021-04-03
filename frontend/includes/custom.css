@@ -165,9 +165,14 @@ header .navbar-link:not(.is-arrowless) {
     padding: 40px;
 }
 
+/* posts in profile */
 .profile-box .no-posts {
     align-self: center;
     color: gray;
+}
+
+.profile-box .tile.is-parent {
+    background-size: cover !important;
 }
 
 .profile-box.menu-display .tile.is-parent {
