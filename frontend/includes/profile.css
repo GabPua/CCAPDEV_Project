@@ -1,12 +1,3 @@
-/* for tabs */
-.tab-content section {
-    display: none;
-}
-
-.tab-content section.is-active {
-    display: block;
-}
-
 .profile-tab.tabs.is-boxed {
     margin-bottom: 0 ;
     background-color: white;

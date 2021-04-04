@@ -55,6 +55,11 @@
     margin-right: auto;
 }
 
+.food-picture {
+    height: 400px;
+    width: 600px;
+}
+
 /* header design */
 header .navbar {
     font-size: 1.25em;
