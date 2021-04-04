@@ -76,7 +76,9 @@ $(document).ready(function () {
         }
     })
 
-    cancel.on('click', function() {
+    cancel.on('click', function(event) {
+        event.preventDefault();
+
         // refresh data
         submit.prop('disabled', true);
         email.val(def_email);
