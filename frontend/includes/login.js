@@ -10,7 +10,7 @@ $(document).ready(function () {
         window.location.replace('index.html');
     });
 
-    $('#submit-signup').on('click', function(event) {
+    $('#submit-login').on('click', function(event) {
         event.preventDefault();
     
         name.trigger('focusout');
@@ -19,7 +19,10 @@ $(document).ready(function () {
         let valid = name.hasClass('is-success') && pw.hasClass('is-success');
 
         if (valid) {
-            $('#login-form').submit();
+            let user = name.val();
+            let url = './users/' + user + '.html';
+
+            window.location.replace(url + '?user=' + user);
         }
     });
 
@@ -31,6 +34,12 @@ $(document).ready(function () {
         } else {
             updateInputFields(false, name, name_help, null, help_text);
         }
+    });
+
+    name.on('keydown', function() {
+        // name_help.html('');
+        // name_help.removeClass('is-danger is-success');
+        // name.removeClass('is-danger is-success');
     });
 
     pw.on('focusout', function() {
