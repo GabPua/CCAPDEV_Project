@@ -7,9 +7,9 @@
 }
 
 .page-height {
-    height: calc(120vh);
-    max-height: 900px;
-    min-height: 900px;
+    height: auto;
+    min-height: calc(100vh - 80px);
+    padding: 10vh 0;
 }
 
 /* image customization */

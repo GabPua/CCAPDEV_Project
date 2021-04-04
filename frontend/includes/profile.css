@@ -37,7 +37,7 @@
 .profile-box.menu-display .tile.is-parent {
     padding: 0;
     /*border-radius: 20px;*/
-    margin: 10px;
+    /*margin: 10px;*/
 }
 
 .profile-box.menu-display .tile.is-parent a  {
@@ -64,7 +64,7 @@
 }
 
 /* pagination for posts */
-.profile-box .section.post-navigation a.pagination-previous,a.pagination-next {
+.profile-box a.pagination-previous, .profile-box a.pagination-next {
     background-color: #ffb21c;
     font-weight: bold;
 }
