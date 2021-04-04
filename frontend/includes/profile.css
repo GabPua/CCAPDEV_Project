@@ -137,3 +137,12 @@
 #profile-view .columns {
     margin-bottom: 0;
 }
+
+#profile-view .button {
+    margin-top: 20px;
+}
+
+#profile-view .button.is-active {
+    background-color: lightgray;
+    border-color: lightgray;
+}
