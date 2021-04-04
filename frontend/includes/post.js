@@ -8,10 +8,9 @@ $(document).ready(function () {
         tab.removeClass('is-active');
         $(this).addClass('is-active');
 
-        if (val == 1) {
-            pic.attr('src', './includes/resources/foodelicious_chicken_adobo.jpg');
-        } else {
-            pic.attr('src', './includes/resources/foodelicious_chicken_adobo' + val + '.jpg');
-        }
+        let url = pic.attr('src');
+        let newUrl = url.substr(0, url.length - 5) + val + '.jpg';
+
+        pic.attr('src', newUrl);
     });
 });
