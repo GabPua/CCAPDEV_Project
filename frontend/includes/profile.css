@@ -115,16 +115,34 @@
     margin-top: 20px;
 }
 
-#profile .icon-group {
+#profile .icon-group, #profile-view .icon-group {
     margin-top: 30px;
     display: flex;
 }
 
-#profile .icon-group .icon-group-item {
+#profile .icon-group .icon-group-item, #profile-view .icon-group .icon-group-item {
     display: inline-block;
     margin: 20px auto;
 }
 
-#profile .icon-group i:before {
-    margin: auto;
+/* profile view */
+#profile-view fieldset[disabled] .input, fieldset[disabled] .textarea {
+    cursor: default;
+    background-color: white;
+    border-color: white;
+    color: black;
+    resize: none;
+}
+
+#profile-view .field {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#profile-view label {
+    font-size: 18px;
+}
+
+#profile-view .columns {
+    margin-bottom: 0;
 }
