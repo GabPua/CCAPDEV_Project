@@ -1,10 +1,152 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
 
-</body>
+        <title>Free Recipes & More</title>
+        <link rel='icon' href='./includes/resources/icon.png'>
+
+        <link rel='stylesheet' href='../includes/bulma.css'>
+        <link rel='stylesheet' href='../includes/custom.css'>
+        <link rel='stylesheet' href='../includes/resources/fontawesome/css/all.css'>
+
+        <script src='../includes/jquery-3.6.0.js'></script>
+        <script src='../includes/script.js'></script>
+        <script src='../includes/post.js'></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class='navbar' role='navigation' aria-label='main navigation'>
+                <div class='navbar-brand'>
+                    <a class='navbar-item' href='masterchef1001.html'>
+                        <img src='../includes/resources/Logo.png' alt='brand'>
+                    </a>
+                
+                    <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
+                        <span aria-hidden='true'></span>
+                        <span aria-hidden='true'></span>
+                        <span aria-hidden='true'></span>
+                    </a>
+                </div>
+              
+                <div id='navbarBasicExample' class='navbar-menu'>
+                    <div class='navbar-start'>
+                        <a href='../users/masterchef1001.html' class='navbar-item'>Home</a>
+              
+                        <a href='../about-v2.html' class='navbar-item'>About</a>
+              
+                        <a href='../explore.html' class='navbar-item'>Explore</a>
+                    </div>
+              
+                    <div class='navbar-end'>
+                        <div class='navbar-item has-dropdown is-hoverable'>
+                            <a class='navbar-link'>
+                                <img id='header-dp' src='../includes/resources/default_dp.jpg' alt='profile_picture'>
+                            </a>
+                            <div class='navbar-dropdown'>
+                                <a class='navbar-item' href='../users/masterchef1001.html'>My Profile</a>
+                                <a class='navbar-item' href='../index.html'>Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <main class='is-fullhd fill page-height parallax vegetable-bg'>
+            <div class='container content is-large box'>
+                <a class='button is-primary is-large is-rounded' href='../newsfeed.html'>
+                    <span class='icon'>
+                        <i class='fas fa-long-arrow-alt-left'></i>
+                    </span>
+                    <span>Return</span>
+                </a>
+                
+                <h1 class='title' id='recipe-name'>Lolah's Chicken Adobo</h1>
+                <h5 class='subtitle' id='shef'>By <a href='../users/foodeliciousview.html'>foodelicious</a></h5>
+                
+                <div class='columns post-header'>
+                    <div class='column is-1 is-offset-3 votes'>
+                        <i class='fas fa-long-arrow-alt-up fa-2x'></i>
+                        <strong>2</strong>
+                        <i class='fas fa-long-arrow-alt-down fa-2x downvote'></i>
+                    </div>
+                    <div class='column is-5'>
+                        <img class='food-picture center' src='../includes/resources/foodelicious_chicken_adobo1.jpg'>
+                    </div>
+                </div>
+
+                <div class='tabs is-centered is-large is-boxed is-toggle'>
+                    <ul>
+                        <li class='is-active'><a>1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a>4</a></li>
+                    </ul>
+                </div>
+                
+                <h3 class='title'>Description</h3>
+                <p class='content'>My Filipino Mom taught me how to make this traditional dish
+                    following the recipe her mother taught her.
+                    And though I've made a couple of changes, I guarantee they're Mom-approved.
+                    'Lolah' is 'Grandma' in the Philippines, in case you were wondering.
+                    Serve over steamed rice.
+                </p>
+
+                <h3 class='title'>Ingredients</h3>
+                <ul class='content'>
+                    <li>3 tablespoons vegetable oil</li>
+                    <li>3 pounds boneless, skinless chicken thighs, rinsed and patted dry</li>
+                    <li>6 cloves garlic, peeled and thinly sliced</li>
+                    <li>½ cup soy sauce</li>
+                    <li>½ cup apple cider vinegar</li>
+                    <li>½ cup water</li>
+                    <li>2 tablespoons pickling spice, wrapped in cheesecloth</li>
+                </ul>
+
+                <h3 class='title'>Directions</h3>
+                <ol class='content'>
+                    <li>Heat oil in a large pot over medium heat until oil is shimmering.
+                        Cook garlic in oil for no more than 30 seconds.
+                        Add all of the chicken to the pot; cook, stirring frequently,
+                        until chicken is white all over. Do not brown.
+                    </li>
+                    <li>
+                        Pour in soy sauce, vinegar, and water, and add the pickling spice.
+                        Make sure the spice ball is submerged. Bring to a boil, reduce heat to simmer,
+                        and place lid on pot so that some steam can escape. Simmer for 1 hour, or until chicken is very tender.
+                    </li>
+                </ol>
+
+                <h3 class='title'>Information</h3>
+                <div class='content'>
+                    <p>Preparation time: 10 mins<br>
+                       Cooking time: 1 hr 10 mins<br>
+                       Total time: 1 hr 20 mins<br>
+                       Servings: 8
+                    </p>
+                </div>
+            </div>
+        </main>
+        
+        <footer class='footer'>
+            <div class='content has-text-centered'>
+                <span class='icon is-large'>
+                    <a href='https://facebook.com/'><i class='fab fa-facebook fa-2x'></i></a>
+                </span>
+                <span class='icon is-large'>
+                    <a href='https://twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
+                </span>
+                <span class='icon is-large'>
+                    <a href='https://linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
+                </span>
+                <p>
+                    <strong>ShefHub</strong> by The Team.<br>
+                    &copy; Copyright <script>document.write(new Date().getFullYear().toString())</script>, The Team. All Rights Reserved.
+                </p>
+            </div>
+        </footer>
+    </body>
 </html>
