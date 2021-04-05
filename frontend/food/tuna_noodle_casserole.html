@@ -1,10 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
 
-</body>
+        <title>Free Recipes & More</title>
+        <link rel='icon' href='../includes/resources/icon.png'>
+
+        <link rel='stylesheet' href='../includes/bulma.css'>
+        <link rel='stylesheet' href='../includes/custom.css'>
+        <link rel='stylesheet' href='../includes/resources/fontawesome/css/all.css'>
+
+        <script src='../includes/jquery-3.6.0.js'></script>
+        <script src='../includes/script.js'></script>
+        <script src='../includes/post.js'></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class='navbar' role='navigation' aria-label='main navigation'>
+                <div class='navbar-brand'>
+                    <a class='navbar-item' href='masterchef1001.html'>
+                        <img src='../includes/resources/Logo.png' alt='brand'>
+                    </a>
+                
+                    <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
+                        <span aria-hidden='true'></span>
+                        <span aria-hidden='true'></span>
+                        <span aria-hidden='true'></span>
+                    </a>
+                </div>
+              
+                <div id='navbarBasicExample' class='navbar-menu'>
+                    <div class='navbar-start'>
+                        <a href='../users/masterchef1001.html' class='navbar-item'>Home</a>
+              
+                        <a href='../about-v2.html' class='navbar-item'>About</a>
+              
+                        <a href='../explore.html' class='navbar-item'>Explore</a>
+                    </div>
+              
+                    <div class='navbar-end'>
+                        <div class='navbar-item has-dropdown is-hoverable'>
+                            <a class='navbar-link'>
+                                <img id='header-dp' src='../includes/resources/default_dp.jpg' alt='profile_picture'>
+                            </a>
+                            <div class='navbar-dropdown'>
+                                <a class='navbar-item' href='../users/masterchef1001.html'>My Profile</a>
+                                <a class='navbar-item' href='../index.html'>Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <main class='is-fullhd fill page-height parallax vegetable-bg'>
+            <div class='container content is-large box'>
+                <a class='button is-primary is-large is-rounded' href='../newsfeed.html'>
+                    <span class='icon'>
+                        <i class='fas fa-long-arrow-alt-left'></i>
+                    </span>
+                    <span>Return</span>
+                </a>
+                
+                <h1 class='title' id='recipe-name'>Tuna Noodle Casserole</h1>
+                <h5 class='subtitle' id='shef'>By <a href='../users/foodeliciousview.html'>foodelicious</a></h5>
+                
+                <div class='columns post-header'>
+                    <div class='column is-1 is-offset-3 vote-header'>
+                        <i class='fas fa-long-arrow-alt-up fa-2x' id='upvote'></i>
+                        <strong id='votes'>2</strong>
+                        <i class='fas fa-long-arrow-alt-down fa-2x' id='downvote'></i>
+                    </div>
+                    <div class='column is-5'>
+                        <img class='food-picture center' src='../includes/resources/tuna_noodle_casserole1.jpg'>
+                    </div>
+                </div>
+
+                <div class='tabs is-centered is-large is-boxed is-toggle'>
+                    <ul>
+                        <li class='is-active'><a>1</a></li>
+                        <li><a>2</a></li>
+                        <li><a>3</a></li>
+                        <li><a>4</a></li>
+                    </ul>
+                </div>
+                
+                <h3 class='title'>Description</h3>
+                <p class='content'>
+                    I consider this the king of comfort food casseroles. What I love about this recipe,
+                    other than that it is simple and easy, is that it doesn't require the traditional can
+                    of cream of mushroom soup--but it still has the same amount of creamy,
+                    decadent goodness that every casserole should. Serve this with a green salad on the side.
+                </p>
+
+                <h3 class='title'>Ingredients</h3>
+                <ul class='content'>
+                    <li>3 tablespoons unsalted butter</li>
+                    <li>½ cup finely diced yellow onion</li>
+                    <li>1 ½ teaspoons kosher salt, divided</li>
+                    <li>3 tablespoons all-purpose flour</li>
+                    <li>4 cups cold milk</li>
+                    <li>1 cup shredded white Cheddar cheese</li>
+                    <li>1 (12 ounce) package dry egg noodles</li>
+                    <li>2 (5.5 ounce) cans tuna packed in olive oil, drained and crumbled, or to taste</li>
+                    <li>¾ cup frozen peas, thawed and drained</li>
+                    <li>1 pinch cayenne pepper</li>
+                    <li>¼ teaspoon freshly ground black pepper</li>
+                    <li>¼ teaspoon Worcestershire sauce</li>
+                    <li>½ cup plain bread crumbs</li>
+                    <li>½ cup grated Parmigiano-Reggiano cheese</li>
+                    <li>2 tablespoons olive oil</li>
+                </ul>
+
+                <h3 class='title'>Directions</h3>
+                <ol class='content'>
+                    <li>
+                        Preheat the oven to 375 degrees F (190 degrees C).
+                        Lightly butter a 9x13-inch casserole dish.
+                    </li>
+                    <li>
+                        Melt 3 tablespoons butter in a medium saucepan over medium heat.
+                        Saute onion with 1/2 teaspoon kosher salt until it starts to soften up
+                        and turn translucent, 3 to 4 minutes. Add the flour, and cook,
+                        stirring, for 3 minutes, reducing heat if needed.
+                    </li>
+                    <li>
+                        Pour in cold milk and whisk for 1 minute.
+                        Raise heat to medium-high and cook, stirring often,
+                        until the sauce thickens and comes to a simmer.
+                        Remove from heat, whisk in Cheddar cheese, and reserve until needed.
+                    </li>
+                    <li>
+                        Fill a large pot with water and remaining salt and bring to a rapid boil.
+                        Cook egg noodles for 5 minutes. Drain well and add to a large mixing bowl.
+                        Stir in the reserved sauce, followed by tuna, peas, cayenne, black pepper,
+                        and Worcestershire sauce. Mix with a spatula until evenly combined.
+                    </li>
+                    <li>
+                        Pour the mixture into the prepared dish. Mix bread crumbs,
+                        Parmigiano-Reggiano cheese, and olive oil together in a small bowl until combined and resembling wet sand.
+                        Sprinkle evenly over the casserole.
+                    </li>
+                    <li>
+                        Bake in the center of the preheated oven until browned and bubbly, about 30 minutes.
+                        Let sit for 10 minutes before cutting and serving.
+                    </li>
+                </ol>
+
+                <h3 class='title'>Information</h3>
+                <div class='content'>
+                    <p>
+                       Preparation time: 15 mins<br>
+                       Cooking time: 55 mins<br>
+                       Additional time: 10 mins<br>
+                       Total time: 1 hr 20 mins<br>
+                       Servings: 8
+                    </p>
+                </div>
+            </div>
+        </main>
+        
+        <footer class='footer'>
+            <div class='content has-text-centered'>
+                <span class='icon is-large'>
+                    <a href='https://facebook.com/'><i class='fab fa-facebook fa-2x'></i></a>
+                </span>
+                <span class='icon is-large'>
+                    <a href='https://twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
+                </span>
+                <span class='icon is-large'>
+                    <a href='https://linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
+                </span>
+                <p>
+                    <strong>ShefHub</strong> by The Team.<br>
+                    &copy; Copyright <script>document.write(new Date().getFullYear().toString())</script>, The Team. All Rights Reserved.
+                </p>
+            </div>
+        </footer>
+    </body>
 </html>

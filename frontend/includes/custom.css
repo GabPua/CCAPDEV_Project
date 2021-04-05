@@ -84,10 +84,18 @@
     height: 400px;
 }
 
-.post-header .votes {
+.post-header .vote-header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.post-header .vote-header i {
+    color: black;
+}
+
+.post-header .vote-header i.is-active {
+    color: red;
 }
 
 .post-header .food-picture {
