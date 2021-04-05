@@ -23,6 +23,7 @@
 
 .profile-box .tile.is-parent {
     background-size: cover !important;
+    background-position: center !important;
 }
 
 .profile-box.menu-display .tile.is-parent {
