@@ -15,7 +15,7 @@
     border-bottom-width: 1px;
 }
 
-/* posts/tiles in profile */
+/* posts/tiles to display recipes */
 .profile-box .no-posts {
     align-self: center;
     color: gray;
@@ -52,6 +52,34 @@
 .profile-box.menu-display .tile.is-parent .title {
     position: absolute;
     bottom: 10px;
+}
+
+ /*posts/tiles to display people */
+.container.people-display .container.tile-root {
+    width: 100%;
+}
+
+.profile-box.people-display .tile.is-child.box {
+    height: min-content;
+}
+
+.profile-box.people-display .tile.is-child * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.profile-box.people-display .tile.is-child img {
+    height: 60px;
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-right: 20px;
+}
+
+/* search bar */
+.profile-box .container.search-bar-container {
+    max-height: 40px;
+    margin-bottom: 30px;
+    margin-right: 0;
 }
 
 /* pagination for posts */
