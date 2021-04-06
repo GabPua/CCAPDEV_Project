@@ -1,21 +1,21 @@
 $(document).ready(function () {
-    const tab = $('.tabs li');
-    const pic = $('.food-picture');
+    const carousel = $('.post-header .pagination a.pagination-link');
+    const pic = $('.slider');
 
     const upvote = $('#upvote');
     const downvote = $('#downvote');
     const votes = $('#votes');
 
-    tab.on('click', function () {
-        let val = $(this).children().html();
+    carousel.on('click', function () {
+        let val = $(this).attr('aria-label').slice(-1);
 
-        tab.removeClass('is-active');
-        $(this).addClass('is-active');
+        carousel.removeClass('is-current');
+        $(this).addClass('is-current');
 
-        let url = pic.attr('src');
+        let url = pic.attr('background');
         let newUrl = url.substr(0, url.length - 5) + val + '.jpg';
 
-        pic.attr('src', newUrl);
+        pic.attr('background', 'url("' + newUrl + ')');
     });
 
     upvote.on('click', function () {

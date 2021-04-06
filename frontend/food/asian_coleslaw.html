@@ -20,7 +20,7 @@
         <header>
             <nav class='navbar' role='navigation' aria-label='main navigation'>
                 <div class='navbar-brand'>
-                    <a class='navbar-item' href='masterchef1001.html'>
+                    <a class='navbar-item' href='../index.html'>
                         <img src='../includes/resources/Logo.png' alt='brand'>
                     </a>
                 
@@ -56,30 +56,41 @@
         </header>
         
         <main class='is-fullhd fill page-height parallax vegetable-bg'>
-            <div class='container content is-large box'>
+            <div class='container content box recipe-view'>
                 <h1 class='title' id='recipe-name'>Asian Coleslaw</h1>
                 <h5 class='subtitle' id='shef'>By <a href='../users/foodeliciousview.html'>foodelicious</a></h5>
                 
                 <div class='columns post-header'>
-                    <div class='column is-1 is-offset-3 vote-header'>
-                        <i class='fas fa-long-arrow-alt-up fa-2x' id='upvote'></i>
+                    <div class='column is-1 vote-header'>
+                        <i class='fas fa-chevron-up fa-2x' id='upvote'></i>
                         <strong id='votes'>2</strong>
-                        <i class='fas fa-long-arrow-alt-down fa-2x' id='downvote'></i>
+                        <i class='fas fa-chevron-down fa-2x' id='downvote'></i>
                     </div>
-                    <div class='column is-5'>
-                        <img class='food-picture center' src='../includes/resources/foodelicious_asian_coleslaw1.jpg'>
+                    <div class='column slider'>
+<!--                        Inner columns -->
+                        <div class='columns' style='background: url("../includes/resources/foodelicious_asian_coleslaw1.jpg")'>
+                            <div class='column is-1'>
+                                <i class='fas fa-chevron-circle-left fa-3x'></i>
+                            </div>
+
+                            <div class='column center'>
+                                    <nav class='pagination is-centered is-rounded' role='navigation' aria-label='pagination'>
+                                        <ul class='pagination-list'>
+                                            <li><a class='pagination-link is-current' aria-label='image 1' aria-current='page'></a></li>
+                                            <li><a class='pagination-link' aria-label='Goto image 2'></a></li>
+                                            <li><a class='pagination-link' aria-label='Goto image 3'></a></li>
+                                        </ul>
+                                    </nav>
+                            </div>
+
+                            <div class='column is-1'>
+                                <i class='fas fa-chevron-circle-right fa-3x'></i>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
-                <div class='tabs is-centered is-large is-boxed is-toggle'>
-                    <ul>
-                        <li class='is-active'><a>1</a></li>
-                        <li><a>2</a></li>
-                        <li><a>3</a></li>
-                        <li><a>4</a></li>
-                    </ul>
-                </div>
-                
                 <h3 class='title'>Description</h3>
                 <p class='content'>
                     A great twist on cabbage salad. The peanut butter in the dressing is the secret.

@@ -80,27 +80,95 @@
     margin-right: auto;
 }
 
-.post-header {
-    height: 400px;
+/* recipe post view */
+.container.recipe-view {
+    padding: 60px 5vw;
 }
 
-.post-header .vote-header {
+.container.recipe-view .post-header {
+    height: min-content;
+    width: 75%;
+    margin: auto;
+}
+
+.container.recipe-view .post-header img {
+    object-position: center;
+}
+
+.container.recipe-view .post-header .vote-header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
+    height: 40%;
 }
 
-.post-header .vote-header i {
+.container.recipe-view .post-header .vote-header i {
     color: black;
 }
 
-.post-header .vote-header i.is-active {
+.container.recipe-view .post-header .vote-header i:hover {
+    cursor: pointer;
+}
+
+#upvote.is-active {
     color: red;
 }
 
-.post-header .food-picture {
+#downvote.is-active {
+    color: blue;
+}
+
+.post-header .image.is-16by9 {
+    margin-bottom: 0;
+}
+
+/* recipe view slider */
+.container.recipe-view .column.slider .columns {
     height: 400px;
-    width: 600px;
+    background-position: center !important;
+    background-size: cover !important;
+}
+
+.container.recipe-view .column.slider .columns i:hover {
+    cursor: pointer;
+    font-size: 3.3em;
+}
+
+.container.recipe-view .column.slider .column.is-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+    backdrop-filter: brightness(50%);
+    align-items: center;
+}
+
+.container.recipe-view .column.slider .column.center {
+    position: relative;
+}
+
+.container.recipe-view .column.slider nav.pagination {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+}
+
+.container.recipe-view .column.slider nav.pagination ul {
+    margin: 0;
+}
+
+.container.recipe-view .pagination-link.is-current {
+    background-color: white;
+    border-color: gray;
+    font-size: 1.3em;
+}
+
+.container.recipe-view .pagination li {
+    background-color: transparent;
+    font-size: 0.4em;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 /* header design */
