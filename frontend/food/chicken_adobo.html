@@ -20,7 +20,7 @@
         <header>
             <nav class='navbar' role='navigation' aria-label='main navigation'>
                 <div class='navbar-brand'>
-                    <a class='navbar-item' href='masterchef1001.html'>
+                    <a class='navbar-item' href='../index.html'>
                         <img src='../includes/resources/Logo.png' alt='brand'>
                     </a>
                 
@@ -56,30 +56,42 @@
         </header>
         
         <main class='is-fullhd fill page-height parallax vegetable-bg'>
-            <div class='container content is-large box'>
+            <div class='container content box recipe-view'>
                 <h1 class='title' id='recipe-name'>Lolah's Chicken Adobo</h1>
                 <h5 class='subtitle' id='shef'>By <a href='../users/foodeliciousview.html'>foodelicious</a></h5>
                 
                 <div class='columns post-header'>
-                    <div class='column is-1 is-offset-3 vote-header'>
-                        <i class='fas fa-long-arrow-alt-up fa-2x' id='upvote'></i>
+                    <div class='column is-1 vote-header'>
+                        <i class='fas fa-chevron-up fa-2x' id='upvote'></i>
                         <strong id='votes'>2</strong>
-                        <i class='fas fa-long-arrow-alt-down fa-2x' id='downvote'></i>
+                        <i class='fas fa-chevron-down fa-2x' id='downvote'></i>
                     </div>
-                    <div class='column is-5'>
-                        <img class='food-picture center' src='../includes/resources/foodelicious_chicken_adobo1.jpg'>
+                    <div class='column slider'>
+<!--                        Inner columns -->
+                        <div class='columns' id='food-pic' style='background: url("../includes/resources/foodelicious_chicken_adobo1.jpg")'>
+                            <div class='column is-1'>
+                                <i class='fas fa-chevron-circle-left fa-3x' id='left'></i>
+                            </div>
+
+                            <div class='column center'>
+                                    <nav class='pagination is-centered is-rounded' role='navigation' aria-label='pagination'>
+                                        <ul class='pagination-list'>
+                                            <li><a class='pagination-link is-current' aria-label='image 1' aria-current='page'></a></li>
+                                            <li><a class='pagination-link' aria-label='image 2'></a></li>
+                                            <li><a class='pagination-link' aria-label='image 3'></a></li>
+                                            <li><a class='pagination-link' aria-label='image 4'></a></li>
+                                        </ul>
+                                    </nav>
+                            </div>
+
+                            <div class='column is-1'>
+                                <i class='fas fa-chevron-circle-right fa-3x' id='right'></i>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
-                <div class='tabs is-centered is-large is-boxed is-toggle'>
-                    <ul>
-                        <li class='is-active'><a>1</a></li>
-                        <li><a>2</a></li>
-                        <li><a>3</a></li>
-                        <li><a>4</a></li>
-                    </ul>
-                </div>
-                
                 <h3 class='title'>Description</h3>
                 <p class='content'>
                     My Filipino Mom taught me how to make this traditional dish
@@ -118,12 +130,33 @@
                 <h3 class='title'>Information</h3>
                 <div class='content'>
                     <p>
-                       Preparation time: 10 mins<br>
-                       Cooking time: 1 hr 10 mins<br>
-                       Total time: 1 hr 20 mins<br>
-                       Servings: 8
+                        Preparation time: 10 mins<br>
+                        Cooking time: 1 hr 10 mins<br>
+                        Total time: 1 hr 20 mins<br>
+                        Servings: 8
                     </p>
                 </div>
+
+                <h3 class='title'>Comments</h3>
+                <article class='media'>
+                    <figure class='media-left'>
+                        <p class='image is-64x64'>
+                            <img class='is-rounded' src='../includes/resources/chefjohn.jpg' alt='chefjohn'>
+                        </p>
+                    </figure>
+                    <div class='media-content'>
+                        <div class='field'>
+                            <p class='control'>
+                                <textarea class='textarea has-fixed-size' placeholder='Add a comment...'></textarea>
+                            </p>
+                        </div>
+                        <div class='field'>
+                            <p class='control'>
+                                <button class='button'>Post comment</button>
+                            </p>
+                        </div>
+                    </div>
+                </article>
             </div>
         </main>
         
