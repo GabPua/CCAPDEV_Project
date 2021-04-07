@@ -64,6 +64,11 @@
     height: min-content;
 }
 
+.profile-box.people-display .tile.is-child.box:hover {
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.02);
+    transform: scale(1.02);
+}
+
 .profile-box.people-display .tile.is-child * {
     display: inline-block;
     vertical-align: middle;
