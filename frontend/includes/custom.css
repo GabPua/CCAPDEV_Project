@@ -149,9 +149,8 @@
 }
 
 .container.recipe-view .column.slider nav.pagination {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
+    height: 100%;
+    align-items: flex-end;
 }
 
 .container.recipe-view .column.slider nav.pagination ul {
