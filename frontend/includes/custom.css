@@ -271,5 +271,6 @@ header .navbar-link:not(.is-arrowless) {
 }
 
 .card-container .card {
+    width: 300px;
     margin: 20px;
 }
