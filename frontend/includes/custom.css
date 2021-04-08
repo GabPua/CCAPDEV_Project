@@ -80,11 +80,6 @@
     margin-right: auto;
 }
 
-.big-search-bar {
-    width: 60vw;
-    margin: auto;
-}
-
 /* recipe post view */
 .container.recipe-view {
     padding: 60px 5vw;
@@ -250,6 +245,31 @@ header .navbar-link:not(.is-arrowless) {
     padding: 30px 40px;
 }
 
+/* searching-related stuff */
+.big-search-bar {
+    width: 60vw;
+}
+
 #search-box {
     padding: 40px;
+}
+
+#search-results form {
+    flex: 0 0 100%;
+}
+
+#search-results form p {
+    width: 75%;
+    margin: 30px auto 60px;
+}
+
+.card-container {
+    margin-top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card-container .card {
+    margin: 20px;
 }
