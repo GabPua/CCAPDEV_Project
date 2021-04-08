@@ -80,6 +80,11 @@
     margin-right: auto;
 }
 
+.big-search-bar {
+    width: 60vw;
+    margin: auto;
+}
+
 /* recipe post view */
 .container.recipe-view {
     padding: 60px 5vw;
@@ -243,4 +248,8 @@ header .navbar-link:not(.is-arrowless) {
     width: 350px;
     max-width: 350px;
     padding: 30px 40px;
+}
+
+#search-box {
+    padding: 40px;
 }

@@ -55,3 +55,12 @@ function updateInputFields(isValid, field, help, icon, helpText) {
         }
     }
 }
+
+$(document).ready(function () {
+    const form = $('form[action="query.html"]');
+    const searchbar = form.children('input[type="text"');
+
+    searchbar.on('click', function () {
+        form.submit();
+    })
+})
