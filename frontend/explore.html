@@ -12,7 +12,6 @@
         <link rel='stylesheet' href='./includes/resources/fontawesome/css/all.css'>
 
         <script src='./includes/jquery-3.6.0.js'></script>
-        <script src='./includes/script.js'></script>
         <script src='./includes/post.js'></script>
     </head>
 
@@ -53,19 +52,60 @@
         </header>
         
         <main class='is-fullhd fill page-height parallax vegetable-bg'>
-            <div class='container content is-large box'>
-                <h1 class='title' id='featured'>Lolah's Chicken Adobo</h1>
+            <div class='container content box recipe-view'>
+                <h1 class='title' id='recipe-name'>Lolah's Chicken Adobo</h1>
                 <h5 class='subtitle' id='shef'>By foodelicious</h5>
                 
-                <img class='food-picture center' src='./includes/resources/foodelicious_chicken_adobo1.jpg'>
+                <div class='columns post-header'>
+                    <div class='column is-1 vote-header'>
+                        <i class='fas fa-chevron-up fa-2x logged-out'></i>
+                        <strong id='votes'>2</strong>
+                        <i class='fas fa-chevron-down fa-2x logged-out'></i>
+                    </div>
 
-                <div class='tabs is-centered is-large is-boxed is-toggle'>
-                    <ul>
-                        <li class='is-active'><a>1</a></li>
-                        <li><a>2</a></li>
-                        <li><a>3</a></li>
-                        <li><a>4</a></li>
-                    </ul>
+                    <div class='modal' id='modal-body'>
+                        <div class='modal-background'></div>
+                        <div class='modal-card'>
+                            <header class='modal-card-head'>
+                                <p class='modal-card-title'>Sign up to vote!</p>
+                                <button class='delete' aria-label='close' id='close'></button>
+                            </header>
+                            <section class='modal-card-body'>
+                                Log-in or register to vote on posts and see more recipes.
+                                Join our community to improve your cooking skills and interact with other chefs
+                                around the globe!
+                            </section>
+                            <footer class='modal-card-foot'>
+                                <a class='button is-primary' href='signup.html'><strong>Sign up</strong></a>
+                                <a class='button' href='login.html'>Log in</a>
+                            </footer>  
+                        </div>
+                      </div>
+
+                    <div class='column slider'>
+<!--                        Inner columns -->
+                        <div class='columns' id='food-pic' style='background: url("./includes/resources/foodelicious_chicken_adobo1.jpg")'>
+                            <div class='column is-1'>
+                                <i class='fas fa-chevron-circle-left fa-3x' id='left'></i>
+                            </div>
+
+                            <div class='column center'>
+                                    <nav class='pagination is-centered is-rounded' role='navigation' aria-label='pagination'>
+                                        <ul class='pagination-list'>
+                                            <li><a class='pagination-link is-current' aria-label='image 1' aria-current='page'></a></li>
+                                            <li><a class='pagination-link' aria-label='image 2'></a></li>
+                                            <li><a class='pagination-link' aria-label='image 3'></a></li>
+                                            <li><a class='pagination-link' aria-label='image 4'></a></li>
+                                        </ul>
+                                    </nav>
+                            </div>
+
+                            <div class='column is-1'>
+                                <i class='fas fa-chevron-circle-right fa-3x' id='right'></i>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
                 <h3 class='title'>Description</h3>
@@ -106,15 +146,12 @@
                 <h3 class='title'>Information</h3>
                 <div class='content'>
                     <p>
-                       Preparation time: 10 mins<br>
-                       Cooking time: 1 hr 10 mins<br>
-                       Total time: 1 hr 20 mins<br>
-                       Servings: 8
+                        Preparation time: 10 mins<br>
+                        Cooking time: 1 hr 10 mins<br>
+                        Total time: 1 hr 20 mins<br>
+                        Servings: 8
                     </p>
                 </div>
-
-                <br>
-                <p>Want to see more? <a href='signup.html'>Sign Up Now!</a></p>
             </div>
         </main>
         

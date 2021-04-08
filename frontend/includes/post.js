@@ -9,6 +9,9 @@ $(document).ready(function () {
     const downvote = $('#downvote');
     const votes = $('#votes');
 
+    const outside = $('.logged-out');
+    const close = $('#close');
+
     carousel.on('click', function () {
         let val = $(this).attr('aria-label').slice(-1);
 
@@ -87,5 +90,22 @@ $(document).ready(function () {
             downvote.addClass('is-active');
             votes.html(num_votes - 1);
         }
+    });
+
+    $(document).on('click', function (e) {
+        if (e.target.id !== 'modal-body' && !e.target.classList.contains('logged-out')) {
+            $('.modal').removeClass('is-active');
+            $('html').removeClass('is-clipped');
+        }
+    });
+
+    outside.on('click', function () {
+        $('.modal').addClass('is-active');
+        $('html').addClass('is-clipped');
+    });
+
+    close.on('click', function () {
+        $('.modal').removeClass('is-active');
+        $('html').removeClass('is-clipped');
     });
 });
