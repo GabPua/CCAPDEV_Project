@@ -28,6 +28,10 @@ function isValidEmail(email) {
     }
 }
 
+function isValidImageFormat(ext) {
+    return ext === 'gif' || ext === 'png' || ext === 'jpeg' || ext === 'jpg';
+}
+
 function updateInputFields(isValid, field, help, icon, helpText) {
     help.html(helpText);
 

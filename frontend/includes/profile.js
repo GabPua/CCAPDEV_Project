@@ -50,7 +50,7 @@ $(document).ready(function () {
         let url = $(this).val();
         let ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
 
-        if (input.files && input.files[0] && (ext === 'gif' || ext === 'png' || ext === 'jpeg' || ext === 'jpg')) {
+        if (input.files && input.files[0] && isValidImageFormat(ext)) {
             let reader = new FileReader();
     
             reader.onload = function (e) {
