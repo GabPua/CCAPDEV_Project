@@ -329,3 +329,9 @@ header .navbar-link:not(.is-arrowless) {
     margin-bottom: 4px;
     width: 300px;
 }
+
+#menu {
+    background: url("../includes/resources/menu.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+}
