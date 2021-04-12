@@ -331,7 +331,24 @@ header .navbar-link:not(.is-arrowless) {
 }
 
 #menu {
-    background: url("../includes/resources/menu.jpg");
-    background-repeat: no-repeat;
-    background-size: contain;
+    flex-direction: column;
+}
+
+#menu .card {
+    max-width: 900px;
+    width: 80vw;
+    min-width: 600px;
+    margin-bottom: 50px;
+}
+
+#menu .card a i {
+    color: #4a4a4a;
+}
+
+#menu .card .user-interactions {
+    margin-top: 15px;
+}
+
+#menu .card .display-count {
+    margin: auto 15px;
 }

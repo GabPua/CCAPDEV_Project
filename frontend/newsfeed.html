@@ -10,6 +10,9 @@
         <link rel='stylesheet' href='./includes/bulma.css'>
         <link rel='stylesheet' href='./includes/custom.css'>
         <link rel='stylesheet' href='./includes/resources/fontawesome/css/all.css'>
+
+        <script src='./includes/jquery-3.6.0.js'></script>
+        <script src='./includes/newsfeed.js'></script>
     </head>
 
     <body>
@@ -51,46 +54,108 @@
             </nav>
         </header>
         
-        <main class='is-fullhd fill page-height parallax vegetable-bg'>
-            <div class='container content box' id='menu'>
-                <div class='columns'>
-                    <div class='column is-5 tile is-ancestor'>
-                        <div class='tile is-parent is-vertical'>
-                            <div class='tile is-child'>
-                                <div class='media box'>
-                                    <div class='media-left'>
-                                        <figure class='image is-128x128'>
-                                            <img src='./includes/resources/foodelicious_chicken_adobo1.jpg' alt='adobo'>
-                                        </figure>
-                                    </div>
-
-                                    <div class='media-content'>
-                                        <p class='title is-4'>Chicken Adobo</p>
-                                        <div class='media'>
-                                            <div class='media-left'>
-                                                <figure class='image is-48x48'>
-                                                    <img class='is-rounded' src='./includes/resources/foodelicious.jpg' alt='foodelicious'>
-                                                </figure>
-                                            </div>
-
-                                            <div class='media-content'>
-                                                <p class='subtitle is-6'>foodelicious</p>
-                                            </div>
-                                        </div>   
-                                    </div>
-                                </div>
-                            </div>
+        <main class='is-fullhd fill page-height parallax vegetable-bg' id='menu'>
+            <div class='card'>
+                <a class='card-image' href='./food/chicken_adobo.html'>
+                    <figure class='image is-2by1'>
+                        <img src='./includes/resources/foodelicious_chicken_adobo1.jpg' alt='Placeholder image'>
+                    </figure>
+                </a>
+                <div class='card-content'>
+                    <div class='media'>
+                        <div class='media-left'>
+                            <a href='./users/foodeliciousview.html' class='image is-48x48'>
+                                <img class='is-rounded' src='./includes/resources/foodelicious.jpg' alt='Placeholder image'>
+                            </a>
                         </div>
-
+                        <div class='media-content'>
+                            <a href='./food/chicken_adobo.html' class='title is-4'>Lolah's Chicken Adobo</a>
+                            <br>
+                            <a href='./users/foodeliciousview.html' class='subtitle is-6'>foodelicious</a>
+                        </div>
                     </div>
 
-                    <div class='column'>
-                        
+                    <div class='content'>
+                        Kainin mo ang manok kong masarap.
+                        <br>
+                        <time datetime='2016-1-1'>11:09 PM - 1 Jan 2016</time>
+
+                        <div class='user-interactions'>
+                            <a><i class='fas fa-thumbs-up'></i></a>
+                            <span class='display-count'>2</span>
+                            <a><i class='fas fa-thumbs-down'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='card'>
+                <a class='card-image' href='./food/tuna_noodle_casserole.html'>
+                    <figure class='image is-2by1'>
+                        <img src='./includes/resources/tuna_noodle_casserole1.jpg' alt='Placeholder image'>
+                    </figure>
+                </a>
+                <div class='card-content'>
+                    <div class='media'>
+                        <div class='media-left'>
+                            <a href='./users/foodeliciousview.html' class='image is-48x48'>
+                                <img class='is-rounded' src='./includes/resources/foodelicious.jpg' alt='Placeholder image'>
+                            </a>
+                        </div>
+                        <div class='media-content'>
+                            <a href='./food/tuna_noodle_casserole.html' class='title is-4'>Tuna Noodle Casserole</a>
+                            <br>
+                            <a href='./users/foodeliciousview.html' class='subtitle is-6'>foodelicious</a>
+                        </div>
+                    </div>
+
+                    <div class='content'>
+                        Sarap nito, grabe!
+                        <br>
+                        <time datetime='2016-1-1'>11:09 PM - 1 Jan 2016</time>
+
+                        <div class='user-interactions'>
+                            <a><i class='fas fa-thumbs-up'></i></a>
+                            <span class='display-count'>2</span>
+                            <a><i class='fas fa-thumbs-down'></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class='card'>
+                <a class='card-image' href='./food/roasted_potatoes.html'>
+                    <figure class='image is-2by1'>
+                        <img src='./includes/resources/roasted_potatoes1.jpg' alt='Placeholder image'>
+                    </figure>
+                </a>
+                <div class='card-content'>
+                    <div class='media'>
+                        <div class='media-left'>
+                            <a href='./users/chefjohnview.html' class='image is-48x48'>
+                                <img class='is-rounded' src='./includes/resources/chefjohn.jpg' alt='Placeholder image'>
+                            </a>
+                        </div>
+                        <div class='media-content'>
+                            <a href='./food/chicken_adobo.html' class='title is-4'>"Special" Roasted Potatoes</a>
+                            <br>
+                            <a href='./users/chefjohnview.html' class='subtitle is-6'>chefjohn</a>
+                        </div>
+                    </div>
+
+                    <div class='content'>
+                        Delicious potatoes for a healthy diet. Let's eat!
+                        <br>
+                        <time datetime='2016-1-1'>11:09 PM - 1 Jan 2016</time>
+
+                        <div class='user-interactions'>
+                            <a><i class='fas fa-thumbs-up'></i></a>
+                            <span class='display-count'>2</span>
+                            <a><i class='fas fa-thumbs-down'></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
         </main>
-        
+
         <footer class='footer'>
             <div class='content has-text-centered'>
                 <span class='icon is-large'>
