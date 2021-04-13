@@ -5,8 +5,8 @@ $(document).ready(function () {
     const left = $('#left');
     const right = $('#right');
 
-    const upvote = $('#upvote');
-    const downvote = $('#downvote');
+    const upvote = $('.upvote');
+    const downvote = $('.downvote');
     const votes = $('#votes');
 
     const outside = $('.logged-out');
@@ -59,14 +59,14 @@ $(document).ready(function () {
     });
 
     upvote.on('click', function () {
-        if (upvote[0].classList.contains('is-active')) {
+        if (upvote.hasClass('is-active')) {
             upvote.removeClass('is-active');
             let num_votes = Number(votes.html());
             votes.html(num_votes - 1);
         } else {
             let num_votes = Number(votes.html());
 
-            if (downvote[0].classList.contains('is-active')) {
+            if (downvote.hasClass('is-active')) {
                 downvote.removeClass('is-active');
                 num_votes += 1;
             }
@@ -76,14 +76,14 @@ $(document).ready(function () {
     });
 
     downvote.on('click', function () {
-        if (downvote[0].classList.contains('is-active')) {
+        if (downvote.hasClass('is-active')) {
             downvote.removeClass('is-active');
             let num_votes = Number(votes.html());
             votes.html(num_votes + 1);
         } else {
             let num_votes = Number(votes.html());
 
-            if (upvote[0].classList.contains('is-active')) {
+            if (upvote.hasClass('is-active')) {
                 upvote.removeClass('is-active');
                 num_votes -= 1;
             }

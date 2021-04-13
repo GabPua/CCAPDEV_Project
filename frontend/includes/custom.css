@@ -110,14 +110,6 @@
     cursor: pointer;
 }
 
-#upvote.is-active {
-    color: red;
-}
-
-#downvote.is-active {
-    color: blue;
-}
-
 .post-header .image.is-16by9 {
     margin-bottom: 0;
 }
@@ -351,4 +343,12 @@ header .navbar-link:not(.is-arrowless) {
 
 #menu .card .display-count {
     margin: auto 15px;
+}
+
+.upvote.is-active {
+    color: red !important;
+}
+
+.downvote.is-active {
+    color: blue !important;
 }
