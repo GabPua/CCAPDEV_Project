@@ -106,10 +106,6 @@
     color: black;
 }
 
-.container.recipe-view .post-header .vote-header i:hover {
-    cursor: pointer;
-}
-
 .post-header .image.is-16by9 {
     margin-bottom: 0;
 }
@@ -328,8 +324,8 @@ header .navbar-link:not(.is-arrowless) {
 
 #menu .card {
     max-width: 900px;
-    width: 80vw;
-    min-width: 600px;
+    width: 45vw;
+    min-width: 400px;
     margin-bottom: 50px;
 }
 
@@ -351,4 +347,21 @@ header .navbar-link:not(.is-arrowless) {
 
 .downvote.is-active {
     color: blue !important;
+}
+
+.upvote:hover {
+    cursor: pointer;
+}
+
+.downvote:hover {
+    cursor: pointer;
+}
+
+#go-create-post {
+    width: 45vw;
+    margin-bottom: 50px;
+    background-color: #00b89c;
+    font-weight: bold;
+    border-color: #00b89c;
+    color: white;
 }
