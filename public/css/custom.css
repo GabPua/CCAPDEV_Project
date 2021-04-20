@@ -197,7 +197,7 @@ header .navbar-link:not(.is-arrowless) {
 /* usual vegetable background */
 .vegetable-bg {
     background-position: center;
-    background-image:  linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ),  url('./resources/Vegetables.jpg');
+    background-image:  linear-gradient( rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4) ),  url('../img/Vegetables.jpg');
     background-repeat: no-repeat;
 }
 
