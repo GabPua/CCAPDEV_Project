@@ -1,3 +1,5 @@
 <?php
-$pdo = new PDO('mysql:host=localhost;dbname=ijdb_sample;charset=utf8', 'ijdb_sample', 'mypassword');
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$client = new MongoDB\Client(
+    'mongodb+srv://admin:TY45CUn.rU56k7s@shefhub.pfyyx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority');
+$db = $client->test;
