@@ -1,10 +1,17 @@
 <?php
+include_once __DIR__ . '/../vendor/autoload.php';
 
-$title = 'Home Page';
-$output = 'Hello World!';
+try {
+    // redirection
+    $route = ltrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
 
-ob_start();
-include __DIR__ . '/../templates/homepage.html.php';
-$output = ob_get_clean();
+    $entryPoint = new \generic\EntryPoint($route, $_SERVER['REQUEST_METHOD'], new \shefhub\ShefHubRoute);
+    $entryPoint->run();
 
-include __DIR__ . '/../templates/layout.html.php';
+} catch (PDOException $e) {
+    $title = 'An error has occurred';
+
+    $output = 'Database error: ' . $e->getMessage() . ' in ' .
+        $e->getFile() . ':' . $e->getLine();
+}
+
