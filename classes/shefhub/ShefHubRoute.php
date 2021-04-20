@@ -23,6 +23,12 @@ class ShefHubRoute implements \generic\Route
                     'controller' => $homeController,
                     'action' => 'about'
                 ]
+            ],
+            'explore' => [
+                'GET' => [
+                    'controller' => $homeController,
+                    'action' => 'explore'
+                ]
             ]
         ];
     }

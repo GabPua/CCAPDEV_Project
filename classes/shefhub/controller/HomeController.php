@@ -20,4 +20,10 @@ class HomeController
         ];
     }
 
+    public function explore() {
+        return [
+            'template' => 'explore.html.php',
+            'title' => 'ShefHub | Free Recipes & More'
+        ];
+    }
 }
