@@ -1,7 +1,7 @@
 <?php
 
 namespace generic;
-include_once __DIR__ . '/../../includes/autoload.php';
+include_once __DIR__ . '/../../vendor/autoload.php';
 
 /**
  * The class serves as the entry point of a user to the website.
