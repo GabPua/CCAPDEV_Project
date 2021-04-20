@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+        <title>Free Recipes & More</title>
+        <link rel='icon' href='../includes/resources/icon.png'>
+
+        <link rel='stylesheet' href='../includes/bulma.css'>
+        <link rel='stylesheet' href='../includes/custom.css'>
+        <link rel='stylesheet' href='../includes/profile.css'>
+        <link rel='stylesheet' href='../includes/resources/fontawesome/css/all.css'>
+
+        <script src='../includes/jquery-3.6.0.js'></script>
+        <script src='../includes/script.js'></script>
+        <script src='../includes/profile.js'></script>
+    </head>
+
+    <body>
+        <header>
+            <nav class='navbar' role='navigation' aria-label='main navigation'>
+                <div class='navbar-brand'>
+                    <a class='navbar-item' href='esmee.html'>
+                        <img src='../includes/resources/Logo.png' alt='brand'>
+                    </a>
+                
+                    <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
+                        <span aria-hidden='true'></span>
+                        <span aria-hidden='true'></span>
+                        <span aria-hidden='true'></span>
+                    </a>
+                </div>
+              
+                <div id='navbarBasicExample' class='navbar-menu'>
+                    <div class='navbar-start'>
+                        <a href='../newsfeed.html' class='navbar-item'>Home</a>
+              
+                        <a href='../about-v2.html' class='navbar-item'>About</a>
+              
+                        <a href='search.html' class='navbar-item'>Explore</a>
+                    </div>
+              
+                    <div class='navbar-end'>
+                        <div class='navbar-item has-dropdown is-hoverable'>
+                            <a class='navbar-link'>
+                                <img id='header-dp' src='../includes/resources/esmee.jpg' alt='profile_picture'>
+                            </a>
+                            <div class='navbar-dropdown'>
+                                <a class='navbar-item' href='esmee.html'>My Profile</a>
+                                <a class='navbar-item' href='../index.html'>Log out</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        
+        <main class='is-fullhd fill page-height parallax vegetable-bg flex-col'>
+            <div class='tabs is-centered is-boxed is-large profile-tab'>
+                <ul>
+                    <li class='is-active'>
+                        <a>
+                            <span class='icon is-small'><i class='fas fa-user' aria-hidden='true'></i></span>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='esmeeposts.html'>
+                            <span class='icon is-small'><i class='fas fa-hamburger' aria-hidden='true'></i></span>
+                            <span>My Recipes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='esmeelikes.html'>
+                            <span class='icon is-small'><i class='fas fa-heart' aria-hidden='true'></i></span>
+                            <span>Liked Recipes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='esmeefollowers.html'>
+                            <span class='icon is-small'><i class='fas fa-users' aria-hidden='true'></i></span>
+                            <span>Followers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href='esmeefollowing.html'>
+                            <span class='icon is-small'><i class='fas fa-user-plus' aria-hidden='true'></i></span>
+                            <span>Following</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class='container content box profile-box' id='profile'>
+
+                <form method='POST' id='profile-form' action='esmee.html'>
+                <div class='columns'>
+
+                    <div class='column is-one-quarter'>
+                        <img class='profile-picture center' src='../includes/resources/esmee.jpg' alt='profile_picture'>
+                        <div class='file is-small is-centered'>
+                            <label class='file-label'>
+                                <input class='file-input' type='file'>
+                                <span class='file-cta'>
+                                    <span class='file-icon'>
+                                        <i class='fas fa-upload'></i>
+                                    </span>
+                                    <span class='file-label'>
+                                        Choose a profile picture
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class='icon-group'>
+
+                            <div class='icon-group-item'>
+                                <i class='fas fa-users fa-lg fa-fw' title='Followers'></i>
+                                <span id='follower-count'>3</span>
+                            </div>
+                            <div class='icon-group-item'>
+                                <i class='fas fa-user-plus fa-lg fa-fw' title='Following'></i>
+                                4
+                            </div>
+                            <div class='icon-group-item'>
+                                <i class='fas fa-clipboard-list fa-lg fa-fw' title='Recipes'></i>
+                                0
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class='column'>
+                        <!-- Inner columns -->
+                        <div class='columns'>
+                            <div class='column'>
+
+                                <fieldset disabled>
+                                    <div class='field'>
+                                        <label class='label' for='name'>Username</label>
+                                        <div class='control has-icons-left has-icons-right'>
+                                        <input class='input' type='text' name='name' value='esmee' id='name'>
+                                        <span class='icon is-small is-left'>
+                                            <i class='fas fa-user'></i>
+                                        </span>
+                                        </div>
+                                        <p class='help' id='name-help'></p>
+                                    </div>
+                                </fieldset>
+                            
+                                <div class='field'>
+                                    <label class='label' for='email'>Email</label>
+                                        <div class='control has-icons-left has-icons-right'>
+                                            <input class='input' type='email' placeholder='Email' value='esmee@allrecipes.com' name='email' id='email'>
+                                            <span class='icon is-small is-left'>
+                                                <i class='fas fa-envelope'></i>
+                                            </span>
+                                            <span class='icon is-small is-right'>
+                                                <i id='email-help-icon'></i>
+                                            </span>
+                                        </div>
+                                    <p class='help' id='email-help'></p>
+                                </div>
+                            </div>
+
+                            <div class='column'>
+
+                                <div class='field'>
+                                    <label class='label' for='password'>Password</label>
+                                    <div class='control has-icons-left has-icons-right'>
+                                        <input class='input' type='password' placeholder='Password' value='Hello1234' name='password' id='password'>
+                                        <span class='icon is-small is-left'>
+                                            <i class='fas fa-lock'></i>
+                                        </span>
+                                        <span class='icon is-small is-right'>
+                                            <i id='pw-help-icon'></i>
+                                        </span>
+                                    </div>
+                                    <p class='help' id='pw-help'></p>
+                                </div>
+
+                                <div class='field'>
+                                    <label class='label' for='profession'>Profession in Cooking</label>
+                                    <div class='control has-icons-left'>
+                                        <input class='input' type='text' placeholder='(Optional)' value='Househusband' name='profession' id='profession'>
+                                        <span class='icon is-small is-left'>
+                                            <i class='fas fa-briefcase'></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='field'>
+                            <label class='label' for='workplace'>Workplace</label>
+                            <div class='control has-icons-left has-icons-right'>
+                                <input class='input' type='text' placeholder='(Optional)' name='workplace' id='workplace'>
+                                <span class='icon is-small is-left'>
+                                    <i class='fas fa-building'></i>
+                                </span>
+                                <p class='help'></p>
+                            </div>
+                        </div>
+
+                        <div class='field'>
+                            <label class='label' for='desc'>Short Description</label>
+                            <div class='field-body'>
+                                <div class='field'>
+                                    <div class='control'>
+                                        <textarea class='textarea' placeholder='(Optional)' id='desc'>My love for cooking is a result of my passion for eating. Good food can make any day better. My mother is from France so food has always been a focus of conversation, travels and special occasions. I also am the vice president of brand marketing at Allrecipes.com. I have been lucky enough to be part of Allrecipes for 10 years (since the early days). It has been one of the true pleasures of my life. Seeing all of the really great cooking ideas posted to the site everyday is a total joy.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class='field is-grouped is-grouped-right form-buttons'>
+                            <div class='control'>
+                                <input type='submit' class='button is-link' id='submit-edit-profile' value='Update Profile' disabled>
+                            </div>
+                            <div class='control'>
+                                <button class='button is-link is-light' id='cancel-edit-profile'>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </main>
+        
+        <footer class='footer'>
+            <div class='content has-text-centered'>
+                <span class='icon is-large'>
+                    <a href='https://facebook.com/'><i class='fab fa-facebook fa-2x'></i></a>
+                </span>
+                <span class='icon is-large'>
+                    <a href='https://twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
+                </span>
+                <span class='icon is-large'>
+                    <a href='https://linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
+                </span>
+                <p>
+                    <strong>ShefHub</strong> by The Team.<br>
+                    &copy; Copyright <script>document.write(new Date().getFullYear().toString())</script>, The Team. All Rights Reserved.
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

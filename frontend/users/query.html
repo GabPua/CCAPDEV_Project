@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <title>Free Recipes & More</title>
+    <link rel='icon' href='../includes/resources/icon.png'>
+
+    <link rel='stylesheet' href='../includes/bulma.css'>
+    <link rel='stylesheet' href='../includes/custom.css'>
+    <link rel='stylesheet' href='../includes/profile.css'>
+    <link rel='stylesheet' href='../includes/resources/fontawesome/css/all.css'>
+
+    <script src='../includes/jquery-3.6.0.js'></script>
+    <script src='../includes/script.js'></script>
+    <script src='../includes/profile.js'></script>
+</head>
+
+<body>
+<header>
+    <nav class='navbar' role='navigation' aria-label='main navigation'>
+        <div class='navbar-brand'>
+            <a class='navbar-item' href='masterchef1001.html'>
+                <img src='../includes/resources/Logo.png' alt='brand'>
+            </a>
+
+            <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
+                <span aria-hidden='true'></span>
+                <span aria-hidden='true'></span>
+                <span aria-hidden='true'></span>
+            </a>
+        </div>
+
+        <div id='navbarBasicExample' class='navbar-menu'>
+            <div class='navbar-start'>
+                <a href='../newsfeed.html' class='navbar-item'>Home</a>
+
+                <a href='../about-v2.html' class='navbar-item'>About</a>
+
+                <a href='search.html' class='navbar-item'>Explore</a>
+            </div>
+
+            <div class='navbar-end'>
+                <div class='navbar-item has-dropdown is-hoverable'>
+                    <a class='navbar-link'>
+                        <img id='header-dp' src='../includes/resources/default_dp.jpg' alt='profile_picture'>
+                    </a>
+                    <div class='navbar-dropdown'>
+                        <a class='navbar-item' href='masterchef1001.html'>My Profile</a>
+                        <a class='navbar-item' href='../index.html'>Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class='is-fullhd fill page-height parallax vegetable-bg flex-col' id='search-results'>
+
+    <div class='card-container'>
+        <form action='query.html' method='GET'>
+            <p class='control has-icons-left big-search-bar'>
+                <input class='input is-rounded is-large' type='text' placeholder='What are you looking for?' aria-label='search input' name='keyword'>
+                <span class='icon is-left'><i class='fas fa-search'></i></span>
+            </p>
+        </form>
+
+        <a class='card' href='../food/chicken_adobo.html'>
+            <div class='card-image'>
+                <figure class='image is-square'>
+                    <img src='../includes/resources/foodelicious_chicken_adobo1.jpg' alt='adobo'>
+                </figure>
+            </div>
+            <div class='card-content'>
+                <div class='media'>
+                    <div class='media-left'>
+                        <figure class='image is-48x48'>
+                            <img class='is-rounded' src='../includes/resources/foodelicious.jpg' alt='foodelicious'>
+                        </figure>
+                    </div>
+                    <div class='media-content'>
+                        <p class='title is-4'>Chicken Adobo</p>
+                        <p class='subtitle is-6'>foodelicious</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <a class='card' href='../food/asian_coleslaw.html'>
+            <div class='card-image'>
+                <figure class='image is-square'>
+                    <img src='../includes/resources/foodelicious_asian_coleslaw1.jpg' alt='coleslaw'>
+                </figure>
+            </div>
+            <div class='card-content'>
+                <div class='media'>
+                    <div class='media-left'>
+                        <figure class='image is-48x48'>
+                            <img class='is-rounded' src='../includes/resources/foodelicious.jpg' alt='foodelicious'>
+                        </figure>
+                    </div>
+                    <div class='media-content'>
+                        <p class='title is-4'>Asian Coleslaw</p>
+                        <p class='subtitle is-6'>foodelicious</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <a class='card' href='../food/tuna_noodle_casserole.html'>
+            <div class='card-image'>
+                <figure class='image is-square'>
+                    <img src='../includes/resources/tuna_noodle_casserole1.jpg' alt='tuna'>
+                </figure>
+            </div>
+            <div class='card-content'>
+                <div class='media'>
+                    <div class='media-left'>
+                        <figure class='image is-48x48'>
+                            <img class='is-rounded' src='../includes/resources/foodelicious.jpg' alt='foodelicious'>
+                        </figure>
+                    </div>
+                    <div class='media-content'>
+                        <p class='title is-4'>Tuna Casserole</p>
+                        <p class='subtitle is-6'>foodelicious</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <a class='card' href='../food/french_fries.html'>
+            <div class='card-image'>
+                <figure class='image is-square'>
+                    <img src='../includes/resources/french_fries4.jpg' alt='fries'>
+                </figure>
+            </div>
+            <div class='card-content'>
+                <div class='media'>
+                    <div class='media-left'>
+                        <figure class='image is-48x48'>
+                            <img class='is-rounded' src='../includes/resources/chefjohn.jpg' alt='chefjohn'>
+                        </figure>
+                    </div>
+                    <div class='media-content'>
+                        <p class='title is-4'>Air Fryer Fries</p>
+                        <p class='subtitle is-6'>chefjohn</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</main>
+
+<footer class='footer'>
+    <div class='content has-text-centered'>
+                <span class='icon is-large'>
+                    <a href='https://facebook.com/'><i class='fab fa-facebook fa-2x'></i></a>
+                </span>
+        <span class='icon is-large'>
+                    <a href='https://twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
+                </span>
+        <span class='icon is-large'>
+                    <a href='https://linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
+                </span>
+        <p>
+            <strong>ShefHub</strong> by The Team.<br>
+            &copy; Copyright <script>document.write(new Date().getFullYear().toString())</script>, The Team. All Rights Reserved.
+        </p>
+    </div>
+</footer>
+</body>
+</html>

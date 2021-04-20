@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <title>Free Recipes & More</title>
+    <link rel='icon' href='../includes/resources/icon.png'>
+
+    <link rel='stylesheet' href='../includes/bulma.css'>
+    <link rel='stylesheet' href='../includes/custom.css'>
+    <link rel='stylesheet' href='../includes/resources/fontawesome/css/all.css'>
+
+    <script src='../includes/jquery-3.6.0.js'></script>
+    <script src='../includes/script.js'></script>
+    <script src='../includes/createpost.js'></script>
+</head>
+
+<body>
+<header>
+    <nav class='navbar' role='navigation' aria-label='main navigation'>
+        <div class='navbar-brand'>
+            <a class='navbar-item' href='masterchef1001.html'>
+                <img src='../includes/resources/Logo.png' alt='brand'>
+            </a>
+
+            <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
+                <span aria-hidden='true'></span>
+                <span aria-hidden='true'></span>
+                <span aria-hidden='true'></span>
+            </a>
+        </div>
+
+        <div id='navbarBasicExample' class='navbar-menu'>
+            <div class='navbar-start'>
+                <a href='../newsfeed.html' class='navbar-item'>Home</a>
+
+                <a href='../about-v2.html' class='navbar-item'>About</a>
+
+                <a href='search.html' class='navbar-item'>Explore</a>
+            </div>
+
+            <div class='navbar-end'>
+                <div class='navbar-item has-dropdown is-hoverable'>
+                    <a class='navbar-link'>
+                        <img id='header-dp' src='../includes/resources/default_dp.jpg' alt='profile_picture'>
+                    </a>
+                    <div class='navbar-dropdown'>
+                        <a class='navbar-item' href='masterchef1001.html'>My Profile</a>
+                        <a class='navbar-item' href='../index.html'>Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class='is-fullhd fill page-height parallax vegetable-bg' id='create-post'>
+    <form class='container content box recipe-view' method='POST'>
+        <h1><label for='edit-name'>Recipe Name</label></h1>
+        <input class='input' type='text' id='edit-name' placeholder='Indicate name of recipe here'>
+
+        <h3>Images</h3>
+
+        <div id='upload-images'>
+            <div class='image-item' id='img-1'>
+                <div class="file is-info has-name">
+                    <label class="file-label">
+                        <input class="file-input" type="file" name="resume" alt='helo'>
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="fas fa-upload"></i>
+                            </span>
+                            <span class="file-label">Upload image</span>
+                        </span>
+                        <span class="file-name"></span>
+                    </label>
+                </div>
+                <button class='button is-danger is-light' onclick='removeField("img-1")'>Remove</button>
+            </div>
+        </div>
+
+        <button class='button is-primary is-light' onclick='addImgField()'>Add Image</button>
+
+        <h3><label for='edit-description'>Description</label></h3>
+        <textarea class='textarea has-fixed-size' placeholder='Place the description here' id='edit-description'></textarea>
+
+        <h3 class='title'>Ingredients</h3>
+        <ol class='content' id='edit-ingredients'>
+            <li id='ing-1'>
+                <div class='field is-horizontal'>
+                    <input class='input ing-qty' type='number' placeholder='Qty'>
+                    <input class='input ing-name' type='text' placeholder='Ingredient name'>
+                    <button class='button is-danger is-light' onclick='removeField("ing-1")'>Remove</button>
+                </div>
+            </li>
+        </ol>
+        <button class='button add-field is-primary is-light' onclick='addIngField()'>Add Ingredient</button>
+
+
+        <h3 class='title'>Directions</h3>
+        <ol class='content' id='edit-directions'>
+            <li id='dir-1'>
+                <div class='field is-horizontal'>
+                    <textarea class='textarea' placeholder='Place the steps here'></textarea>
+                    <button class='button is-danger is-light' onclick='removeField("dir-1")'>Remove</button>
+                </div>
+            </li>
+        </ol>
+        <button class='button add-field is-primary is-light' onclick='addDirField()'>Add Step</button>
+
+
+        <h3 class='title'>Information</h3>
+
+        <div class='field is-horizontal'>
+            <div class='field-label is-normal'>
+                <label class='label' for='servings'>Servings size</label>
+            </div>
+            <div class='field-body'>
+                <div class='control'>
+                    <input class='input' type='number' id='servings' placeholder='e.g. 8'>
+                </div>
+            </div>
+        </div>
+
+        <div class='field is-horizontal'>
+            <div class='field-label is-normal'>
+                <label class='label'>Preparation time</label>
+            </div>
+            <div class='field-body'>
+                <div class='control'>
+                    <input class='input' type='number' id='prep-hr' value='0' min='0'>
+                </div>
+                <label for='prep-hr'>hours</label>
+                <div class='control'>
+                    <input class='input' type='number' id='prep-min' value='0' min='0' max='59'>
+                </div>
+                <label for='prep-min'>minutes</label>
+            </div>
+        </div>
+
+        <div class='field is-horizontal'>
+            <div class='field-label is-normal'>
+                <label class='label'>Cooking time</label>
+            </div>
+            <div class='field-body'>
+                <div class='control'>
+                    <input class='input' type='number' id='cook-hr' value='0' min='0'>
+                </div>
+                <label for='cook-hr'>hours</label>
+                <div class='control'>
+                    <input class='input' type='number' id='cook-min' value='0' min='0' max='59'>
+                </div>
+                <label for='cook-min'>minutes</label>
+            </div>
+        </div>
+
+        <div class='field has-addons is-horizontal'>
+            <div class='field-label is-normal'>
+                <label class='label'>Total time</label>
+            </div>
+
+            <div class='field-body'>
+                <p id='total-hr'>0</p>
+                <label>hours</label>
+                <p id='total-min'>0</p>
+                <label>minutes</label>
+            </div>
+        </div>
+
+        <div class='field is-grouped is-grouped-right'>
+            <p class='control'>
+                <input class='button is-primary is-medium' type='submit'>
+            </p>
+            <p class='control'>
+                <a class='button is-light is-medium' href='masterchef1001.html'>
+                    Cancel
+                </a>
+            </p>
+        </div>
+    </form>
+</main>
+
+<footer class='footer'>
+    <div class='content has-text-centered'>
+                <span class='icon is-large'>
+                    <a href='https://facebook.com/'><i class='fab fa-facebook fa-2x'></i></a>
+                </span>
+        <span class='icon is-large'>
+                    <a href='https://twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
+                </span>
+        <span class='icon is-large'>
+                    <a href='https://linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
+                </span>
+        <p>
+            <strong>ShefHub</strong> by The Team.<br>
+            &copy; Copyright <script>document.write(new Date().getFullYear().toString())</script>, The Team. All Rights Reserved.
+        </p>
+    </div>
+</footer>
+</body>
+</html>

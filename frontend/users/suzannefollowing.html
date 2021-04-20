@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <title>Free Recipes & More</title>
+    <link rel='icon' href='../includes/resources/icon.png'>
+
+    <link rel='stylesheet' href='../includes/bulma.css'>
+    <link rel='stylesheet' href='../includes/custom.css'>
+    <link rel='stylesheet' href='../includes/profile.css'>
+    <link rel='stylesheet' href='../includes/resources/fontawesome/css/all.css'>
+
+    <script src='../includes/jquery-3.6.0.js'></script>
+    <script src='../includes/script.js'></script>
+    <script src='../includes/profile.js'></script>
+</head>
+
+<body>
+<header>
+    <nav class='navbar' role='navigation' aria-label='main navigation'>
+        <div class='navbar-brand'>
+            <a class='navbar-item' href='suzanne.html'>
+                <img src='../includes/resources/Logo.png' alt='brand'>
+            </a>
+
+            <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
+                <span aria-hidden='true'></span>
+                <span aria-hidden='true'></span>
+                <span aria-hidden='true'></span>
+            </a>
+        </div>
+
+        <div id='navbarBasicExample' class='navbar-menu'>
+            <div class='navbar-start'>
+                <a href='../newsfeed.html' class='navbar-item'>Home</a>
+
+                <a href='../about-v2.html' class='navbar-item'>About</a>
+
+                <a href='search.html' class='navbar-item'>Explore</a>
+            </div>
+
+            <div class='navbar-end'>
+                <div class='navbar-item has-dropdown is-hoverable'>
+                    <a class='navbar-link'>
+                        <img id='header-dp' src='../includes/resources/suzanne.jpg' alt='profile_picture'>
+                    </a>
+                    <div class='navbar-dropdown'>
+                        <a class='navbar-item' href='suzanne.html'>My Profile</a>
+                        <a class='navbar-item' href='../index.html'>Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class='is-fullhd fill page-height parallax vegetable-bg flex-col'>
+    <div class='tabs is-centered is-boxed is-large profile-tab'>
+        <ul>
+            <li>
+                <a href='suzanne.html'>
+                    <span class='icon is-small'><i class='fas fa-user' aria-hidden='true'></i></span>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li>
+                <a href='suzanneposts.html'>
+                    <span class='icon is-small'><i class='fas fa-hamburger' aria-hidden='true'></i></span>
+                    <span>My Recipes</span>
+                </a>
+            </li>
+            <li>
+                <a href='suzannelikes.html'>
+                    <span class='icon is-small'><i class='fas fa-heart' aria-hidden='true'></i></span>
+                    <span>Liked Recipes</span>
+                </a>
+            </li>
+            <li>
+                <a href='suzannefollowers.html'>
+                    <span class='icon is-small'><i class='fas fa-users' aria-hidden='true'></i></span>
+                    <span>Followers</span>
+                </a>
+            </li>
+            <li class='is-active'>
+                <a>
+                    <span class='icon is-small'><i class='fas fa-user-plus' aria-hidden='true'></i></span>
+                    <span>Following</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class='container content box profile-box people-display'>
+        <div class='container search-bar-container'>
+            <p class='control has-icons-left'>
+                <input class='input is-rounded' type='text' aria-label='search input' aria-expanded='false'
+                       placeholder='Search from following' id='folower-search'>
+                <span class='icon is-small is-left'>
+                    <i class='fas fa-search'></i>
+                </span>
+            </p>
+        </div>
+        <div class='container tile-root'>
+        <!--        If friends more than what can fit, add ".scroll" class -->
+            <div class='tile is-ancestor'>
+                <div class='tile is-parent is-4'>
+                    <a class='tile is-child box' href='masterchef1001view.html'>
+                        <img src='../includes/resources/default_dp.jpg' alt='default'>
+                        <p class='subtitle'>masterchef1001</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <section class='section post-navigation'>
+            <nav class='pagination is-centered is-small' role='navigation' aria-label='pagination'>
+                <a class='pagination-previous' disabled='true'>＜</a>
+                <a class='pagination-next' disabled='true'>＞</a>
+                <ul class='pagination-list'>
+                    <li><a class='pagination-link is-current' aria-label='Goto page 1'>1</a></li>
+                </ul>
+            </nav>
+        </section>
+    </div>
+
+</main>
+
+<footer class='footer'>
+    <div class='content has-text-centered'>
+                <span class='icon is-large'>
+                    <a href='https://facebook.com/'><i class='fab fa-facebook fa-2x'></i></a>
+                </span>
+        <span class='icon is-large'>
+                    <a href='https://twitter.com'><i class='fab fa-twitter fa-2x'></i></a>
+                </span>
+        <span class='icon is-large'>
+                    <a href='https://linkedin.com'><i class='fab fa-linkedin fa-2x'></i></a>
+                </span>
+        <p>
+            <strong>ShefHub</strong> by The Team.<br>
+            &copy; Copyright <script>document.write(new Date().getFullYear().toString())</script>, The Team. All Rights Reserved.
+        </p>
+    </div>
+</footer>
+</body>
+</html>
