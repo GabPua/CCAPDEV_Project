@@ -9,10 +9,12 @@ class ShefHubRoute implements \generic\Route
 
     public function getRoutes()
     {
+        $homeController = new \shefhub\controller\HomeController();
+
         return [
             '' => [
                 'GET' => [
-                    'controller' => 'shefhub',
+                    'controller' => $homeController,
                     'action' => 'home'
                 ]
             ]
