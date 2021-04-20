@@ -13,4 +13,11 @@ class HomeController
         ];
     }
 
+    public function about() {
+        return [
+            'template' => 'about.html.php',
+            'title' => 'ShefHub | Free Recipes & More'
+        ];
+    }
+
 }
