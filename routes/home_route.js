@@ -9,7 +9,13 @@ router.get('/', function (req, res) {
 });
 
 router.get('/about', function(req, res) {
-    res.render('', {
+    res.render('about', {
+        title: homeTitle
+    })
+})
+
+router.get('/explore', function(req, res) {
+    res.render('explore', {
         title: homeTitle
     })
 })
