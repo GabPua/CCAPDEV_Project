@@ -1,0 +1,30 @@
+{
+  "name": "shefhub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "supervisor public/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaredblase/ShefHub.git"
+  },
+  "keywords": [
+    "recipe app",
+    "web development"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jaredblase/ShefHub/issues"
+  },
+  "homepage": "https://github.com/jaredblase/ShefHub#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "hbs": "^4.1.2"
+  }
+}
