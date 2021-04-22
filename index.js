@@ -1,14 +1,11 @@
 const dotenv = require('dotenv');
 const express = require('express');
-const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 
 // initialize express
 const app = express();
 app.engine('hbs', exphbs({extname: '.hbs'}));
 app.set('view engine', 'hbs');
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
 
 // configure server
 dotenv.config();
