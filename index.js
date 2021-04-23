@@ -1,16 +1,21 @@
 const dotenv = require('dotenv');
 const express = require('express');
-const exphbs = require('express-handlebars');
+const hbs = require('express-handlebars');
+const mongoose = require('mongoose');
+
+// get environment variables
+dotenv.config();
+const port = process.env.PORT || 3000;
+const hostname = process.env.HOSTNAME || 'localhost';
+
+// set connection with db
+const db = require('./server');
+
 
 // initialize express
 const app = express();
-app.engine('hbs', exphbs({extname: '.hbs'}));
+app.engine('hbs', hbs({extname: '.hbs'}));
 app.set('view engine', 'hbs');
-
-// configure server
-dotenv.config();
-const port = process.env.PORT;
-const hostname = process.env.HOSTNAME;
 
 // routes
 const home_route = require('./routes/home_route');
@@ -18,11 +23,13 @@ const home_route = require('./routes/home_route');
 app.use('/public', express.static('public'));
 app.use('/', home_route);
 
-app.use(function (req, res, next) {
+// Error 404: File not found
+app.use(function (req, res) {
     res.status(404).send('File not in server!');
 });
 
-app.listen(port, hostname, function (req, res) {
+// initialize server
+app.listen(port, hostname,() => {
     console.log('Server running at: ');
-    console.log('http://' + hostname + ':' + port);
+    console.log('http://' + hostname + ':' + port + '\n');
 });
