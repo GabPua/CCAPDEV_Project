@@ -5,20 +5,21 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <title>{{{title}}}</title>
-    <link rel='icon' href='../../public/img/icon.png'>
+    <link rel='icon' href='public/img/icon.png'>
 
-    <link rel='stylesheet' href='../../public/css/bulma.css'>
-    <link rel='stylesheet' href='../../public/css/custom.css'>
-    <link rel='stylesheet' href='../../public/css/fontawesome/css/all.css'>
+    <link rel='stylesheet' href='public/css/bulma.css'>
+    <link rel='stylesheet' href='public/css/custom.css'>
+    <link rel='stylesheet' href='public/css/fontawesome/css/all.css'>
 
-    <script src='../../public/js/jquery-3.6.0.js'></script>
+    <script src='public/js/jquery-3.6.0.js'></script>
+    <script src='public/js/script.js'></script>
 </head>
 <body>
 <header>
     <nav class='navbar' role='navigation' aria-label='main navigation'>
         <div class='navbar-brand'>
             <a class='navbar-item' href='/'>
-                <img src='../../public/img/Logo.png' alt='brand'>
+                <img src='public/img/Logo.png' alt='brand'>
             </a>
 
             <a role='button' class='navbar-burger' aria-label='menu' aria-expanded='false' data-target='navbarBasicExample'>
@@ -33,17 +34,40 @@
                 <a href='/' class='navbar-item'>Home</a>
 
                 <a href='/about' class='navbar-item'>About</a>
-
-                <a href='/explore' class='navbar-item'>Explore</a>
+                {{#if session.name}}
+                    <a href='/search' class='navbar-item'>Explore</a>
+                {{else}}
+                    <a href='/explore' class='navbar-item'>Explore</a>
+                {{/if}}
             </div>
 
             <div class='navbar-end'>
-                <div class='navbar-item'>
-                    <div class='buttons'>
-                        <a class='button is-primary' href='signup.html'><strong>Sign up</strong></a>
-                        <a class='button is-light' href='login.html'>Log in</a>
+                {{#if session.name}}
+                    <div class='navbar-item has-dropdown is-hoverable'>
+                        <a class='navbar-link'>
+                            <img id='header-dp' src='public/img/default_dp.jpg' alt='profile_picture'>
+                        </a>
+                        <div class='navbar-dropdown'>
+                            <a class='navbar-item' href='/profile'>My Profile</a>
+                            <a class='navbar-item' href='/logout'>Log out</a>
+                        </div>
                     </div>
-                </div>
+                {{else}}
+                    <div class='navbar-item'>
+                        <div class='buttons'>
+                            {{#unless signup}}
+                                <a class='button is-primary' href='/signup'><strong>Sign up</strong></a>
+                            {{/unless}}
+                            {{#unless login}}
+                                {{#unless signup}}
+                                    <a class='button is-light' href='/login'>Log in</a>
+                                {{else}}
+                                    <a class='button is-primary' href='/login'><strong>Log in</strong></a>
+                                {{/unless}}
+                            {{/unless}}
+                        </div>
+                    </div>
+                {{/if}}
             </div>
         </div>
     </nav>
