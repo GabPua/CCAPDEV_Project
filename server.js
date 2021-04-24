@@ -3,7 +3,7 @@ const express = require('express');
 const hbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const session = require('express-session');
-const cookieParser = require('cookie-parser');
+const mongoStore = require('connect-mongodb-session')(session);
 
 // get environment variables
 dotenv.config();
@@ -25,12 +25,44 @@ mongoose.connect(dbUri, {useNewUrlParser: true, useUnifiedTopology: true})
 
 const db = mongoose.connection;
 
-// initialize express
+// storage for user sessions
+const store = new mongoStore({
+    uri: dbUri,
+    databaseName: 'shefhub',
+    collection: 'session'
+});
+
+store.on('error', (error) => {
+    console.log(error.message);
+});
+
+// initialize and configure express
 const app = express();
-app.use(cookieParser());
-app.use(session({secret: 'hushPuppy', reSave: true}));
 app.engine('hbs', hbs({extname: '.hbs'}));
 app.set('view engine', 'hbs');
+
+// configure user session
+app.use(session({
+    secret: 'hushPuppy',
+    resave: false,
+    saveUninitialized: false,
+    rolling: true,      // refresh cookie age
+    cookie: {
+        maxAge: 12096e5 // two weeks
+    },
+    store: store
+}));
+
+// make session visible to all hbs pages
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+});
+
+// instantiate models
+// const userModel = require('./models/user');
+// const recipeModel = require('./models/recipe');
+// const commentModel = require('./models/comment');
 
 // routes
 const home_route = require('./routes/home_route');
@@ -39,7 +71,7 @@ app.use('/public', express.static('public'));
 app.use('/', home_route);
 
 // Error 404: File not found
-app.use(function (req, res) {
+app.use((req, res) => {
     res.status(404).send('File not in server!');
 });
 
