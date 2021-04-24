@@ -3,6 +3,7 @@ const express = require('express');
 const hbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const mongoStore = require('connect-mongodb-session')(session);
 
 // get environment variables
@@ -40,9 +41,11 @@ store.on('error', (error) => {
 const app = express();
 app.engine('hbs', hbs({extname: '.hbs'}));
 app.set('view engine', 'hbs');
+app.use(cookieParser());
 
 // configure user session
 app.use(session({
+    key: 'user_sid',
     secret: 'hushPuppy',
     resave: false,
     saveUninitialized: false,
@@ -53,8 +56,8 @@ app.use(session({
     store: store
 }));
 
-// make session visible to all hbs pages
 app.use((req, res, next) => {
+    // make session visible to all hbs pages
     res.locals.session = req.session;
     next();
 });
