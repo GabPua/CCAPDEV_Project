@@ -1,0 +1,74 @@
+<script src='public/js/signup.js'></script>
+
+<main class='is-fullhd fill page-height parallax vegetable-bg'>
+    <div class='container content box' id='signup-box'>
+        <h1 class='title'>Sign Up</h1>
+        <h5 class='subtitle'>Join our community today!</h5>
+
+        <form method='POST' id='signup-form' action='../frontend/users/masterchef1001.html'>
+
+            <div class='field'>
+                <label class='label' for='email'>Email</label>
+                <div class='control has-icons-left has-icons-right'>
+                    <input class='input' type='email' placeholder='Email' name='email' id='email'>
+                    <span class='icon is-small is-left'>
+                                    <i class='fas fa-envelope'></i>
+                                </span>
+                    <span class='icon is-small is-right'>
+                                    <i id='email-help-icon'></i>
+                                </span>
+                </div>
+                <p class='help' id='email-help'></p>
+            </div>
+
+            <div class='field'>
+                <label class='label' for='name'>Username</label>
+                <div class='control has-icons-left has-icons-right'>
+                    <input class='input' type='text' placeholder='Username' name='name' id='name'>
+                    <span class='icon is-small is-left'>
+                                <i class='fas fa-user'></i>
+                          </span>
+                    <span class='icon is-small is-right'>
+                                <i id='name-help-icon'></i>
+                          </span>
+                </div>
+                <p class='help' id='name-help'></p>
+            </div>
+
+            <div class='field'>
+                <label class='label' for='password'>Password</label>
+                <div class='control has-icons-left has-icons-right'>
+                    <input class='input' type='password' placeholder='Password' value='' name='password' id='password'>
+                    <span class='icon is-small is-left'>
+                                    <i class='fas fa-lock'></i>
+                                </span>
+                    <span class='icon is-small is-right'>
+                                    <i id='pw-help-icon'></i>
+                                </span>
+                </div>
+                <p class='help' id='pw-help'></p>
+            </div>
+
+            <div class='field'>
+                <div class='control'>
+                    <label class='checkbox'>
+                        <input type='checkbox'>
+                        I agree to the <a href='#'>terms and conditions</a>
+                    </label>
+                </div>
+                <p class='help is-danger' id='tandc-help'></p>
+            </div>
+
+            <div class='field is-grouped'>
+                <div class='control'>
+                    <input type='submit' class='button is-link' id='submit-signup'>
+                </div>
+                <div class='control'>
+                    <button class='button is-link is-light' id='cancel-signup'>Cancel</button>
+                </div>
+            </div>
+        </form>
+        <br>
+        <p>Already Registered? <a href='views/login.html'>Log in</a></p>
+    </div>
+</main>
