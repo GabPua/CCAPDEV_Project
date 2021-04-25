@@ -11,11 +11,15 @@ function isValidPassword(pw) {
 function isValidUsername(name) {
     if (name === '') {
         return 'Cannot be left blank';
-    } else if (name == null) { // TODO: Additional check stuff
-        return 'Cannot be left blank';
-    } else {
-        return '';
     }
+    
+    $.get('/signup/getCheckUsername', {_id: name}, function (result) {
+        if (result._id === name) {
+            return 'Username taken';
+        } else {
+            return '';
+        }
+    });
 }
 
 function isValidEmail(email) {

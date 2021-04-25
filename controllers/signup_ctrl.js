@@ -28,6 +28,8 @@ function isValidEmail(email) {
     }
 }
 
+const db = require('../models/db');
+const User = require('../models/user');
 
 const signup_ctrl = {
     getForm: (req, res) => {
@@ -45,6 +47,16 @@ const signup_ctrl = {
         }
         return res.redirect('/signup');
     },
+
+    getCheckUsername: (req, res) => {
+        let name = req.query._id;
+        console.log(name);
+
+        db.findOne(User, {_id: name}, '_id', function (result) {
+            console.log(result._id);
+            res.send(result);
+        });
+    }
 };
 
 module.exports = signup_ctrl;
