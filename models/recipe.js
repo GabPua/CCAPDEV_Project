@@ -14,4 +14,4 @@ let recipeSchema = new mongoose.Schema({
     dislikes: {type: Array, require: true}
 });
 
-module.exports = mongoose.model('Recipe', recipeSchema);
+module.exports = mongoose.model('Recipe', recipeSchema, 'recipe');

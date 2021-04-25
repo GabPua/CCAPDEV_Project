@@ -8,16 +8,6 @@ function isValidPassword(pw) {
     }
 }
 
-function isValidUsername(name) {
-    if (name === '') {
-        return 'Cannot be left blank';
-    } else if (name == null) { // TODO: Additional check stuff
-        return 'Cannot be left blank';
-    } else {
-        return '';
-    }
-}
-
 function isValidEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     
