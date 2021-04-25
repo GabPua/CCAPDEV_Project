@@ -3,8 +3,8 @@ const router = express.Router();
 const homeTitle = 'ShefHub | Free Recipes & More';
 
 function verifyUser (req, res) {
-    console.log(req.session);
-    console.log(req.cookies);
+    // console.log(req.session);
+    // console.log(req.cookies);
     if (!(req.session.name && req.cookies.user_sid)) {
         res.redirect('/');
     }
@@ -64,15 +64,32 @@ router.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
-router.get('/:view', (req, res, next) => {
+router.get('/newsfeed', function(req, res) {
     verifyUser(req, res);
-    try {
-        res.render(req.params.view, {
-            title: "HELLO"
-        });
-    } catch (err) {
-        next();
-    }
+    res.render('newsfeed', {
+        title: homeTitle
+    });
+});
+
+router.get('/create', function(req, res) {
+    verifyUser(req, res);
+    res.render('create', {
+        title: 'Create a new recipe'
+    });
+});
+
+router.get('/:view/?', (req, res, next) => {
+    verifyUser(req, res);
+    res.render('profile', {
+        title: "YOUR PROFILE", // TODO: name?
+        template: req.params.view
+    },
+    (err, html) => {
+        if (err) {
+            res.status(404).send('File not in server!');
+        }
+        res.send(html);
+    });
 });
 
 module.exports = router;
