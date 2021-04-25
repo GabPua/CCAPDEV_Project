@@ -2,31 +2,31 @@
     <div class='tabs is-centered is-boxed is-large profile-tab'>
         <ul>
             <li class='is-active'>
-                <a>
+                <a href='/profile'>
                     <span class='icon is-small'><i class='fas fa-user' aria-hidden='true'></i></span>
                     <span>Profile</span>
                 </a>
             </li>
             <li>
-                <a href='chefjohnposts.html'>
+                <a href='/posts'>
                     <span class='icon is-small'><i class='fas fa-hamburger' aria-hidden='true'></i></span>
                     <span>My Recipes</span>
                 </a>
             </li>
             <li>
-                <a href='chefjohnlikes.html'>
+                <a href='/likes'>
                     <span class='icon is-small'><i class='fas fa-heart' aria-hidden='true'></i></span>
                     <span>Liked Recipes</span>
                 </a>
             </li>
             <li>
-                <a href='chefjohnfollowers.html'>
+                <a href='/followers'>
                     <span class='icon is-small'><i class='fas fa-users' aria-hidden='true'></i></span>
                     <span>Followers</span>
                 </a>
             </li>
             <li>
-                <a href='chefjohnfollowing.html'>
+                <a href='/following'>
                     <span class='icon is-small'><i class='fas fa-user-plus' aria-hidden='true'></i></span>
                     <span>Following</span>
                 </a>
@@ -34,145 +34,5 @@
         </ul>
     </div>
 
-    <div class='container content box profile-box' id='profile'>
-
-        <form method='POST' id='profile-form' action='chefjohn.html'>
-            <div class='columns'>
-
-                <div class='column is-one-quarter'>
-                    <img class='profile-picture center' src='../includes/resources/chefjohn.jpg' alt='profile_picture'>
-                    <div class='file is-small is-centered'>
-                        <label class='file-label'>
-                            <input class='file-input' type='file'>
-                            <span class='file-cta'>
-                                    <span class='file-icon'>
-                                        <i class='fas fa-upload'></i>
-                                    </span>
-                                    <span class='file-label'>
-                                        Choose a profile picture
-                                    </span>
-                                </span>
-                        </label>
-                    </div>
-
-                    <div class='icon-group'>
-
-                        <div class='icon-group-item'>
-                            <i class='fas fa-users fa-lg fa-fw' title='Followers'></i>
-                            <span id='follower-count'>3</span>
-                        </div>
-                        <div class='icon-group-item'>
-                            <i class='fas fa-user-plus fa-lg fa-fw' title='Following'></i>
-                            4
-                        </div>
-                        <div class='icon-group-item'>
-                            <i class='fas fa-clipboard-list fa-lg fa-fw' title='Recipes'></i>
-                            2
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class='column'>
-                    <!-- Inner columns -->
-                    <div class='columns'>
-                        <div class='column'>
-
-                            <fieldset disabled>
-                                <div class='field'>
-                                    <label class='label' for='name'>Username</label>
-                                    <div class='control has-icons-left has-icons-right'>
-                                        <input class='input' type='text' name='name' value='chefjohn' id='name'>
-                                        <span class='icon is-small is-left'>
-                                            <i class='fas fa-user'></i>
-                                        </span>
-                                    </div>
-                                    <p class='help' id='name-help'></p>
-                                </div>
-                            </fieldset>
-
-                            <div class='field'>
-                                <label class='label' for='email'>Email</label>
-                                <div class='control has-icons-left has-icons-right'>
-                                    <input class='input' type='email' placeholder='Email'
-                                           value='chefjohn@allrecipes.com' name='email' id='email'>
-                                    <span class='icon is-small is-left'>
-                                                <i class='fas fa-envelope'></i>
-                                            </span>
-                                    <span class='icon is-small is-right'>
-                                                <i id='email-help-icon'></i>
-                                            </span>
-                                </div>
-                                <p class='help' id='email-help'></p>
-                            </div>
-                        </div>
-
-                        <div class='column'>
-
-                            <div class='field'>
-                                <label class='label' for='password'>Password</label>
-                                <div class='control has-icons-left has-icons-right'>
-                                    <input class='input' type='password' placeholder='Password' value='Hello1234'
-                                           name='password' id='password'>
-                                    <span class='icon is-small is-left'>
-                                            <i class='fas fa-lock'></i>
-                                        </span>
-                                    <span class='icon is-small is-right'>
-                                            <i id='pw-help-icon'></i>
-                                        </span>
-                                </div>
-                                <p class='help' id='pw-help'></p>
-                            </div>
-
-                            <div class='field'>
-                                <label class='label' for='profession'>Profession in Cooking</label>
-                                <div class='control has-icons-left'>
-                                    <input class='input' type='text' placeholder='(Optional)' value='Profession Chef'
-                                           name='profession' id='profession'>
-                                    <span class='icon is-small is-left'>
-                                            <i class='fas fa-briefcase'></i>
-                                        </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class='field'>
-                        <label class='label' for='workplace'>Workplace</label>
-                        <div class='control has-icons-left has-icons-right'>
-                            <input class='input' type='text' placeholder='(Optional)' name='workplace' id='workplace'>
-                            <span class='icon is-small is-left'>
-                                    <i class='fas fa-building'></i>
-                                </span>
-                            <p class='help'></p>
-                        </div>
-                    </div>
-
-                    <div class='field'>
-                        <label class='label' for='desc'>Short Description</label>
-                        <div class='field-body'>
-                            <div class='field'>
-                                <div class='control'>
-                                        <textarea class='textarea' placeholder='(Optional)' id='desc'>I received my culinary degree from Paul Smith's College, NY, in 1983. After 15 plus years in the food industry, I was hired as a Chef Instructor at the prestigious California Culinary Academy. After five successful years of teaching, I left to follow my dream of teaching a larger audience online.
-
-6 years later, I run the multiple award-winning blog, Food Wishes, which has become one of the most visited video recipe sites online, and is home to over 650 original recipe videos.</textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Buttons -->
-                    <div class='field is-grouped is-grouped-right form-buttons'>
-                        <div class='control'>
-                            <input type='submit' class='button is-link' id='submit-edit-profile' value='Update Profile'
-                                   disabled>
-                        </div>
-                        <div class='control'>
-                            <button class='button is-link is-light' id='cancel-edit-profile'>Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
+    {{> (lookup. 'template') }}
 </main>
