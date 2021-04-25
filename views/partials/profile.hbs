@@ -1,21 +1,21 @@
 <div class='container content box profile-box' id='profile'>
 
-        <form method='POST' id='profile-form' action='chefjohn.html'>
+        <form method='POST' id='profile-form' action='/profile'>
             <div class='columns'>
 
                 <div class='column is-one-quarter'>
-                    <img class='profile-picture center' src='../includes/resources/chefjohn.jpg' alt='profile_picture'>
+                    <img class='profile-picture center' src='/public/img/chefjohn.jpg' alt='profile_picture'>
                     <div class='file is-small is-centered'>
                         <label class='file-label'>
                             <input class='file-input' type='file'>
                             <span class='file-cta'>
-                                    <span class='file-icon'>
-                                        <i class='fas fa-upload'></i>
-                                    </span>
-                                    <span class='file-label'>
-                                        Choose a profile picture
-                                    </span>
+                                <span class='file-icon'>
+                                    <i class='fas fa-upload'></i>
                                 </span>
+                                <span class='file-label'>
+                                    Choose a profile picture
+                                </span>
+                            </span>
                         </label>
                     </div>
 
@@ -23,15 +23,15 @@
 
                         <div class='icon-group-item'>
                             <i class='fas fa-users fa-lg fa-fw' title='Followers'></i>
-                            <span id='follower-count'>3</span>
+                            <span id='follower-count'>{{user.followers.length}}</span>
                         </div>
                         <div class='icon-group-item'>
                             <i class='fas fa-user-plus fa-lg fa-fw' title='Following'></i>
-                            4
+                            {{user.following.length}}
                         </div>
                         <div class='icon-group-item'>
                             <i class='fas fa-clipboard-list fa-lg fa-fw' title='Recipes'></i>
-                            2
+                            {{post}} <!-- TODO: complete this -->
                         </div>
 
                     </div>
@@ -46,7 +46,7 @@
                                 <div class='field'>
                                     <label class='label' for='name'>Username</label>
                                     <div class='control has-icons-left has-icons-right'>
-                                        <input class='input' type='text' name='name' value='chefjohn' id='name'>
+                                        <input class='input' type='text' name='name' value='{{user.name}}' id='name'>
                                         <span class='icon is-small is-left'>
                                             <i class='fas fa-user'></i>
                                         </span>
@@ -76,7 +76,7 @@
                             <div class='field'>
                                 <label class='label' for='password'>Password</label>
                                 <div class='control has-icons-left has-icons-right'>
-                                    <input class='input' type='password' placeholder='Password' value='Hello1234'
+                                    <input class='input' type='password' placeholder='Password' value='{{user.password}}'> <!-- TODO: Complete this -->
                                            name='password' id='password'>
                                     <span class='icon is-small is-left'>
                                             <i class='fas fa-lock'></i>
@@ -91,7 +91,7 @@
                             <div class='field'>
                                 <label class='label' for='profession'>Profession in Cooking</label>
                                 <div class='control has-icons-left'>
-                                    <input class='input' type='text' placeholder='(Optional)' value='Profession Chef'
+                                    <input class='input' type='text' placeholder='(Optional)' value='{{user.profession}}'
                                            name='profession' id='profession'>
                                     <span class='icon is-small is-left'>
                                             <i class='fas fa-briefcase'></i>
@@ -104,7 +104,7 @@
                     <div class='field'>
                         <label class='label' for='workplace'>Workplace</label>
                         <div class='control has-icons-left has-icons-right'>
-                            <input class='input' type='text' placeholder='(Optional)' name='workplace' id='workplace'>
+                            <input class='input' type='text' placeholder='(Optional)' name='workplace' id='workplace' value='{{user.workplace}}'>
                             <span class='icon is-small is-left'>
                                     <i class='fas fa-building'></i>
                                 </span>
@@ -117,9 +117,7 @@
                         <div class='field-body'>
                             <div class='field'>
                                 <div class='control'>
-                                        <textarea class='textarea' placeholder='(Optional)' id='desc'>I received my culinary degree from Paul Smith's College, NY, in 1983. After 15 plus years in the food industry, I was hired as a Chef Instructor at the prestigious California Culinary Academy. After five successful years of teaching, I left to follow my dream of teaching a larger audience online.
-
-6 years later, I run the multiple award-winning blog, Food Wishes, which has become one of the most visited video recipe sites online, and is home to over 650 original recipe videos.</textarea>
+                                    <textarea class='textarea' placeholder='(Optional)' id='desc'>{{user.desc}}</textarea>
                                 </div>
                             </div>
                         </div>
