@@ -37,17 +37,6 @@ router.get('/explore', function(req, res) {
     });
 });
 
-router.route('/signup')
-    .get((req, res) => {
-        res.render('signup', {
-            title: 'Sign up @ ShefHub',
-            signup: true
-        });
-    })
-    .post((req, res) => {
-        // TODO: registration
-    });
-
 router.get('/login', function(req, res) {
     res.render('login', {
         title: 'Log in @ ShefHub',

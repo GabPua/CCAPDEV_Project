@@ -62,6 +62,9 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.urlencoded());
+app.use(express.json());
+
 // instantiate models
 // const userModel = require('./models/user');
 // const recipeModel = require('./models/recipe');
@@ -69,8 +72,10 @@ app.use((req, res, next) => {
 
 // routes
 const home_route = require('./routes/home_route');
+const signup_route = require('./routes/signup_route');
 
 app.use('/public', express.static('public'));
+app.use('/signup', signup_route);
 app.use('/', home_route);
 
 // Error 404: File not found

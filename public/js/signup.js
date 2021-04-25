@@ -21,20 +21,8 @@ $(document).ready(function () {
     });
 
     $('#submit-signup').on('click', function(event) {
-        event.preventDefault();
-    
-        email.trigger('focusout');
-        name.trigger('focusout');
-        pw.trigger('focusout');
-
         if (!tandc.is(':checked')) {
             tandc_help.html('Must agree with terms and conditions first.');
-        }
-
-        let valid = email.hasClass('is-success') && name.hasClass('is-success') && pw.hasClass('is-success') && tandc.is(':checked');
-
-        if (valid) {
-            $('#signup-form').submit();
         }
     });
 
@@ -70,5 +58,5 @@ $(document).ready(function () {
 
     tandc.on('click', function() {
         tandc_help.html('');
-    })
+    });
 });
