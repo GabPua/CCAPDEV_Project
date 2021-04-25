@@ -4,6 +4,7 @@ const hbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const db = require('./models/db');
 const mongoStore = require('connect-mongodb-session')(session);
 
 // get environment variables
@@ -12,19 +13,7 @@ const port = process.env.PORT || 3000;
 const hostname = process.env.HOSTNAME || 'localhost';
 const dbUri = process.env.SERVER_DB_URI;
 
-// setup connection with mongo db
-mongoose.connect(dbUri, {useNewUrlParser: true, useUnifiedTopology: true})
-    .then(
-        () => {
-            console.log('Connection with mongodb established!');
-            mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
-        },
-        (err) => {
-            console.log('Error with mongodb connection: ' + err.message);
-        }
-    );
-
-const db = mongoose.connection;
+db.connect(dbUri);
 
 // storage for user sessions
 const store = new mongoStore({
