@@ -2,6 +2,11 @@ const page_title = 'ShefHub | Free Recipes & More';
 
 const home_controller = {
     getIndex: (req, res) => {
+        req.session.name = 'MasterChef1001';
+        if (req.session.name && req.cookies.user_sid) {
+            res.redirect('/newsfeed');
+        }
+
         res.render('home', {
             title: page_title
         });
