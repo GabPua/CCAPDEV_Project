@@ -34,7 +34,12 @@ const user_controller = {
         res.render('profile', {
                 title: "YOUR PROFILE", // TODO: name?
                 user: req.session.user,
-                template: req.params.view
+                template: req.params.view,
+                helpers: {
+                    ifEquals: (arg1, arg2, options) => {
+                        return arg1 === arg2 ? options.fn(this) : options.inverse(this);
+                    }
+                }
             },
             (err, html) => {
                 if (err) {

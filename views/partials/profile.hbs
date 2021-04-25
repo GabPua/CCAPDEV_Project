@@ -59,7 +59,7 @@
                                 <label class='label' for='email'>Email</label>
                                 <div class='control has-icons-left has-icons-right'>
                                     <input class='input' type='email' placeholder='Email'
-                                           value='chefjohn@allrecipes.com' name='email' id='email'>
+                                           value='{{user.email}}' name='email' id='email'>
                                     <span class='icon is-small is-left'>
                                                 <i class='fas fa-envelope'></i>
                                             </span>
@@ -76,8 +76,8 @@
                             <div class='field'>
                                 <label class='label' for='password'>Password</label>
                                 <div class='control has-icons-left has-icons-right'>
-                                    <input class='input' type='password' placeholder='Password' value='{{user.password}}'> <!-- TODO: Complete this -->
-                                           name='password' id='password'>
+                                    <!-- TODO: Complete this -->
+                                    <input class='input' type='password' placeholder='Password' value='{{user.password}}' name='password' id='password'>
                                     <span class='icon is-small is-left'>
                                             <i class='fas fa-lock'></i>
                                         </span>
