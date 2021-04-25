@@ -8,20 +8,6 @@ function isValidPassword(pw) {
     }
 }
 
-function isValidUsername(name) {
-    if (name === '') {
-        return 'Cannot be left blank';
-    }
-    
-    $.get('/signup/getCheckUsername', {_id: name}, function (result) {
-        if (result._id === name) {
-            return 'Username taken';
-        } else {
-            return '';
-        }
-    });
-}
-
 function isValidEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     

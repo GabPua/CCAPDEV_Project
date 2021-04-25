@@ -37,13 +37,23 @@ $(document).ready(function () {
     });
 
     name.on('focusout', function() {
-        let help_text = isValidUsername(name.val());
+        let username = name.val().toLowerCase();
+        
+        $.get('/signup/getCheckUsername', {_id: username}, function (result) {
+            let help_text = '';
 
-        if (help_text === '') {
-            updateInputFields(true, name, name_help, name_help_icon, 'The username is available');
-        } else {
-            updateInputFields(false, name, name_help, name_help_icon, help_text);
-        }
+            if (username === '') {
+                help_text = 'Cannot be left blank';
+            } else if (result._id === username) {
+                help_text = 'Username taken';
+            }
+
+            if (help_text === '') {
+                updateInputFields(true, name, name_help, name_help_icon, 'The username is available');
+            } else {
+                updateInputFields(false, name, name_help, name_help_icon, help_text);
+            }
+        });
     });
 
     pw.on('focusout', function() {
