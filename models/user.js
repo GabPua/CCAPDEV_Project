@@ -8,8 +8,8 @@ let userSchema = new mongoose.Schema({
     workplace: {type: String, require: false},
     desc: {type: String, require: false},
     // TODO: profile picture
-    followers: {type: Array, require:true},
+    followers: {type: Array, require: true},
     following: {type: Array, require: true}
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema, 'user');

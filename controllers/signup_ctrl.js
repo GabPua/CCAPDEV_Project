@@ -32,20 +32,35 @@ const db = require('../models/db');
 const User = require('../models/user');
 
 const signup_ctrl = {
-    getForm: (req, res) => {
+    getSignup: (req, res) => {
         res.render('signup', {
             title: 'Sign up @ ShefHub',
             signup: true
         });
     },
 
-    postForm: (req, res) => {
+    postSignup: (req, res) => {
         const { email, name, password, tandc } = req.body;
 
-        if (isValidEmail(email) && isValidUsername(name) && isValidPassword(password) && tandc === 'on') {
-            return res.redirect('/newsfeed');
-        }
-        return res.redirect('/signup');
+        let user = {
+            _id: name,
+            email: email,
+            password: password,
+            followers: [],
+            following: []
+        };
+
+        db.insertOne(User, user, function (flag) {
+            if (flag) {
+                res.redirect('/newsfeed');
+            }
+        })
+
+        // if (isValidEmail(email) && isValidUsername(name) && isValidPassword(password) && tandc === 'on') {
+
+        //     return res.redirect('/newsfeed');
+        // }
+        // return res.redirect('/signup');
     },
 
     getCheckUsername: (req, res) => {
@@ -53,7 +68,7 @@ const signup_ctrl = {
         console.log(name);
 
         db.findOne(User, {_id: name}, '_id', function (result) {
-            console.log(result._id);
+            console.log(result);
             res.send(result);
         });
     }
