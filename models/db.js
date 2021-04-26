@@ -10,7 +10,7 @@ const database = {
     connect: function (uri) {
         mongoose.connect(uri, options, function (error) {
             if (error) throw error;
-            console.log('Connected to: ' + uri);
+            console.log('Established connection with mongodb!');
         });
     },
 
@@ -22,7 +22,7 @@ const database = {
         });
     },
 
-    insertMany: function(model, docs) {
+    insertMany: function(model, docs, callback) {
         model.insertMany(docs, function (error, result) {
             if (error) return callback(false);
             console.log('Added ' + result);
@@ -44,7 +44,7 @@ const database = {
         });
     },
 
-    updateOne: function (model, filter, update) {
+    updateOne: function (model, filter, update, callback) {
         model.updateOne(filter, update, function (error, result) {
             if (error) return callback(false);
             console.log('Document modified: ' + result.nModified);
@@ -52,7 +52,7 @@ const database = {
         });
     },
 
-    updateMany: function (model, filter, update) {
+    updateMany: function (model, filter, update, callback) {
         model.updateMany(filter, update, function(error, result) {
             if (error) return callback(false);
             console.log('Documents modified: ' + result.nModified);
@@ -60,7 +60,7 @@ const database = {
         });
     },
 
-    deleteOne: function (model, conditions) {
+    deleteOne: function (model, conditions, callback) {
         model.deleteOne(conditions, function (error, result) {
             if (error) return callback(false);
             console.log('Document deleted: ' + result.deletedCount);
@@ -68,7 +68,7 @@ const database = {
         });
     },
 
-    deleteMany: function (model, conditions) {
+    deleteMany: function (model, conditions, callback) {
         model.deleteMany(conditions, function (error, result) {
             if (error) return callback(false);
             console.log('Document deleted: ' + result.deletedCount);
