@@ -1,3 +1,11 @@
+function isValidUsername(name) {
+    if (name == null || name === '') {
+        return 'Username cannot be left blank';
+    } else {
+        return '';
+    }
+}
+
 function isValidPassword(pw) {
     if (pw === '') {
         return 'Password cannot be left blank';
