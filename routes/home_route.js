@@ -1,11 +1,11 @@
 const express = require('express');
 const ctrl = require('../controllers/home_ctrl');
 const router = express.Router();
-
-router.get('/', ctrl.getIndex);
+ctrl.getIndex
+router.get('/', );
 
 router.get('/about', ctrl.getAbout);
 
-router.get('/explore', ctrl.getExplore);
+router.get('/featured', ctrl.getFeatured);
 
 module.exports = router;

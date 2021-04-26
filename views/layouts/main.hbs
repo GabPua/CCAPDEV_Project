@@ -35,10 +35,12 @@
                 <a href='/' class='navbar-item'>Home</a>
 
                 <a href='/about' class='navbar-item'>About</a>
+
+                <a href='/featured' class='navbar-item'>Featured</a>
+
                 {{#if session._id}}
-                    <a href='/search' class='navbar-item'>Explore</a>
-                {{else}}
-                    <a href='/explore' class='navbar-item'>Explore</a>
+                    <a href='/search' class='navbar-item'>Search</a>
+                    <a href='/create' class='navbar-item'>Create</a>
                 {{/if}}
             </div>
 
