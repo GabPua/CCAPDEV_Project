@@ -1,53 +1,53 @@
+const db = require('../models/db');
+const User = require('../models/user');
+
 // checks if the credentials inside the cookie are valid
-function verifyUser (req, res) {
-    // console.log(req.session);
-    // console.log(req.cookies);
-    // if (!(req.session.name && req.cookies.user_sid)) {
-    //     res.redirect('/');
-    // }
+function redirect (req, res, toRun) {
+    if (req.session._id && req.cookies.user_sid) {
+        toRun();
+    } else {
+        res.redirect('/');
+    }
 }
 
 const user_controller = {
-    getNewsfeed: (req, res) => {
-        verifyUser(req, res);
-        res.render('newsfeed', {
-            title: 'Your page'
-        });
-    },
-
     getCreate: (req, res) => {
-        verifyUser(req, res);
-        res.render('create', {
-            title: 'Create a new recipe'
+        redirect(req, res, () => {
+            res.render('create', {
+                title: 'Create a new recipe'
+            });
         });
     },
 
     getLogout: (req, res) => {
-        verifyUser(req, res);
-        req.session.destroy();
-        res.clearCookie('user_sid');
-        res.redirect('/');
+        redirect(req, res, () => {
+            req.session.destroy();
+            res.clearCookie('user_sid');
+            res.redirect('/');
+        });
     },
 
     getProfileView: (req, res) => {
-        verifyUser(req, res);
-        res.render('profile', {
-                title: "YOUR PROFILE", // TODO: name?
-                user: req.session.user,
-                template: req.params.view,
-                helpers: {
-                    ifEquals: (arg1, arg2, options) => {
-                        return arg1 === arg2 ? options.fn(this) : options.inverse(this);
+        redirect(req, res, async () => {
+            let user;
+            await User.findById( req.session._id, null, null, (err, result) => {
+                user = result;
+            }).lean().exec();
+
+            console.log(user)
+
+            res.render('profile', {
+                    title: "YOUR PROFILE", // TODO: name?
+                    user: user,
+                    template: req.path.replace('/', ''),
+                    helpers: {
+                        ifEquals: (arg1, arg2, options) => {
+                            return arg1 === arg2 ? options.fn(this) : options.inverse(this);
+                        }
                     }
                 }
-            },
-            (err, html) => {
-                if (err) {
-                    res.status(404).send('File not in server!');
-                }
-                res.send(html);
-            }
-        );
+            );
+        });
     }
 }
 
