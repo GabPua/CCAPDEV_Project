@@ -5,20 +5,16 @@ $(document).ready(function () {
     const pw = $("input[type='password']");
     const pw_help = $('#password-help');
 
+    // check first before submitting
     $('#submit-login').on('click', function(event) {
         event.preventDefault();
     
         name.trigger('focusout');
         pw.trigger('focusout');
 
-        let valid = name.hasClass('is-success') && pw.hasClass('is-success');
-
-        if (valid) {
-            let user = name.val();
-            let url = './users/' + user + '.html';
-
-            window.location.replace(url + '?user=' + user);
-        }
+       if (name.hasClass('is-success') && pw.hasClass('is-success')) {
+           $('form').submit();
+       }
     });
 
     name.on('focusout', function() {
