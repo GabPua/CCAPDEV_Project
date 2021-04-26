@@ -4,7 +4,7 @@ const home_controller = {
     getIndex: (req, res) => {
         if (req.session._id && req.cookies.user_sid) {
             res.render('newsfeed', {
-                title: 'Your page'
+                title: 'ShefHub | Home'
             });
         } else {
             res.render('home', {
@@ -19,8 +19,8 @@ const home_controller = {
         });
     },
 
-    getExplore: (req, res) => {
-        res.render('explore', {
+    getFeatured: (req, res) => {
+        res.render('featured', {
             title: page_title
         });
     }

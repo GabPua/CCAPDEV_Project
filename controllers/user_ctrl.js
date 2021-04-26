@@ -1,4 +1,3 @@
-const db = require('../models/db');
 const User = require('../models/user');
 
 // checks if the credentials inside the cookie are valid
