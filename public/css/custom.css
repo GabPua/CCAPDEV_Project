@@ -226,9 +226,12 @@ header .navbar-link:not(.is-arrowless) {
     padding: 30px 40px;
 }
 
+.error-message {
+    color: red;
+}
+
 #login-box {
-    width: 350px;
-    max-width: 350px;
+    max-width: 400px;
     padding: 30px 40px;
 }
 
