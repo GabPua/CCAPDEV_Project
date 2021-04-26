@@ -59,20 +59,14 @@ function updateInputFields(isValid, field, help, icon, helpText) {
 }
 
 $(document).ready(function () {
-    const form = $('form[action="query.html"]');
+    const form = $('.search-form');
 
     if (form.length > 0) {
         const searchbar = form.children().children('input[type="text"]');
-        let searchParams = new URLSearchParams(window.location.search)
 
-        if (searchParams.has('keyword')) {
-            console.log(searchbar);
-            searchbar.val(searchParams.get('keyword'));
-        }
-
-        searchbar.on('keyup', function (event) {
-            if (event.keyCode === 13) {
-                form.submit();
+        form.submit((event) => {
+            if (searchbar.val() == null || searchbar.val() === '') {
+                event.preventDefault();
             }
         });
     }
