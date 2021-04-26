@@ -33,10 +33,14 @@ const User = require('../models/user');
 
 const signup_ctrl = {
     getSignup: (req, res) => {
-        res.render('signup', {
-            title: 'Sign up @ ShefHub',
-            signup: true
-        });
+        if (req.session._id && req.cookies.user_sid) {
+            res.redirect('/');
+        } else {
+            res.render('signup', {
+                title: 'Sign up | ShefHub',
+                signup: true
+            });
+        }
     },
 
     postSignup: (req, res) => {
