@@ -35,7 +35,7 @@
                 <a href='/' class='navbar-item'>Home</a>
 
                 <a href='/about' class='navbar-item'>About</a>
-                {{#if session.name}}
+                {{#if session._id}}
                     <a href='/search' class='navbar-item'>Explore</a>
                 {{else}}
                     <a href='/explore' class='navbar-item'>Explore</a>
@@ -43,7 +43,7 @@
             </div>
 
             <div class='navbar-end'>
-                {{#if session.name}}
+                {{#if session._id}}
                     <div class='navbar-item has-dropdown is-hoverable'>
                         <a class='navbar-link'>
                             <img id='header-dp' src='/public/img/default_dp.jpg' alt='profile_picture'>
