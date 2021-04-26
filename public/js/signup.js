@@ -14,13 +14,7 @@ $(document).ready(function () {
     const tandc = $("input[type='checkbox']");
     const tandc_help = $('#tandc-help');
 
-
-    $('#cancel-signup').on('click', function(event) {
-        event.preventDefault();
-        window.location.replace('index.html');
-    });
-
-    $('#submit-signup').on('click', function(event) {
+    $('#submit-signup').on('click', function() {
         if (!tandc.is(':checked')) {
             tandc_help.html('Must agree with terms and conditions first.');
         }
