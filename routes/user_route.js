@@ -8,4 +8,6 @@ router.get('/logout', ctrl.getLogout);
 
 router.get(['/profile', '/posts', '/likes', '/following', '/followers'], ctrl.getProfileView);
 
+router.get('/search', ctrl.getSearch);
+
 module.exports = router;

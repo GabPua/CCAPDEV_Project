@@ -48,6 +48,23 @@ const user_controller = {
                 }
             );
         });
+    },
+
+    getSearch: (req, res) => {
+        redirect(req, res, () => {
+            const { keyword } = req.query
+
+            if (keyword) {
+                res.render('query', {
+                    title: 'Search | ' + keyword,
+                    query: keyword
+                });
+            } else {
+                res.render('search', {
+                    title: 'ShefHub | Search Recipes'
+                });
+            }
+        });
     }
 }
 
