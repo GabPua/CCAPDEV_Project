@@ -3,14 +3,18 @@
 <main class='is-fullhd fill page-height parallax vegetable-bg'>
     <div class='container content box' id='login-box'>
         <h1 class='title'>Log In</h1>
-        <h5 class='subtitle'>See the newest recipes Today!</h5>
+        <h5 class='subtitle'>See the newest recipes today!</h5>
+
+        {{#if id}}
+            <p class='error-message'>Invalid username/password!</p>
+        {{/if}}
 
         <form method='POST' id='login-form'>
 
             <div class='field'>
                 <label for='username' class='label'>Username</label>
                 <div class='control has-icons-left'>
-                    <input type='text' id='username' placeholder='Username' class='input' required>
+                    <input type='text' id='username' placeholder='Username' value='{{id}}' class='input' name='_id' required>
                     <span class='icon is-small is-left'>
                         <i class='fas fa-user'></i>
                     </span>
@@ -21,7 +25,7 @@
             <div class='field'>
                 <label for='password' class='label'>Password</label>
                 <div class='control has-icons-left'>
-                    <input type='password' id='password' placeholder='Password' class='input' required>
+                    <input type='password' id='password' placeholder='Password' class='input' name='password' required>
                     <span class='icon is-small is-left'>
                         <i class='fas fa-lock'></i>
                     </span>
