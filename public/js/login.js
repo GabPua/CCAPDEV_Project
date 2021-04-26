@@ -5,11 +5,6 @@ $(document).ready(function () {
     const pw = $("input[type='password']");
     const pw_help = $('#password-help');
 
-    $('#cancel-login').on('click', function(event) {
-        event.preventDefault();
-        window.location.replace('index.html');
-    });
-
     $('#submit-login').on('click', function(event) {
         event.preventDefault();
     
