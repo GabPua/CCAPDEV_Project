@@ -28,7 +28,6 @@ function isValidEmail(email) {
     }
 }
 
-const db = require('../models/db');
 const User = require('../models/user');
 
 const signup_ctrl = {
@@ -43,7 +42,7 @@ const signup_ctrl = {
         }
     },
 
-    postSignup: (req, res) => {
+    postSignup: async (req, res) => {
         const { email, name, password, tandc } = req.body;
 
         let user = {
@@ -52,11 +51,9 @@ const signup_ctrl = {
             password: password
         };
 
-        db.insertOne(User, user, function (flag) {
-            if (flag) {
-                res.redirect('/newsfeed');
-            }
-        })
+        await User.create(user, (err, result) => {
+            res.redirect('/');
+        }).lean().exec();
 
         // if (isValidEmail(email) && isValidUsername(name) && isValidPassword(password) && tandc === 'on') {
 
@@ -65,14 +62,14 @@ const signup_ctrl = {
         // return res.redirect('/signup');
     },
 
-    getCheckUsername: (req, res) => {
+    getCheckUsername: async (req, res) => {
         let name = req.query._id;
         console.log(name);
 
-        db.findOne(User, {_id: name}, '_id', function (result) {
+        await User.findById(name, '_id', null, (err, result) => {
             console.log(result);
             res.send(result);
-        });
+        }).lean().exec();
     }
 };
 
