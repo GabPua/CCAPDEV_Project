@@ -7,9 +7,7 @@ let userSchema = new mongoose.Schema({
     email: {type: String, require: true},
     workplace: {type: String, require: false},
     desc: {type: String, require: false},
-    // TODO: profile picture
-    followers: {type: Array, require: true},
-    following: {type: Array, require: true}
+    picture_path: {type: String, require: false}
 });
 
 module.exports = mongoose.model('User', userSchema, 'user');

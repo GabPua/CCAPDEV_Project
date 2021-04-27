@@ -49,9 +49,7 @@ const signup_ctrl = {
         let user = {
             _id: name,
             email: email,
-            password: password,
-            followers: [],
-            following: []
+            password: password
         };
 
         db.insertOne(User, user, function (flag) {
