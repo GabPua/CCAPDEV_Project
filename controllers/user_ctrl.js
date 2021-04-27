@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Follow = require('../models/follow');
 
 // checks if the credentials inside the cookie are valid
 function redirect (req, res, toRun) {
@@ -28,16 +29,28 @@ const user_controller = {
 
     getProfileView: (req, res) => {
         redirect(req, res, async () => {
-            let user;
+            let user, followers, following;
             await User.findById( req.session._id, null, null, (err, result) => {
                 user = result;
             }).lean().exec();
 
-            console.log(user)
+            await Follow.find({ following: req.session._id }, null, (err, result) => {
+                followers = result.length;
+            }).lean().exec();
+
+            await Follow.find({ follower: req.session._id }, null, (err, result) => {
+                following = result.length;
+            }).lean().exec();
+
+            console.log(user);
+            console.log(followers);
+            console.log(following);
 
             res.render('profile', {
                     title: "YOUR PROFILE", // TODO: name?
                     user: user,
+                    followers: followers,
+                    following: following,
                     template: req.path.replace('/', ''),
                     helpers: {
                         ifEquals: (arg1, arg2, options) => {
