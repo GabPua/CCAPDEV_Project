@@ -88,23 +88,30 @@ const user_controller = {
         });
     },
 
-    getFollowing: (req, res) => {
+    getFollow: (req, res) => {
         redirect(req, res, async () => {
+            let users = [];
+            const path = req.path.replace('/', '');
 
-        })
-    },
-
-    getFollowers: (req, res) => {
-        redirect(req, res, async () => {
-            let followers;
-            await Follow.find({ following: req.session._id }, 'follower', (err, result) => {
-                followers = result;
-            }).lean().exec();
+            if (path === 'followers') {
+                await Follow.find({following: req.session._id}, 'follower', (err, result) => {
+                    result.forEach((item) => {
+                        users.push(item.follower);
+                    });
+                }).lean().exec();
+            } else {
+                await Follow.find({follower: req.session._id}, 'following', (err, result) => {
+                    result.forEach((item) => {
+                        users.push(item.following);
+                    });
+                }).lean().exec();
+            }
 
             res.render('profile', {
                 title: "ShefHub | " + req.session._id,
-                followers: followers,
-                template: 'followers'
+                users: users,
+                template: 'follow',
+                path: path
             });
         });
     },

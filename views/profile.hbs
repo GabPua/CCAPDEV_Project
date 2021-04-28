@@ -21,13 +21,13 @@
                     <span>Liked Recipes</span>
                 </a>
             </li>
-            <li {{#ifEquals template 'followers'}}class='is-active'{{/ifEquals}}>
+            <li {{#ifEquals path 'followers'}}class='is-active'{{/ifEquals}}>
                 <a href='/followers'>
                     <span class='icon is-small'><i class='fas fa-users' aria-hidden='true'></i></span>
                     <span>Followers</span>
                 </a>
             </li>
-            <li {{#ifEquals template 'following'}}class='is-active'{{/ifEquals}}>
+            <li {{#ifEquals path 'following'}}class='is-active'{{/ifEquals}}>
                 <a href='/following'>
                     <span class='icon is-small'><i class='fas fa-user-plus' aria-hidden='true'></i></span>
                     <span>Following</span>

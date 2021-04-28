@@ -14,9 +14,7 @@ router.get('/posts', ctrl.getPosts);
 
 router.get('/likes', ctrl.getLikes);
 
-router.get('/following', ctrl.getFollowing);
-
-router.get('/followers', ctrl.getFollowers);
+router.get(['/following', '/followers'], ctrl.getFollow);
 
 router.get('/search', ctrl.getSearch);
 
