@@ -23,13 +23,13 @@
             </li>
 
             {{#ifEquals user._id session._id}}
-                <li {{#ifEquals path 'followers'}}class='is-active'{{/ifEquals}}>
+                <li {{#ifEquals ../path 'followers'}}class='is-active'{{/ifEquals}}>
                     <a href='/followers'>
                         <span class='icon is-small'><i class='fas fa-users' aria-hidden='true'></i></span>
                         <span>Followers</span>
                     </a>
                 </li>
-                <li {{#ifEquals path 'following'}}class='is-active'{{/ifEquals}}>
+                <li {{#ifEquals ../path 'following'}}class='is-active'{{/ifEquals}}>
                     <a href='/following'>
                         <span class='icon is-small'><i class='fas fa-user-plus' aria-hidden='true'></i></span>
                         <span>Following</span>
