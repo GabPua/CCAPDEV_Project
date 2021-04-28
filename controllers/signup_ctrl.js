@@ -1,3 +1,9 @@
+const dotenv = require('dotenv')
+const crypto = require('crypto-js');
+
+dotenv.config();
+const key = process.env.SECRET || 'hushPuppy1234';
+
 function isValidPassword(pw) {
     if (pw === '') {
         return false;
@@ -48,10 +54,10 @@ const signup_ctrl = {
             let user = {
                 _id: name,
                 email: email,
-                password: password
+                password: crypto.AES.encrypt(password, key).toString()
             };
 
-            User.create(user, (err, result) => {
+            User.create(user, (err) => {
                 if (err) {
                     console.log(err);
                     res.redirect('/');
