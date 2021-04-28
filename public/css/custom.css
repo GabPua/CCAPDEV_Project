@@ -258,10 +258,11 @@ header .navbar-link:not(.is-arrowless) {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
 }
 
 .card-container .card {
-    width: 300px;
+    width: 320px;
     margin: 20px;
 }
 

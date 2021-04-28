@@ -31,22 +31,22 @@ const user_controller = {
             let user, followers, following, posts;
 
             // get user details using id stored in session
-            await User.findById( req.session._id, null, null, (err, result) => {
+            await User.findById( req.session._id,(err, result) => {
                 user = result;
             }).lean().exec();
 
             // get number of followers
-            await Follow.find({ following: req.session._id }, null, (err, result) => {
+            await Follow.find({ following: req.session._id },(err, result) => {
                 followers = result.length;
             }).lean().exec();
 
             // get number of following
-            await Follow.find({ follower: req.session._id }, null, (err, result) => {
+            await Follow.find({ follower: req.session._id },(err, result) => {
                 following = result.length;
             }).lean().exec();
 
             // get number of posts
-            await Posts.find( { user_id: req.session._id }, null, null, (err, result) => {
+            await Posts.find( { user_id: req.session._id }, (err, result) => {
                 posts = result.length;
             }).lean().exec();
 
@@ -74,11 +74,16 @@ const user_controller = {
     getPosts: (req, res) => {
         redirect(req, res, async () => {
             let posts;
-            await Posts.find( { user_id: req.session._id }, null, null, (err, result) => {
+            await Posts.find( { user_id: req.session._id }, (err, result) => {
                posts = result;
             }).lean().exec();
 
-
+            res.render('profile', {
+                    title: "ShefHub | " + user._id,
+                    post: posts,
+                    template: 'profile'
+                }
+            );
         });
     },
 
@@ -117,13 +122,22 @@ const user_controller = {
     },
 
     getSearch: (req, res) => {
-        redirect(req, res, () => {
+        redirect(req, res, async () => {
             const { keyword } = req.query
 
             if (keyword) {
+                let results;
+                const pattern = new RegExp(keyword, 'i');
+
+                // query
+                await Posts.find({title: {$regex: pattern} },(err, result) => {
+                    results = result;
+                }).lean().exec();
+
                 res.render('query', {
-                    title: 'Search | ' + keyword,
-                    query: keyword
+                    title: 'Shefhub Search | ' + keyword,
+                    query: keyword,
+                    results: results
                 });
             } else {
                 res.render('search', {
