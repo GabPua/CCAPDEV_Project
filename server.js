@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 const express = require('express');
-const hbs = require('express-handlebars');
+const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
@@ -16,8 +16,8 @@ const options = {
     useNewUrlParser: true
 };
 
-mongoose.connect(dbUri, options, (error) => {
-    console.log('Established connection with mongodb!');
+mongoose.connect(dbUri, options, (err) => {
+    console.log(err? err : 'Established connection with mongodb!');
 });
 
 // storage for user sessions
@@ -31,9 +31,23 @@ store.on('error', (error) => {
     console.log(error.message);
 });
 
+// configure hbs
+const hbs = exphbs.create({
+    extname: '.hbs',
+    helpers: {
+        ifEquals: (arg1, arg2, options) => {
+            return arg1 === arg2 ? options.fn(this) : options.inverse(this);
+        },
+
+        mod3: (n, options) => {
+            return n % 3 === 0? options.fn(this) : options.inverse(this);
+        }
+    }
+});
+
 // initialize and configure express
 const app = express();
-app.engine('hbs', hbs({extname: '.hbs'}));
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.use(cookieParser());
 
@@ -58,11 +72,6 @@ app.use((req, res, next) => {
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// instantiate models
-// const userModel = require('./models/user');
-// const recipeModel = require('./models/recipe');
-// const commentModel = require('./models/comment');
 
 // routes
 const home_route = require('./routes/home_route');
