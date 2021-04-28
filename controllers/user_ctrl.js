@@ -138,6 +138,31 @@ const user_controller = {
         });
     },
 
+    getRecipe: (req, res) => {
+        redirect(req, res, async () => {
+            const id = req.params.id;
+            let post;
+
+            await Posts.findById(id, (err, result) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    post = result;
+                }
+            }).lean().exec();
+
+            if (post == null) {
+                res.redirect('/404NotFound');
+                return;
+            }
+
+            res.render('post', {
+                title: 'ShefHub | ' + post.title,
+                post: post
+            });
+        });
+    },
+
     getSearch: (req, res) => {
         redirect(req, res, async () => {
             const { keyword } = req.query

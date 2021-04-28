@@ -22,6 +22,8 @@ router.get('/user/:id/posts', ctrl.getPosts);
 
 router.get('/user/:id/likes', ctrl.getLikes);
 
+router.get('/post/:id', ctrl.getRecipe);
+
 router.get('/search', ctrl.getSearch);
 
 router.get('/logout', ctrl.getLogout);
