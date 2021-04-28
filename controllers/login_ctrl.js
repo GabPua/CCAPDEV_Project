@@ -1,5 +1,10 @@
+const dotenv = require('dotenv')
+const crypto = require('crypto-js');
 const User = require('../models/user');
 const page_title = 'Shefhub | Login Page';
+
+dotenv.config();
+const key = process.env.SECRET || 'hushPuppy123';
 
 const login_controller = {
     getLogin: (req, res) => {
@@ -21,7 +26,7 @@ const login_controller = {
             if (err) {
                 console.log(err);
             } else {
-                isSuccess = result != null && password === result.password;
+                isSuccess = result != null && password === crypto.AES.decrypt(result.password, key).toString(crypto.enc.Utf8);
             }
         }).exec();
 
