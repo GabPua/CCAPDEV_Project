@@ -8,88 +8,27 @@
             </p>
         </form>
 
-        <a class='card' href='../food/chicken_adobo.html'>
-            <div class='card-image'>
-                <figure class='image is-square'>
-                    <img src='/public/img/foodelicious_chicken_adobo1.jpg' alt='adobo'>
-                </figure>
-            </div>
-            <div class='card-content'>
-                <div class='media'>
-                    <div class='media-left'>
-                        <figure class='image is-48x48'>
-                            <img class='is-rounded' src='/public/img/foodelicious.jpg' alt='foodelicious'>
-                        </figure>
-                    </div>
-                    <div class='media-content'>
-                        <p class='title is-4'>Chicken Adobo</p>
-                        <p class='subtitle is-6'>foodelicious</p>
+        {{#each results}}
+            <a class='card' href='../post/{{this._id}}'>
+                <div class='card-image'>
+                    <figure class='image is-square'>
+                        <img src='/public/img/foodelicious_chicken_adobo1.jpg' alt='{{this.title}}'>
+                    </figure>
+                </div>
+                <div class='card-content'>
+                    <div class='media'>
+                        <div class='media-left'>
+                            <figure class='image is-48x48'>
+                                <img class='is-rounded' src='/public/img/foodelicious.jpg' alt='{{this.user_id}}'>
+                            </figure>
+                        </div>
+                        <div class='media-content'>
+                            <p class='title is-4'>{{this.title}}</p>
+                            <p class='subtitle is-6'>{{this.user_id}}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </a>
-
-        <a class='card' href='../food/asian_coleslaw.html'>
-            <div class='card-image'>
-                <figure class='image is-square'>
-                    <img src='/public/img/foodelicious_asian_coleslaw1.jpg' alt='coleslaw'>
-                </figure>
-            </div>
-            <div class='card-content'>
-                <div class='media'>
-                    <div class='media-left'>
-                        <figure class='image is-48x48'>
-                            <img class='is-rounded' src='/public/img/foodelicious.jpg' alt='foodelicious'>
-                        </figure>
-                    </div>
-                    <div class='media-content'>
-                        <p class='title is-4'>Asian Coleslaw</p>
-                        <p class='subtitle is-6'>foodelicious</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-
-        <a class='card' href='../food/tuna_noodle_casserole.html'>
-            <div class='card-image'>
-                <figure class='image is-square'>
-                    <img src='/public/img/tuna_noodle_casserole1.jpg' alt='tuna'>
-                </figure>
-            </div>
-            <div class='card-content'>
-                <div class='media'>
-                    <div class='media-left'>
-                        <figure class='image is-48x48'>
-                            <img class='is-rounded' src='/public/img/foodelicious.jpg' alt='foodelicious'>
-                        </figure>
-                    </div>
-                    <div class='media-content'>
-                        <p class='title is-4'>Tuna Casserole</p>
-                        <p class='subtitle is-6'>foodelicious</p>
-                    </div>
-                </div>
-            </div>
-        </a>
-
-        <a class='card' href='../food/french_fries.html'>
-            <div class='card-image'>
-                <figure class='image is-square'>
-                    <img src='public/img/french_fries4.jpg' alt='fries'>
-                </figure>
-            </div>
-            <div class='card-content'>
-                <div class='media'>
-                    <div class='media-left'>
-                        <figure class='image is-48x48'>
-                            <img class='is-rounded' src='/public/img/chefjohn.jpg' alt='chefjohn'>
-                        </figure>
-                    </div>
-                    <div class='media-content'>
-                        <p class='title is-4'>Air Fryer Fries</p>
-                        <p class='subtitle is-6'>chefjohn</p>
-                    </div>
-                </div>
-            </div>
-        </a>
+            </a>
+        {{/each}}
     </div>
 </main>
