@@ -1,0 +1,185 @@
+<script src='/public/js/post.js'></script>
+<main class='is-fullhd fill page-height parallax vegetable-bg'>
+    <div class='container content box recipe-view'>
+        <h1 class='title' id='recipe-name'>{{post.title}}</h1>
+        <h5 class='subtitle' id='shef'>By <a href='/user/{{post.user_id}}'>{{post.user_id}}</a></h5>
+
+        <div class='columns post-header'>
+            <div class='column is-1 vote-header'>
+                <i class='fas fa-chevron-up fa-2x upvote'></i>
+                <strong id='votes'>{{sum}}</strong>
+                <i class='fas fa-chevron-down fa-2x downvote'></i>
+            </div>
+            <div class='column slider'>
+                <!-- Inner columns -->
+                <div class='columns' id='food-pic'
+                     style='background: url("/public/img/foodelicious_asian_coleslaw1.jpg")'>
+                    <div class='column is-1'>
+                        <i class='fas fa-chevron-circle-left fa-3x' id='left'></i>
+                    </div>
+
+                    <div class='column center'>
+                        <nav class='pagination is-centered is-rounded' role='navigation' aria-label='pagination'>
+                            <ul class='pagination-list'>
+                                <li><a class='pagination-link is-current' aria-label='image 1' aria-current='page'></a>
+                                </li>
+                                <li><a class='pagination-link' aria-label='image 2'></a></li>
+                                <li><a class='pagination-link' aria-label='image 3'></a></li>
+                                <li><a class='pagination-link' aria-label='image 4'></a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <div class='column is-1'>
+                        <i class='fas fa-chevron-circle-right fa-3x' id='right'></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <h3 class='title'>Description</h3>
+        <p class='content'>
+            {{post.desc}}
+        </p>
+
+        <h3 class='title'>Ingredients</h3>
+        <ul class='content'>
+            {{#each post.ingredients}}
+                <li><input type='checkbox'>{{this}}</li>
+            {{/each}}
+        </ul>
+
+        <h3 class='title'>Directions</h3>
+        <ol class='content'>
+            {{#each post.direction}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ol>
+
+        <h3 class='title'>Information</h3>
+        <div class='content'>
+            <p>
+                Preparation time: 30 mins<br>
+                Total time: 30 mins<br>
+                Servings: {{post.serings}}
+            </p>
+        </div>
+
+        <h3 class='title'>Comments</h3>
+        <article class='media'>
+            <figure class='media-left'>
+                <p class='image is-64x64'>
+                    <img class='is-rounded' src='../includes/resources/suzanne.jpg' alt='suzanne'>
+                </p>
+            </figure>
+            <div class='media-content'>
+                <div class='content'>
+                    <p>
+                        <strong>Suzanne</strong>
+                        <br>
+                        Wow, this is so good!
+                        <br>
+                        <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
+                    </p>
+                </div>
+
+                <article class='media'>
+                    <figure class='media-left'>
+                        <p class='image is-48x48'>
+                            <img class='is-rounded' src='../includes/resources/default_dp.jpg' alt='default'>
+                        </p>
+                    </figure>
+                    <div class='media-content'>
+                        <div class='content'>
+                            <p>
+                                <strong>MasterChef1001</strong>
+                                <br>
+                                I know, right? And it's so easy to prepare too.
+                                <br>
+                                <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+                <article class='media'>
+                    <figure class='media-left'>
+                        <p class='image is-48x48'>
+                            <img class='is-rounded' src='../includes/resources/foodelicious.jpg' alt='foodelicious'>
+                        </p>
+                    </figure>
+                    <div class='media-content'>
+                        <div class='content'>
+                            <p>
+                                <strong>foodelicious</strong>
+                                <br>
+                                Thanks for the support, guys!
+                                <br>
+                                <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </article>
+
+        <article class='media'>
+            <figure class='media-left'>
+                <p class='image is-64x64'>
+                    <img class='is-rounded' src='../includes/resources/esmee.jpg' alt='suzanne'>
+                </p>
+            </figure>
+            <div class='media-content'>
+                <div class='content'>
+                    <p>
+                        <strong>Esmee</strong>
+                        <br>
+                        Way too simple, but so deliciousss
+                        <br>
+                        <small><a>Like</a> · <a>Reply</a> · 1 hr</small>
+                    </p>
+                </div>
+
+                <article class='media'>
+                    <figure class='media-left'>
+                        <p class='image is-48x48'>
+                            <img class='is-rounded' src='../includes/resources/foodelicious.jpg' alt='default'>
+                        </p>
+                    </figure>
+                    <div class='media-content'>
+                        <div class='content'>
+                            <p>
+                                <strong>foodelicious</strong>
+                                <br>
+                                Glad to hear that, Esmee!
+                                <br>
+                                <small><a>Like</a> · <a>Reply</a> · 1 hr</small>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </article>
+
+        <article class='media'>
+            <figure class='media-left'>
+                <p class='image is-64x64'>
+                    <img class='is-rounded' src='../includes/resources/chefjohn.jpg' alt='{{user._id}}'>
+                </p>
+            </figure>
+            <div class='media-content'>
+                <div class='field'>
+                    <p class='control'>
+                        <textarea class='textarea has-fixed-size' placeholder='Add a comment...'></textarea>
+                    </p>
+                </div>
+                <div class='field'>
+                    <p class='control'>
+                        <button class='button'>Post comment</button>
+                    </p>
+                </div>
+            </div>
+        </article>
+    </div>
+</main>
