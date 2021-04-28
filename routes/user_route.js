@@ -16,6 +16,12 @@ router.get('/likes', ctrl.getLikes);
 
 router.get(['/following', '/followers'], ctrl.getFollow);
 
+router.get('/user/:id', ctrl.getProfile);
+
+router.get('/user/:id/posts', ctrl.getPosts);
+
+router.get('/user/:id/likes', ctrl.getLikes);
+
 router.get('/search', ctrl.getSearch);
 
 router.get('/logout', ctrl.getLogout);
