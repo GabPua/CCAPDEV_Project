@@ -11,9 +11,9 @@
 
     <div class='container tile-root'>
         {{#each users}}
-            {{#mod3 @index}}
+            {{#ifMod @index 3 0}}
                 <div class='tile is-ancestor'>
-            {{/mod3}}
+            {{/ifMod}}
 
             <div class='tile is-parent is-4'>
                 <a class='tile is-child box' href='/user/{{this}}'>
@@ -22,9 +22,14 @@
                 </a>
             </div>
 
-            {{#mod3 @index}}
+            {{#if @last}}
                 </div>
-            {{/mod3}}
+            {{else}}
+                {{#ifMod @index 3 2}}
+                </div>
+                {{/ifMod}}
+            {{/if}}
+
         {{/each}}
     </div>
 
