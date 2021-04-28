@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
     const email = $("input[type='email']");
     const email_help = $('#email-help');
     const email_help_icon = $('#email-help-icon');
@@ -14,13 +14,23 @@ $(document).ready(function () {
     const tandc = $("input[type='checkbox']");
     const tandc_help = $('#tandc-help');
 
-    $('#submit-signup').on('click', function() {
-        if (!tandc.is(':checked')) {
+    $('#submit-signup').click((event) => {
+        event.preventDefault();
+
+        email.trigger('focusout');
+        name.trigger('focusout');
+        pw.trigger('focusout');
+
+        if (tandc.is(':checked')) {
+            if (email.hasClass('is-success') && pw.hasClass('is-success') && name.hasClass('is-success')) {
+               $('form').submit();
+            }
+        } else {
             tandc_help.html('Must agree with terms and conditions first.');
         }
     });
 
-    email.on('focusout', function() {
+    email.focusout(() => {
         let help_text = isValidEmail(email.val());
 
         if (help_text === '') {
@@ -30,9 +40,10 @@ $(document).ready(function () {
         }
     });
 
-    name.on('focusout', function() {
+    name.focusout(() => {
         let username = name.val().toLowerCase();
-        
+
+        // check if already taken
         $.get('/signup/getCheckUsername', {_id: username}, function (result) {
             let help_text = '';
 
@@ -50,7 +61,7 @@ $(document).ready(function () {
         });
     });
 
-    pw.on('focusout', function() {
+    pw.focusout(() => {
         let help_text = isValidPassword(pw.val());
 
         if (help_text === '') {
@@ -60,7 +71,7 @@ $(document).ready(function () {
         }
     });
 
-    tandc.on('click', function() {
+    tandc.click(() => {
         tandc_help.html('');
     });
 });
