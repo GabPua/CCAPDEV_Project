@@ -28,37 +28,45 @@ const user_controller = {
 
     getProfile: (req, res) => {
         redirect(req, res, async () => {
+            let id = req.params.id;
+
+            if (id == null) {
+                id = req.session._id;
+            } else if (id === req.session._id) {
+                res.redirect('/profile');
+                return;
+            }
+
             let user, followers, following, posts;
 
             // get user details using id stored in session
-            await User.findById( req.session._id,(err, result) => {
+            await User.findById(id ,(err, result) => {
                 user = result;
             }).lean().exec();
 
             // get number of followers
-            await Follow.find({ following: req.session._id },(err, result) => {
+            await Follow.find({ following: id },(err, result) => {
                 followers = result.length;
             }).lean().exec();
 
             // get number of following
-            await Follow.find({ follower: req.session._id },(err, result) => {
+            await Follow.find({ follower: id },(err, result) => {
                 following = result.length;
             }).lean().exec();
 
             // get number of posts
-            await Posts.find( { user_id: req.session._id }, (err, result) => {
+            await Posts.find( { user_id: id }, (err, result) => {
                 posts = result.length;
             }).lean().exec();
 
             res.render('profile', {
-                    title: "ShefHub | " + user._id,
-                    user: user,
-                    followers: followers,
-                    following: following,
-                    post: posts,
-                    template: 'profile'
-                }
-            );
+                title: "ShefHub | " + id,
+                user: user,
+                followers: followers,
+                following: following,
+                post: posts,
+                template: 'profile'
+            });
         });
     },
 
@@ -73,17 +81,26 @@ const user_controller = {
 
     getPosts: (req, res) => {
         redirect(req, res, async () => {
+            let id = req.params.id;
+
+            if (id == null) {
+                id = req.session._id;
+            } else if (id === req.session._id) {
+                res.redirect('/posts');
+                return;
+            }
+
             let posts;
-            await Posts.find( { user_id: req.session._id }, (err, result) => {
+            await Posts.find( { user_id: id }, (err, result) => {
                posts = result;
             }).lean().exec();
 
             res.render('profile', {
-                    title: "ShefHub | " + user._id,
-                    post: posts,
-                    template: 'profile'
-                }
-            );
+                user: {_id: id},
+                title: "ShefHub | " + req.session._id,
+                posts: posts,
+                template: 'posts'
+            });
         });
     },
 
@@ -111,8 +128,8 @@ const user_controller = {
                     });
                 }).lean().exec();
             }
-
             res.render('profile', {
+                user: { _id: req.session._id },
                 title: "ShefHub | " + req.session._id,
                 users: users,
                 template: 'follow',
