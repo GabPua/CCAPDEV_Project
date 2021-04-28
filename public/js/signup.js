@@ -31,13 +31,24 @@ $(document).ready(() => {
     });
 
     email.focusout(() => {
-        let help_text = isValidEmail(email.val());
+        let mail = email.val().toLowerCase();
 
-        if (help_text === '') {
-            updateInputFields(true, email, email_help, email_help_icon, 'Valid email address');
-        } else {
-            updateInputFields(false, email, email_help, email_help_icon, help_text);
-        }
+        // check if already taken
+        $.get('/signup/getCheckEmail', {email: mail}, function (result) {
+            let help_text = '';
+
+            if (mail === '') {
+                help_text = 'Cannot be left blank';
+            } else if (result.email === mail) {
+                help_text = 'Email taken';
+            }
+
+            if (help_text === '') {
+                updateInputFields(true, email, email_help, email_help_icon, 'Valid email address');
+            } else {
+                updateInputFields(false, email, email_help, email_help_icon, help_text);
+            }
+        });
     });
 
     name.focusout(() => {

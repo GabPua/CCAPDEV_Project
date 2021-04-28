@@ -78,10 +78,16 @@ const signup_ctrl = {
 
     getCheckUsername: async (req, res) => {
         let name = req.query._id;
-        console.log(name);
 
         await User.findById(name, '_id', null, (err, result) => {
-            console.log(result);
+            res.send(result);
+        }).lean().exec();
+    },
+
+    getCheckEmail: async (req, res) => {
+        let email = req.query.email;
+
+        await User.findOne({email: email}, 'email', null, (err, result) => {
             res.send(result);
         }).lean().exec();
     }
