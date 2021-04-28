@@ -4,19 +4,30 @@
             <input class='input is-rounded' type='text' aria-label='search input' aria-expanded='false'
                    placeholder='Search from followers' id='folower-search'>
             <span class='icon is-small is-left'>
-                    <i class='fas fa-search'></i>
-                </span>
+                <i class='fas fa-search'></i>
+            </span>
         </p>
     </div>
-    <!--        If friends more than what can fit, add ".scroll" class -->
-    <div class='tile is-ancestor'>
-        <div class='tile is-parent is-4'>
-            <a class='tile is-child box' href='masterchef1001view.html'>
-                <img src='public/img/default_dp.jpg' alt='default'>
-                <p class='subtitle'>masterchef1001</p>
-            </a>
-        </div>
+
+    <div class='container tile-root'>
+        {{#each followers}}
+            {{#mod3 @index}}
+                <div class='tile is-ancestor'>
+            {{/mod3}}
+
+            <div class='tile is-parent is-4'>
+                <a class='tile is-child box' href='/user/{{this.follower}}'>
+                    <img src='public/img/default_dp.jpg' alt='default'>
+                    <p class='subtitle'>{{this.follower}}</p>
+                </a>
+            </div>
+
+            {{#mod3 @index}}
+                </div>
+            {{/mod3}}
+        {{/each}}
     </div>
+
 
     <section class='section post-navigation'>
         <nav class='pagination is-centered is-small' role='navigation' aria-label='pagination'>
