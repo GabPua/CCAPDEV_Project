@@ -2,22 +2,30 @@
     <div class='container search-bar-container'>
         <p class='control has-icons-left'>
             <input class='input is-rounded' type='text' aria-label='search input' aria-expanded='false'
-                   placeholder='Search from following' id='folower-search'>
+                   placeholder='Search from {{path}}' id='folower-search'>
             <span class='icon is-small is-left'>
-                    <i class='fas fa-search'></i>
-                </span>
+                <i class='fas fa-search'></i>
+            </span>
         </p>
     </div>
+
     <div class='container tile-root'>
-        <!--        If friends more than what can fit, add ".scroll" class -->
-        <div class='tile is-ancestor'>
+        {{#each users}}
+            {{#mod3 @index}}
+                <div class='tile is-ancestor'>
+            {{/mod3}}
+
             <div class='tile is-parent is-4'>
-                <a class='tile is-child box' href='masterchef1001view.html'>
+                <a class='tile is-child box' href='/user/{{this}}'>
                     <img src='public/img/default_dp.jpg' alt='default'>
-                    <p class='subtitle'>masterchef1001</p>
+                    <p class='subtitle'>{{this}}</p>
                 </a>
             </div>
-        </div>
+
+            {{#mod3 @index}}
+                </div>
+            {{/mod3}}
+        {{/each}}
     </div>
 
     <section class='section post-navigation'>
@@ -30,3 +38,4 @@
         </nav>
     </section>
 </div>
+
