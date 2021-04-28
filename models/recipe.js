@@ -9,7 +9,8 @@ let recipeSchema = new mongoose.Schema({
     prep_time: {type: Number, require: true},
     cook_time: {type: Number, require: true},
     direction: {type: String, require: true},
-    ingredient: {type: String, require: true}
+    ingredient: {type: String, require: true},
+    date: {type: Date, require: true}
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema, 'recipe');

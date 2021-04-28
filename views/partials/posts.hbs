@@ -1,27 +1,31 @@
 <div class='container content box profile-box menu-display'>
-    <div class='tile is-ancestor'>
-        <div class='tile is-vertical'>
+    {{#if posts}}
+        <div class='tile is-ancestor'>
+            <div class='tile is-vertical'>
             {{#each posts}}
                 {{#ifMod @index 2 0}}
-                    <div class='tile'>
+                <div class='tile'>
                 {{/ifMod}}
-                    <div class='tile is-parent' style='background: url(/public/img/roasted_potatoes1.jpg)'>
-                        <a href='/food/{{this._id}}'>
-                            <div class='is-child box'>
-                                <p class='title'>{{this.title}}</p>
-                            </div>
-                        </a>
-                    </div>
+                <div class='tile is-parent' style='background: url(/public/img/roasted_potatoes1.jpg)'>
+                    <a href='/post/{{this._id}}'>
+                        <div class='is-child box'>
+                            <p class='title'>{{this.title}}</p>
+                        </div>
+                    </a>
+                </div>
                 {{#if @last}}
-                    </div>
+                </div>
                 {{else}}
                     {{#ifMod @index 2 1}}
-                        </div>
+                    </div>
                     {{/ifMod}}
                 {{/if}}
             {{/each}}
         </div>
-    </div>
+    {{else}}
+        <h1 class='no-posts'>No favorites yet</h1>
+    {{/if}}
+</div>
 
     <section class='section post-navigation'>
         <nav class='pagination is-centered is-small' role='navigation' aria-label='pagination'>
