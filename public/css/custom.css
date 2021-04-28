@@ -369,3 +369,17 @@ header .navbar-link:not(.is-arrowless) {
     border-color: #00b89c;
     color: white;
 }
+
+#ingredient-list {
+    list-style: none;
+}
+
+#ingredient-list input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+#post-date {
+    font-weight: normal;
+    margin-left: 20px;
+    margin-bottom: 10px;
+}

@@ -42,6 +42,31 @@ const hbs = exphbs.create({
 
         ifMod: (a, b, c, options) => {
             return a % b === c? options.fn(this) : options.inverse(this);
+        },
+
+        parseMinToHHMM: (m1, m2) => {
+            let m = m1 + m2;
+            const h = Math.floor(m / 60);
+            m %= 60;
+
+            let minute = '', hour = '';
+            if (h === 1) {
+                hour = '1 hour ';
+            } else if (h > 1) {
+                hour = h + ' hours ';
+            }
+
+            if (m === 1) {
+                minute = '1 minute';
+            } else if(m > 1) {
+                minute = m + ' minutes';
+            }
+
+            return hour + minute;
+        },
+
+        formatDate: (date) => {
+            return date.toLocaleString();
         }
     }
 });

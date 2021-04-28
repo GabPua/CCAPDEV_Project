@@ -141,17 +141,19 @@ const user_controller = {
     getRecipe: (req, res) => {
         redirect(req, res, async () => {
             const id = req.params.id;
-            let post;
+            let post, invalid = false;
 
-            await Posts.findById(id, (err, result) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    post = result;
-                }
-            }).lean().exec();
+            try {
+                await Posts.findById(id, (err, result) => {
+                    if (!err) {
+                        post = result;
+                    }
+                }).lean().exec();
+            } catch (err) {
+                invalid = true;
+            }
 
-            if (post == null) {
+            if (invalid || post == null) {
                 res.redirect('/404NotFound');
                 return;
             }
