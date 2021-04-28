@@ -39,8 +39,8 @@ const hbs = exphbs.create({
             return arg1 === arg2 ? options.fn(this) : options.inverse(this);
         },
 
-        mod3: (n, options) => {
-            return n % 3 === 0? options.fn(this) : options.inverse(this);
+        ifMod: (a, b, c, options) => {
+            return a % b === c? options.fn(this) : options.inverse(this);
         }
     }
 });
