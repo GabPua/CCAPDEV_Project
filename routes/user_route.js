@@ -1,6 +1,5 @@
-const express = require('express');
+const router = require('express')();
 const ctrl = require('../controllers/user_ctrl');
-const router = express.Router();
 
 router.route('/create')
     .get(ctrl.getCreate)

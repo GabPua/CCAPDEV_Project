@@ -1,6 +1,5 @@
-const express = require('express');
+const router = require('express')();
 const ctrl = require('../controllers/home_ctrl');
-const router = express.Router();
 
 router.get('/', ctrl.getIndex);
 
