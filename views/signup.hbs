@@ -5,12 +5,17 @@
         <h1 class='title'>Sign Up</h1>
         <h5 class='subtitle'>Join our community today!</h5>
 
+        {{#if name}}
+            <p class='error-message'>There was an error encountered when creating your account.
+                Please contact us if you continue receiving this error.</p>
+        {{/if}}
+
         <form method='POST' id='signup-form'>
 
             <div class='field'>
                 <label class='label' for='email'>Email</label>
                 <div class='control has-icons-left has-icons-right'>
-                    <input class='input' type='email' placeholder='Email' name='email' id='email'>
+                    <input class='input' type='email' placeholder='Email' name='email' id='email' value='{{email}}'>
                     <span class='icon is-small is-left'>
                                     <i class='fas fa-envelope'></i>
                                 </span>
@@ -24,7 +29,7 @@
             <div class='field'>
                 <label class='label' for='name'>Username</label>
                 <div class='control has-icons-left has-icons-right'>
-                    <input class='input' type='text' placeholder='Username' name='name' id='name'>
+                    <input class='input' type='text' placeholder='Username' name='name' id='name' value='{{name}}'>
                     <span class='icon is-small is-left'>
                                 <i class='fas fa-user'></i>
                           </span>

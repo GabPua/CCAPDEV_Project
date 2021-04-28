@@ -9,23 +9,13 @@ function isValidPassword(pw) {
 }
 
 function isValidUsername(name) {
-    if (name === '') {
-        return false;
-    } else if (name == null) { // TODO: Additional check stuff
-        return false;
-    } else {
-        return true;
-    }
+    return !(name == null || name === '');
 }
 
 function isValidEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     
-    if (re.test(String(email).toLowerCase())) {
-        return true;
-    } else {
-        return false;
-    }
+    return re.test(String(email).toLowerCase());
 }
 
 const User = require('../models/user');
@@ -45,30 +35,38 @@ const signup_ctrl = {
     postSignup: async (req, res) => {
         const { email, name, password, tandc } = req.body;
 
-        let good = true;
-        
-        if (!isValidEmail(email) || !isValidPassword(password) || tandc === 'on')
-            good = false;
+        // final check before creating account
+        let isValid = isValidEmail(email) && isValidPassword(password) && isValidUsername(name) && tandc === 'on';
         
         await User.findById(name, '_id', null, (err, result) => {
-            if (result !== null && result._id === name)
-                good = false;
-        }).lean().exec();
+            if (result !== null && result._id === name) {
+                isValid = false;
+            }
+        }).exec();
 
-        if (good) {
+        if (isValid) {
             let user = {
                 _id: name,
                 email: email,
                 password: password
             };
 
-            req.session._id = name;
-
-            await User.create(user, (err, result) => {
-                res.redirect('/');
-            }).lean().exec();
+            User.create(user, (err, result) => {
+                if (err) {
+                    console.log(err);
+                    res.redirect('/');
+                } else {
+                    req.session._id = name;
+                    res.redirect('/profile');
+                }
+            });
         } else {
-            
+            res.render('signup', {
+                title: 'Sign up | ShefHub',
+                signup: true,
+                email: email,
+                name: name
+            });
         }
     },
 
