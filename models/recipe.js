@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 let recipeSchema = new mongoose.Schema({
-    _id: {type: Number, require: true},
     user_id: {type: String, require: true},
     title: {type: String, require: true},
     desc: {type: String, require: false},

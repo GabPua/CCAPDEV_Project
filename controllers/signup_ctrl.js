@@ -45,21 +45,31 @@ const signup_ctrl = {
     postSignup: async (req, res) => {
         const { email, name, password, tandc } = req.body;
 
-        let user = {
-            _id: name,
-            email: email,
-            password: password
-        };
-
-        await User.create(user, (err, result) => {
-            res.redirect('/');
+        let good = true;
+        
+        if (!isValidEmail(email) || !isValidPassword(password) || tandc === 'on')
+            good = false;
+        
+        await User.findById(name, '_id', null, (err, result) => {
+            if (result !== null && result._id === name)
+                good = false;
         }).lean().exec();
 
-        // if (isValidEmail(email) && isValidUsername(name) && isValidPassword(password) && tandc === 'on') {
+        if (good) {
+            let user = {
+                _id: name,
+                email: email,
+                password: password
+            };
 
-        //     return res.redirect('/newsfeed');
-        // }
-        // return res.redirect('/signup');
+            req.session._id = name;
+
+            await User.create(user, (err, result) => {
+                res.redirect('/');
+            }).lean().exec();
+        } else {
+            
+        }
     },
 
     getCheckUsername: async (req, res) => {
