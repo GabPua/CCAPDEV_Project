@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Follow = require('../models/follow');
+const Posts = require('../models/recipe');
 
 // checks if the credentials inside the cookie are valid
 function redirect (req, res, toRun) {
@@ -19,46 +20,92 @@ const user_controller = {
         });
     },
 
-    getLogout: (req, res) => {
-        redirect(req, res, () => {
-            req.session.destroy();
-            res.clearCookie('user_sid');
-            res.redirect('/');
-        });
+    postCreate: (req, res) => {
+      redirect(req, res, async () => {
+          // TODO: Insert doc to recipe
+      });
     },
 
-    getProfileView: (req, res) => {
+    getProfile: (req, res) => {
         redirect(req, res, async () => {
-            let user, followers, following;
+            let user, followers, following, posts;
+
+            // get user details using id stored in session
             await User.findById( req.session._id, null, null, (err, result) => {
                 user = result;
             }).lean().exec();
 
+            // get number of followers
             await Follow.find({ following: req.session._id }, null, (err, result) => {
                 followers = result.length;
             }).lean().exec();
 
+            // get number of following
             await Follow.find({ follower: req.session._id }, null, (err, result) => {
                 following = result.length;
             }).lean().exec();
 
-            console.log(user);
-            console.log(followers);
-            console.log(following);
+            // get number of posts
+            await Posts.find( { user_id: req.session._id }, null, null, (err, result) => {
+                posts = result.length;
+            }).lean().exec();
 
             res.render('profile', {
-                    title: "YOUR PROFILE", // TODO: name?
+                    title: "ShefHub | " + user._id,
                     user: user,
                     followers: followers,
                     following: following,
-                    template: req.path.replace('/', ''),
-                    helpers: {
-                        ifEquals: (arg1, arg2, options) => {
-                            return arg1 === arg2 ? options.fn(this) : options.inverse(this);
-                        }
-                    }
+                    post: posts,
+                    template: 'profile'
                 }
             );
+        });
+    },
+
+    postProfile: (req, res) => {
+        redirect(req, res, async () => {
+
+            // TODO: verify info and update profile in db
+
+            res.redirect('/profile');
+        });
+    },
+
+    getPosts: (req, res) => {
+        redirect(req, res, async () => {
+            let posts;
+            await Posts.find( { user_id: req.session._id }, null, null, (err, result) => {
+               posts = result;
+            }).lean().exec();
+
+
+        });
+    },
+
+    getLikes: (req, res) => {
+        redirect(req, res, async () => {
+
+        });
+    },
+
+    getFollowing: (req, res) => {
+        redirect(req, res, async () => {
+
+        })
+    },
+
+    getFollowers: (req, res) => {
+        redirect(req, res, async () => {
+            let followers;
+            await Follow.find({ following: req.session._id }, 'follower', (err, result) => {
+                followers = result;
+            }).lean().exec();
+
+            res.render('profile', {
+                title: "ShefHub | " + req.session._id,
+                followers: followers,
+                template: 'followers'
+            });
         });
     },
 
@@ -76,6 +123,14 @@ const user_controller = {
                     title: 'ShefHub | Search Recipes'
                 });
             }
+        });
+    },
+
+    getLogout: (req, res) => {
+        redirect(req, res, () => {
+            req.session.destroy();
+            res.clearCookie('user_sid');
+            res.redirect('/');
         });
     }
 }
