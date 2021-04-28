@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
     const name = $("input[type='text']");
     const name_help = $('#username-help');
 
@@ -6,7 +6,7 @@ $(document).ready(function () {
     const pw_help = $('#password-help');
 
     // check first before submitting
-    $('#submit-login').on('click', function(event) {
+    $('#submit-login').click((event) => {
         event.preventDefault();
     
         name.trigger('focusout');
@@ -17,7 +17,7 @@ $(document).ready(function () {
        }
     });
 
-    name.on('focusout', function() {
+    name.focusout(() => {
         let help_text = isValidUsername(name.val());
 
         if (help_text === '') {
@@ -27,13 +27,7 @@ $(document).ready(function () {
         }
     });
 
-    name.on('keydown', function() {
-        // name_help.html('');
-        // name_help.removeClass('is-danger is-success');
-        // name.removeClass('is-danger is-success');
-    });
-
-    pw.on('focusout', function() {
+    pw.focusout(() => {
         let help_text = isValidPassword(pw.val());
 
         if (help_text === '') {
