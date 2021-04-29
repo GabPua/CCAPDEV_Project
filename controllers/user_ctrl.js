@@ -1,6 +1,6 @@
 const User = require('../models/user');
 const Follow = require('../models/follow');
-const Posts = require('../models/recipe');
+const Post = require('../models/recipe');
 
 // checks if the credentials inside the cookie are valid
 function redirect (req, res, toRun) {
@@ -22,7 +22,9 @@ const user_controller = {
 
     postCreate: (req, res) => {
       redirect(req, res, async () => {
-          // TODO: Insert doc to recipe
+          console.log(req.body);
+          console.log(req.body.ingredient);
+          res.redirect('./create');
       });
     },
 
@@ -55,7 +57,7 @@ const user_controller = {
             }).lean().exec();
 
             // get number of posts
-            await Posts.find( { user_id: id }, (err, result) => {
+            await Post.find( { user_id: id }, (err, result) => {
                 posts = result.length;
             }).lean().exec();
 
@@ -91,7 +93,7 @@ const user_controller = {
             }
 
             let posts;
-            await Posts.find( { user_id: id }, (err, result) => {
+            await Post.find( { user_id: id }, (err, result) => {
                posts = result;
             }).lean().exec();
 
@@ -144,7 +146,7 @@ const user_controller = {
             let post, invalid = false;
 
             try {
-                await Posts.findById(id, (err, result) => {
+                await Post.findById(id, (err, result) => {
                     if (!err) {
                         post = result;
                     }
@@ -174,7 +176,7 @@ const user_controller = {
                 const pattern = new RegExp(keyword, 'i');
 
                 // query
-                await Posts.find({title: {$regex: pattern} },(err, result) => {
+                await Post.find({title: {$regex: pattern} },(err, result) => {
                     results = result;
                 }).lean().exec();
 
