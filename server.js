@@ -67,6 +67,14 @@ const hbs = exphbs.create({
 
         formatDate: (date) => {
             return date.toLocaleString();
+        },
+
+        getHr: (time) => {
+            return Math.floor(time??0 / 60);
+        },
+
+        getMin: (time) => {
+            return time??0 % 60;
         }
     }
 });
