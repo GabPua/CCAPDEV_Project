@@ -27,4 +27,14 @@ router.get('/search', ctrl.getSearch);
 
 router.get('/logout', ctrl.getLogout);
 
+router.get('/getCheckEmail', ctrl.getCheckEmail);
+
+router.get('/getCheckPassword', ctrl.getCheckPassword);
+
+router.get('/getCheckProf', ctrl.getCheckProf);
+
+router.get('/getCheckPlace', ctrl.getCheckPlace);
+
+router.get('/getCheckDesc', ctrl.getCheckDesc);
+
 module.exports = router;
