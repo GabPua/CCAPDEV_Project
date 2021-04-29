@@ -25,23 +25,121 @@ $(document).ready(function () {
 
     // Validators
     email.on('focusout', function() {
-        let help_text = isValidEmail(email.val());
+        let mail = email.val().toLowerCase();
 
-        if (help_text === '') {
-            updateInputFields(true, email, email_help, email_help_icon, 'Valid email address');
-        } else {
-            updateInputFields(false, email, email_help, email_help_icon, help_text);
-        }
+        // check if already taken
+        $.get('/getCheckEmail', {email: mail}, function (result) {
+            let help_text = '';
+
+            email.addClass('is-updated');
+
+            if (mail === '') {
+                help_text = 'Cannot be left blank';
+            } else if (result === 'good') {
+                help_text = '';
+                email.removeClass('is-updated');
+            } else if (result.email === mail) {
+                help_text = 'Email taken';
+            }
+
+            if (help_text === '') {
+                updateInputFields(true, email, email_help, email_help_icon, 'Valid email address');
+            } else {
+                updateInputFields(false, email, email_help, email_help_icon, help_text);
+            }
+
+            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
+                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                submit.prop('disabled', false);
+            } else {
+                submit.prop('disabled', true);
+            }
+        });
     });
 
     pw.on('focusout', function() {
-        let help_text = isValidPassword(pw.val());
+        let pass = pw.val();
 
-        if (help_text === '') {
-            updateInputFields(true, pw, pw_help, pw_help_icon, 'Valid password');
-        } else {
-            updateInputFields(false, pw, pw_help, pw_help_icon, help_text);
-        }
+        $.get('/getCheckPassword', {password: pass}, function (result) {
+            let help_text = isValidPassword(pass);
+            
+            pw.addClass('is-updated');
+
+            if (result === 'good') {
+                help_text = '';
+                pw.removeClass('is-updated');
+            }
+
+            if (help_text === '') {
+                updateInputFields(true, pw, pw_help, pw_help_icon, 'Valid password');
+            } else {
+                updateInputFields(false, pw, pw_help, pw_help_icon, help_text);
+            }
+
+            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
+                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                submit.prop('disabled', false);
+            } else {
+                submit.prop('disabled', true);
+            }
+        });
+    });
+
+    prof.on('focusout', function () {
+        let profession = prof.val();
+
+        $.get('/getCheckProf', {profession: profession}, function (result) {
+            prof.addClass('is-updated');
+
+            if (result === 'good') {
+                prof.removeClass('is-updated');
+            }
+
+            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
+                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                submit.prop('disabled', false);
+            } else {
+                submit.prop('disabled', true);
+            }
+        });
+    });
+
+    place.on('focusout', function () {
+        let workplace = place.val();
+
+        $.get('/getCheckPlace', {place: workplace}, function (result) {
+            place.addClass('is-updated');
+
+            if (result === 'good') {
+                place.removeClass('is-updated');
+            }
+
+            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
+                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                submit.prop('disabled', false);
+            } else {
+                submit.prop('disabled', true);
+            }
+        });
+    });
+
+    desc.on('focusout', function () {
+        let descript = desc.val();
+
+        $.get('/getCheckDesc', {desc: descript}, function (result) {
+            desc.addClass('is-updated');
+
+            if (result === 'good') {
+                desc.removeClass('is-updated');
+            }
+
+            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
+                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                submit.prop('disabled', false);
+            } else {
+                submit.prop('disabled', true);
+            }
+        });
     });
 
     // Profile picture updating
@@ -88,33 +186,16 @@ $(document).ready(function () {
         desc.val(def_desc);
 
         // remove validations
-        email.removeClass('is-danger is-success');
+        email.removeClass('is-danger is-success is-updated');
         email_help.html('')
         email_help_icon.removeClass();
 
-        pw.removeClass('is-danger is-success');
+        pw.removeClass('is-danger is-success is-updated');
         pw_help.html('');
         pw_help_icon.removeClass();
-    });
 
-    // Changing inputs enables update profile button
-    email.on('keydown', function() {
-        submit.prop('disabled', false);
-    });
-
-    pw.on('keydown', function() {
-        submit.prop('disabled', false);
-    });
-    
-    prof.on('keydown', function() {
-        submit.prop('disabled', false);
-    });
-    
-    place.on('keydown', function() {
-        submit.prop('disabled', false);
-    });
-
-    desc.on('keydown', function() {
-        submit.prop('disabled', false);
+        prof.removeClass('is-updated');
+        place.removeClass('is-updated');
+        desc.removeClass('is-updated');
     });
 })

@@ -199,6 +199,65 @@ const user_controller = {
             res.clearCookie('user_sid');
             res.redirect('/');
         });
+    },
+
+    getCheckEmail: async (req, res) => {
+        let email = req.query.email;
+
+        await User.findOne({email: email}, null, null, (err, result) => {
+            if (result !== null && result._id === req.session._id)
+                res.send('good');
+            else
+                res.send(result);
+        }).lean().exec();
+    },
+
+    getCheckPassword: async (req, res) => {
+        let password = req.query.password;
+        let _id = req.session._id;
+
+        await User.findOne({_id: _id, password: password}, null, null, (err, result) => {
+            if (result !== null)
+                res.send('good');
+            else
+                res.send(result);
+        }).lean().exec();
+    },
+
+    getCheckProf: async (req, res) => {
+        let profession = req.query.profession;
+        let _id = req.session._id;
+
+        await User.findOne({_id: _id, profession: profession}, null, null, (err, result) => {
+            if (result !== null)
+                res.send('good');
+            else
+                res.send(result);
+        }).lean().exec();
+    },
+
+    getCheckPlace: async (req, res) => {
+        let place = req.query.place;
+        let _id = req.session._id;
+
+        await User.findOne({_id: _id, workplace: place}, null, null, (err, result) => {
+            if (result !== null)
+                res.send('good');
+            else
+                res.send(result);
+        }).lean().exec();
+    },
+
+    getCheckDesc: async (req, res) => {
+        let desc = req.query.desc;
+        let _id = req.session._id;
+
+        await User.findOne({_id: _id, desc: desc}, null, null, (err, result) => {
+            if (result !== null)
+                res.send('good');
+            else
+                res.send(result);
+        }).lean().exec();
     }
 }
 
