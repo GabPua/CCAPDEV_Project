@@ -20,20 +20,12 @@ $(document).ready(() => {
     name.focusout(() => {
         let help_text = isValidUsername(name.val());
 
-        if (help_text === '') {
-            updateInputFields(true, name, name_help, null, help_text);
-        } else {
-            updateInputFields(false, name, name_help, null, help_text);
-        }
+        updateInputFields(help_text === '', name, name_help, null, help_text);
     });
 
     pw.focusout(() => {
         let help_text = isValidPassword(pw.val());
 
-        if (help_text === '') {
-            updateInputFields(true, pw, pw_help, null, help_text);
-        } else {
-            updateInputFields(false, pw, pw_help, null, help_text);
-        }
+        updateInputFields(help_text === '', pw, pw_help, null, help_text);
     });
 });

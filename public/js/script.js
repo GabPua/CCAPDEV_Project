@@ -1,3 +1,11 @@
+function isNotEmpty(str) {
+    if (str == null || str.trim() === '') {
+        return 'Field cannot be left blank';
+    } else {
+        return '';
+    }
+}
+
 function isValidUsername(name) {
     if (name == null || name === '') {
         return 'Username cannot be left blank';
@@ -7,9 +15,11 @@ function isValidUsername(name) {
 }
 
 function isValidPassword(pw) {
-    if (pw === '') {
+    const re = /\d/g;
+
+    if (pw == null || pw.trim() === '') {
         return 'Password cannot be left blank';
-    } else if (pw == null) {    // TODO: Addition check stuff
+    } else if (!re.test(pw)) {
         return 'Password must contain at least 1 number';
     } else {
         return '';
@@ -30,31 +40,31 @@ function isValidImageFormat(ext) {
     return ext === 'gif' || ext === 'png' || ext === 'jpeg' || ext === 'jpg';
 }
 
+function isValidNum(t1, t2) {
+    return (parseInt(t1) + parseInt(t2) === 0)? 'Must be greater than 0' : '';
+}
+
 function updateInputFields(isValid, field, help, icon, helpText) {
-    help.html(helpText);
+    help?.html(helpText);
 
     if (isValid) {
         field.removeClass('is-danger');
         field.addClass('is-success');
         
-        help.removeClass('is-danger');
-        help.addClass('is-success');
+        help?.removeClass('is-danger');
+        help?.addClass('is-success');
 
-        if (icon !== null) {
-            icon.removeClass('fas fa-exclamation-triangle');
-            icon.addClass('fas fa-check');
-        }
+        icon?.removeClass('fas fa-exclamation-triangle');
+        icon?.addClass('fas fa-check');
     } else {
         field.removeClass('is-success');
         field.addClass('is-danger');
 
-        help.removeClass('is-success');
-        help.addClass('is-danger');
+        help?.removeClass('is-success');
+        help?.addClass('is-danger');
 
-        if (icon !== null) {
-            icon.removeClass('fas fa-check');
-            icon.addClass('fas fa-exclamation-triangle');
-        }
+        icon?.removeClass('fas fa-check');
+        icon?.addClass('fas fa-exclamation-triangle');
     }
 }
 
