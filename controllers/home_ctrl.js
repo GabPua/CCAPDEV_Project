@@ -13,34 +13,34 @@ const home_controller = {
     },
 
     getAbout: async (req, res) => {
-        let user = null;
+        let path = null;
 
         if (req.session._id && req.cookies.user_sid) {
-            // get user
+            // get user picture
             await User.findById(req.session._id ,(err, result) => {
-                user = result;
+                path = result.picture_path;
             }).lean().exec();
         }
 
         res.render('about', {
             title: page_title,
-            user: user
+            path: path
         });
     },
 
     getFeatured: async (req, res) => {
-        let user = null;
+        let path = null;
 
         if (req.session._id && req.cookies.user_sid) {
-            // get user
+            // get user picture
             await User.findById(req.session._id ,(err, result) => {
-                user = result;
+                path = result.picture_path;
             }).lean().exec();
         }
 
         res.render('featured', {
             title: page_title,
-            user: user
+            path: path
         });
     }
 }

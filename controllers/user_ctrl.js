@@ -22,11 +22,11 @@ function redirect (req, res, toRun) {
 const user_controller = {
     // this is only accessible from home_ctrl, which already verifies login; no need to call for redirect().
     getNewsfeed: async (req, res) => {
-        let user, friends = [], posts = [];
+        let path, friends = [], posts = [];
 
-        // get user
+        // get user picture
         await User.findById(req.session._id ,(err, result) => {
-            user = result;
+            path = result.picture_path;
         }).lean().exec();
 
         // get users that are followed by the logged-in user
@@ -50,22 +50,22 @@ const user_controller = {
         res.render('newsfeed', {
             title: 'ShefHub | Home',
             post: posts,
-            user: user
+            path: path
         });
     },
 
     getCreate: (req, res) => {
         redirect(req, res, async () => {
-            let user;
+            let path;
 
-            // get user
+            // get user picture
             await User.findById(req.session._id ,(err, result) => {
-                user = result;
+                path = result.picture_path;
             }).lean().exec();
 
             res.render('create', {
                 title: 'Create a new recipe',
-                user: user
+                path: path
             });
         });
     },
@@ -144,17 +144,17 @@ const user_controller = {
                     }
                 });
             } else {
-                let user;
+                let path;
                 
-                // get user
+                // get user picture
                 await User.findById(req.session._id ,(err, result) => {
-                    user = result;
+                    path = result.picture_path;
                 }).lean().exec();
 
                 res.render('./create', {
                     post: req.body,
                     err: err,
-                    user: user
+                    path: path
                 });
             }
         });
@@ -171,10 +171,15 @@ const user_controller = {
                 return;
             }
 
-            let user, followers, following, posts;
+            let user, followers, following, posts, path;
+
+            // get user picture
+            await User.findById(req.session._id, (err, result) => {
+                path = result.picture_path;
+            }).lean().exec();
 
             // get user details using id stored in session
-            await User.findById(id ,(err, result) => {
+            await User.findById(id, (err, result) => {
                 user = result;
             }).lean().exec();
 
@@ -199,7 +204,8 @@ const user_controller = {
                 followers: followers,
                 following: following,
                 post: posts,
-                template: 'profile'
+                template: 'profile',
+                path: path
             });
         });
     },
@@ -239,14 +245,15 @@ const user_controller = {
                posts = result;
             }).lean().exec();
 
-            let user;
-            // get user
+            let path;
+
+            // get user picture
             await User.findById(req.session._id ,(err, result) => {
-                user = result;
+                path = result.picture_path;
             }).lean().exec();
 
             res.render('profile', {
-                user: user,
+                path: path,
                 title: "ShefHub | " + req.session._id,
                 posts: posts,
                 template: 'posts'
@@ -263,9 +270,9 @@ const user_controller = {
     getFollow: (req, res) => {
         redirect(req, res, async () => {
             let users = [];
-            const path = req.path.replace('/', '');
+            const route = req.path.replace('/', '');
 
-            if (path === 'followers') {
+            if (route === 'followers') {
                 await Follow.find({following: req.session._id}, 'follower', (err, result) => {
                     result.forEach(async (item) => {
                         let id = item.follower;
@@ -285,18 +292,19 @@ const user_controller = {
                 }).lean().exec();
             }
 
-            let user;
-            // get user
+            let path;
+
+            // get user picture
             await User.findById(req.session._id ,(err, result) => {
-                user = result;
+                path = result.picture_path;
             }).lean().exec();
 
             res.render('profile', {
-                user: user,
                 title: "ShefHub | " + req.session._id,
                 users: users,
                 template: 'follow',
-                path: path
+                path: path,
+                route: route
             });
         });
     },
@@ -321,16 +329,17 @@ const user_controller = {
                 return;
             }
 
-            let user;
-            // get user
-            await User.findById(req.session._id, (err, result) => {
-                user = result;
+            let path;
+
+            // get user picture
+            await User.findById(req.session._id ,(err, result) => {
+                path = result.picture_path;
             }).lean().exec();
 
             res.render('post', {
                 title: 'ShefHub | ' + post.title,
                 post: post,
-                user: user
+                path: path
             });
         });
     },
@@ -339,10 +348,11 @@ const user_controller = {
         redirect(req, res, async () => {
             const { keyword } = req.query
 
-            let user;
-            // get user
+            let path;
+
+            // get user picture
             await User.findById(req.session._id ,(err, result) => {
-                user = result;
+                path = result.picture_path;
             }).lean().exec();
 
             if (keyword) {
@@ -358,12 +368,12 @@ const user_controller = {
                     title: 'Shefhub Search | ' + keyword,
                     query: keyword,
                     results: results,
-                    user: user
+                    path: path
                 });
             } else {
                 res.render('search', {
                     title: 'ShefHub | Search Recipes',
-                    user: user
+                    path: path
                 });
             }
         });
