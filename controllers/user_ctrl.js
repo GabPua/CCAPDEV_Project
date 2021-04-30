@@ -368,6 +368,45 @@ const user_controller = {
             else
                 res.send(result);
         }).lean().exec();
+    },
+
+    getCheckFollow: async (req, res) => {
+        const following = req.query.user_id;
+        const follower = req.session._id;
+
+        await Follow.findOne({follower: follower, following: following}, null, null, (err, result) => {
+            console.log(result);
+            res.send(result);
+        }).exec();
+    },
+
+    postFollow: async (req, res) => {
+        const { follow_id = null,  user_id: following = null} = req.body;
+
+        // _id given for a follow doc
+        if (follow_id) {
+            await Follow.findByIdAndDelete(follow_id, (err, result) => {
+                res.send(result);
+            }).exec();
+        } else {
+            const follower = req.session._id;
+            let isValid;
+
+            // verify user to be followed
+            await User.findById(following, '_id', null, (err, result) => {
+                isValid = result != null;
+            }).exec();
+
+            if (isValid) {
+                let follow = {
+                    follower: follower,
+                    following: following
+                };
+
+                // prevents duplicates
+                res.send(await Follow.findOneAndUpdate(follow, follow, {new: true, upsert: true}));
+            }
+        }
     }
 }
 
