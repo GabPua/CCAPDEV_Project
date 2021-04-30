@@ -164,7 +164,7 @@ fieldset[disabled] .input, fieldset[disabled] .textarea {
     resize: none;
 }
 
-fieldset[disabled]>.field {
+fieldset[disabled].profile-view>.field {
     margin-top: 20px;
     margin-bottom: 20px;
 }
