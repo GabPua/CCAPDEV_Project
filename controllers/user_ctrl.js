@@ -323,7 +323,7 @@ const user_controller = {
 
             let user;
             // get user
-            await User.findById(req.session._id ,(err, result) => {
+            await User.findById(req.session._id, (err, result) => {
                 user = result;
             }).lean().exec();
 
