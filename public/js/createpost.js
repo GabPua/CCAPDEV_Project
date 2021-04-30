@@ -1,15 +1,6 @@
-let img_list, ing_list, dir_list;
 let p_min, p_hr, c_min, c_hr, t_min, t_hr, c_help, p_help;
 
 $(document).ready(() => {
-    img_list = $('#upload-images');
-    ing_list = $('#edit-ingredients');
-    dir_list = $('#edit-directions');
-
-    addImgField();
-    addIngField();
-    addDirField();
-
     p_hr = $('#prep-hr');
     p_min = $('#prep-min');
     p_help = $('#prep-time-help');
@@ -19,6 +10,8 @@ $(document).ready(() => {
     t_hr = $('#total-hr');
     t_min = $('#total-min')
 
+    addImgField();
+    updateTime();
     p_hr.change(() => updateTime('prep'));
     c_hr.change(() => updateTime('cook'));
     p_min.change(() => updateTime('prep'));
@@ -106,26 +99,28 @@ function updateTime(str) {
         hr = c_hr;
         min = c_min;
         help = c_help;
-    } else {
+    } else if (str === 'prep') {
         hr = p_hr;
         min = p_min;
         help = p_help;
     }
 
-    let help_text = isValidNum(hr.val(), min.val());
+    if (str) {
+        let help_text = isValidNum(hr.val(), min.val());
 
-    updateInputFields(help_text === '', hr, null, null, '');
-    updateInputFields(help_text === '', min, help, null, help_text);
+        updateInputFields(help_text === '', hr, null, null, '');
+        updateInputFields(help_text === '', min, help, null, help_text);
+    }
 }
 
 function setup(list, item) {
     list.append(item);
 
-    // prevent submission by remove button
+    // prevent submission by remove buttons
     item.find('button').click((event) => {
         event.preventDefault();
 
-        if (list.children().length > 1) {
+        if (list.children(':not(script)').length > 1) {
             item.remove();
         }
     });
@@ -144,12 +139,15 @@ function updateLabel(input) {
     }
 }
 
+let ing_ctr = 0;
+
 function addImgField() {
+    const img_list = $('#upload-images');
     const newItem = $(
         `<div class='image-item'>
             <div class="file is-info has-name">
                 <label class="file-label">
-                    <input class="file-input" type="file" name="recipe-pic[]">
+                    <input class="file-input" type="file" name="picture[]">
                     <span class="file-cta">
                         <span class="file-icon">
                             <i class="fas fa-upload"></i>
@@ -168,15 +166,16 @@ function addImgField() {
     setup(img_list, newItem);
 }
 
-function addIngField() {
-    const newItem =$(
+function addIngField(q = '', u= '', n= '') {
+    const ing_list = $('#edit-ingredients');
+    const newItem = $(
         `<li> 
             <div class='field is-horizontal'>
-                <input class='input ing-qty' type='number' placeholder='Qty' name='ingredient[][qty]' min='0'>
+                <input class='input ing-qty' type='number' placeholder='Qty' name='ingredient[${ing_ctr}][qty]' min='1' value='${q}'>
 
-                <input class='input ing-unit' type='text' placeholder='Unit' name='ingredient[][unit]'>
+                <input class='input ing-unit' type='text' placeholder='Unit' name='ingredient[${ing_ctr}][unit]' value='${u}'>
 
-                <input class='input ing-name' type='text' placeholder='Ingredient name' name='ingredient[][name]'>     
+                <input class='input ing-name' type='text' placeholder='Ingredient name' name='ingredient[${ing_ctr++}][name]' value='${n}'>     
 
                 <button class='button is-danger is-light'>Remove</button>
             </div>
@@ -201,11 +200,12 @@ function addIngField() {
     setup(ing_list, newItem);
 }
 
-function addDirField() {
+function addDirField(content= '') {
+    const dir_list = $('#edit-directions');
     const newItem = $(
         `<li> 
             <div class='field is-horizontal'>
-                <textarea class='textarea' placeholder='Please include the steps here'></textarea>
+                <textarea class='textarea' placeholder='Please include the steps here' name='direction[]'>${content}</textarea>
                 <button class='button is-danger is-light'>Remove</button>
             </div>
         </li>`);

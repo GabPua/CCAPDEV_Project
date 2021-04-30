@@ -3,44 +3,72 @@
 <main class='is-fullhd fill page-height parallax vegetable-bg' id='create-post'>
     <form class='container content box recipe-view' method='POST'>
         <h1><label for='recipe-title'>Recipe Title</label></h1>
+        {{#if err.title}}
+            <p class='help is-danger'>{{err.title}}</p>
+        {{/if}}
         <input class='input' type='text' id='recipe-title' placeholder='Indicate name of recipe here' name='title' value='{{post.title}}'>
         <p class='help' id='recipe-title-help'></p>
 
         <h3>Images</h3>
-
+        {{#if err.picture}}
+            <p class='help is-danger'>{{err.picture}}</p>
+        {{/if}}
         <div id='upload-images'>
 
         </div>
         <button class='button is-primary is-light' onclick='addImgField()'>Add Image</button>
 
         <h3><label for='recipe-desc'>Description</label></h3>
-        <textarea class='textarea has-fixed-size' placeholder='Place the description here' id='recipe-desc' name='desc'></textarea>
+        {{#if err.desc}}
+            <p class='help is-danger'>{{err.desc}}</p>
+        {{/if}}
+        <textarea class='textarea has-fixed-size' placeholder='Place the description here' id='recipe-desc' name='desc'>{{post.desc}}</textarea>
         <p class='help' id='recipe-desc-help'></p>
 
 
         <h3 class='title'>Ingredients</h3>
+        {{#if err.ingredient}}
+            <p class='help is-danger'>{{err.ingredient}}</p>
+        {{/if}}
         <ol class='content' id='edit-ingredients'>
+            {{#unless post.ingredient}}
+                <script type='text/javascript'>addIngField()</script>
+            {{/unless}}
 
+            {{#each post.ingredient}}
+                <script type='text/javascript'>addIngField('{{this.qty}}', '{{this.unit}}', '{{this.name}}')</script>
+            {{/each}}
         </ol>
         <button class='button add-field is-primary is-light' onclick='addIngField()'>Add Ingredient</button>
 
 
         <h3 class='title'>Directions</h3>
+        {{#if err.direction}}
+            <p class='help is-danger'>{{err.direction}}</p>
+        {{/if}}
         <ol class='content' id='edit-directions'>
+            {{#unless post.direction}}
+                <script type='text/javascript'>addDirField()</script>
+            {{/unless}}
 
+            {{#each post.direction}}
+                <script type='text/javascript'>addDirField('{{this}}')</script>
+            {{/each}}
         </ol>
         <button class='button add-field is-primary is-light' onclick='addDirField()'>Add Step</button>
 
 
         <h3 class='title'>Information</h3>
-
+        {{#if err.information}}
+            <p class='help is-danger'>{{err.information}}</p>
+        {{/if}}
         <div class='field is-horizontal'>
             <div class='field-label is-normal'>
                 <label class='label' for='servings'>Servings size</label>
             </div>
             <div class='field-body'>
                 <div class='control'>
-                    <input class='input' type='number' id='servings' placeholder='e.g. 8' name='serving' min='0' value='{{post.serving}}'>
+                    <input class='input' type='number' id='servings' placeholder='e.g. 8' name='serving' min='1' value='{{post.serving}}'>
                 </div>
                 <p class='help is-danger' id='serving-help'></p>
             </div>
@@ -52,11 +80,11 @@
             </div>
             <div class='field-body'>
                 <div class='control'>
-                    <input class='input' type='number' id='prep-hr' min='0' name='prep-hr' value='{{getHr post.prep_time}}'>
+                    <input class='input' type='number' id='prep-hr' min='0' name='prep_hr' value='{{post.prep_hr}}'>
                 </div>
                 <label for='prep-hr'>hours</label>
                 <div class='control'>
-                    <input class='input' type='number' id='prep-min' min='0' max='59' name='prep-min' value='{{getMin post.prep_time}}'>
+                    <input class='input' type='number' id='prep-min' min='0' max='59' name='prep_min' value='{{post.prep_min}}'>
                 </div>
                 <label for='prep-min'>minutes</label>
                 <p class='help is-danger' id='prep-time-help'></p>
@@ -69,11 +97,11 @@
             </div>
             <div class='field-body'>
                 <div class='control'>
-                    <input class='input' type='number' id='cook-hr' min='0' name='cook-hr' value='{{getHr post.cook_time}}'>
+                    <input class='input' type='number' id='cook-hr' min='0' name='cook_hr' value='{{post.cook_hr}}'>
                 </div>
                 <label for='cook-hr'>hours</label>
                 <div class='control'>
-                    <input class='input' type='number' id='cook-min' min='0' max='59' name='cook-min' value='{{getMin post.cook_time}}'>
+                    <input class='input' type='number' id='cook-min' min='0' max='59' name='cook_min' value='{{post.cook_min}}'>
                 </div>
                 <label for='cook-min'>minutes</label>
                 <p class='help is-danger' id='cook-time-help'></p>

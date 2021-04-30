@@ -2,6 +2,14 @@ const User = require('../models/user');
 const Follow = require('../models/follow');
 const Post = require('../models/recipe');
 
+function isEmpty(str) {
+    return str == null || str.trim() === '';
+}
+
+function isInvalidNum(n) {
+    return n <= 0;
+}
+
 // checks if the credentials inside the cookie are valid
 function redirect (req, res, toRun) {
     if (req.session._id && req.cookies.user_sid) {
@@ -21,11 +29,85 @@ const user_controller = {
     },
 
     postCreate: (req, res) => {
-      redirect(req, res, async () => {
-          console.log(req.body);
-          console.log(req.body.ingredient);
-          res.redirect('./create');
-      });
+        redirect(req, res, async () => {
+            const { title, picture = [], desc, ingredient = [], direction = []} = req.body;
+            let { serving, prep_hr, prep_min, cook_hr, cook_min } = req.body;
+            serving = parseInt(serving);
+            prep_hr = parseInt(prep_hr);
+            prep_min = parseInt(prep_min);
+            cook_hr = parseInt(cook_hr);
+            cook_min = parseInt(cook_min);
+
+            // final validation
+            const err = {};
+
+            if (isEmpty(title)) {
+                err.title = "Missing title";
+            }
+
+            if (isEmpty(desc)) {
+                err.desc = "Missing description";
+            }
+
+            if (isInvalidNum(serving) || isInvalidNum(prep_hr + prep_min) || isInvalidNum(cook_hr + cook_min)) {
+                err.information = "Invalid inputs";
+            }
+
+            let emptyCount = picture.filter(isEmpty).length;
+
+            if (picture.length === emptyCount) {
+                err.picture = 'At least 1 image required';
+            } else if (emptyCount !== 0) {
+                err.picture = 'Please remove empty entries';
+            }
+
+            emptyCount = ingredient.filter(e => {return Object.values(e).filter(isEmpty).length !== 0;}).length;
+
+            if(picture.length === emptyCount) {
+                err.ingredient = 'At least 1 ingredient required';
+            } else if(emptyCount !== 0) {
+                err.ingredient = 'Please remove empty entries';
+            }
+
+            emptyCount = direction.filter(isEmpty).length
+
+            if (direction.length === emptyCount) {
+                err.direction = 'At least 1 procedure required';
+            } else if (emptyCount !== 0) {
+                err.direction = 'Please remove empty entries';
+            }
+
+            if (Object.keys(err).length === 0) {
+                const ingredient_list = [];
+                ingredient.forEach(e => ingredient_list.push(Object.values(e).join(" ")));
+
+                let post = {
+                    user_id: req.session._id,
+                    title: title,
+                    desc: desc,
+                    serving: serving,
+                    picture: picture,
+                    prep_time: prep_hr * 60 + prep_min,
+                    cook_time: cook_hr * 60 + cook_min,
+                    direction: direction,
+                    ingredient: ingredient_list,
+                    date: new Date()
+                };
+
+                await Post.create(post, (err, result) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        res.redirect('/post/' + result._id);
+                    }
+                });
+            } else {
+                res.render('./create', {
+                    post: req.body,
+                    err: err
+                });
+            }
+        });
     },
 
     getProfile: (req, res) => {
