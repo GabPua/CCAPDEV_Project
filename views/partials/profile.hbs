@@ -1,14 +1,17 @@
 <div class='container content box profile-box' id='profile'>
+    {{#unless (isEqual user._id session._id)}}
+        <fieldset disabled>
+    {{/unless}}
+    <form method='POST' id='profile-form' action='/profile'>
+        <div class='columns'>
+            <div class='column is-one-quarter'>
+                <img class='profile-picture center' src='{{user.picture_path}}' alt='profile_picture'>
 
-        <form method='POST' id='profile-form' action='/profile'>
-            <div class='columns'>
-
-                <div class='column is-one-quarter'>
-                    <img class='profile-picture center' src='{{user.picture_path}}' alt='profile_picture'>
-                    <div class='file is-small is-centered'>
-                        <label class='file-label'>
-                            <input class='file-input' name='file' type='file'>
-                            <span class='file-cta'>
+                {{#if (isEqual user._id session._id)}}
+                <div class='file is-small is-centered'>
+                    <label class='file-label'>
+                        <input class='file-input' type='file'>
+                        <span class='file-cta'>
                                 <span class='file-icon'>
                                     <i class='fas fa-upload'></i>
                                 </span>
@@ -16,101 +19,109 @@
                                     Choose a profile picture
                                 </span>
                             </span>
-                        </label>
+                    </label>
+                </div>
+                {{else}}
+                    <a class='button' id='follow-button'></a>
+                {{/if}}
+
+
+                <div class='icon-group'>
+
+                    <div class='icon-group-item'>
+                        <i class='fas fa-users fa-lg fa-fw' title='Followers'></i>
+                        <span id='follower-count'>{{followers}}</span>
+                    </div>
+                    <div class='icon-group-item'>
+                        <i class='fas fa-user-plus fa-lg fa-fw' title='Following'></i>
+                        {{following}}
+                    </div>
+                    <div class='icon-group-item'>
+                        <i class='fas fa-clipboard-list fa-lg fa-fw' title='Recipes'></i>
+                        {{post}} <!-- TODO: complete this -->
                     </div>
 
-                    <div class='icon-group'>
+                </div>
+            </div>
 
-                        <div class='icon-group-item'>
-                            <i class='fas fa-users fa-lg fa-fw' title='Followers'></i>
-                            <span id='follower-count'>{{followers}}</span>
-                        </div>
-                        <div class='icon-group-item'>
-                            <i class='fas fa-user-plus fa-lg fa-fw' title='Following'></i>
-                            {{following}}
-                        </div>
-                        <div class='icon-group-item'>
-                            <i class='fas fa-clipboard-list fa-lg fa-fw' title='Recipes'></i>
-                            {{post}} <!-- TODO: complete this -->
-                        </div>
+            <div class='column'>
+                <!-- Inner columns -->
+                <div class='columns'>
+                    <div class='column'>
 
+                        <fieldset disabled>
+                            <div class='field'>
+                                <label class='label' for='name'>Username</label>
+                                <div class='control has-icons-left has-icons-right'>
+                                    <input class='input' type='text' name='name' value='{{user._id}}' id='name'>
+                                    <span class='icon is-small is-left'>
+                                        <i class='fas fa-user'></i>
+                                    </span>
+                                </div>
+                                <p class='help' id='name-help'></p>
+                            </div>
+                        </fieldset>
+
+                        <div class='field'>
+                            <label class='label' for='email'>Email</label>
+                            <div class='control has-icons-left has-icons-right'>
+                                <input class='input' type='email' placeholder='Email'
+                                       value='{{user.email}}' name='email' id='email'>
+                                <span class='icon is-small is-left'>
+                                                <i class='fas fa-envelope'></i>
+                                            </span>
+                                <span class='icon is-small is-right'>
+                                                <i id='email-help-icon'></i>
+                                            </span>
+                            </div>
+                            <p class='help' id='email-help'></p>
+                        </div>
+                    </div>
+
+                    <div class='column'>
+
+                        {{#if (isEqual user._id session._id)}}
+                        <div class='field'>
+                            <label class='label' for='password'>Password</label>
+                            <div class='control has-icons-left has-icons-right'>
+                                <!-- TODO: Complete this -->
+                                <input class='input' type='password' placeholder='Password' value='{{user.password}}'
+                                       name='password' id='password'>
+                                <span class='icon is-small is-left'>
+                                            <i class='fas fa-lock'></i>
+                                        </span>
+                                <span class='icon is-small is-right'>
+                                            <i id='pw-help-icon'></i>
+                                        </span>
+                            </div>
+                            <p class='help' id='pw-help'></p>
+                        </div>
+                        {{/if}}
+
+                        <div class='field'>
+                            <label class='label' for='profession'>Profession in Cooking</label>
+                            <div class='control has-icons-left'>
+                                <input class='input' type='text' placeholder='(Optional)' value='{{user.profession}}'
+                                       name='profession' id='profession'>
+                                <span class='icon is-small is-left'>
+                                            <i class='fas fa-briefcase'></i>
+                                        </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class='column'>
-                    <!-- Inner columns -->
-                    <div class='columns'>
-                        <div class='column'>
-
-                            <fieldset disabled>
-                                <div class='field'>
-                                    <label class='label' for='name'>Username</label>
-                                    <div class='control has-icons-left has-icons-right'>
-                                        <input class='input' type='text' name='name' value='{{user._id}}' id='name'>
-                                        <span class='icon is-small is-left'>
-                                            <i class='fas fa-user'></i>
-                                        </span>
-                                    </div>
-                                    <p class='help' id='name-help'></p>
-                                </div>
-                            </fieldset>
-
-                            <div class='field'>
-                                <label class='label' for='email'>Email</label>
-                                <div class='control has-icons-left has-icons-right'>
-                                    <input class='input' type='email' placeholder='Email'
-                                           value='{{user.email}}' name='email' id='email'>
-                                    <span class='icon is-small is-left'>
-                                                <i class='fas fa-envelope'></i>
-                                            </span>
-                                    <span class='icon is-small is-right'>
-                                                <i id='email-help-icon'></i>
-                                            </span>
-                                </div>
-                                <p class='help' id='email-help'></p>
-                            </div>
-                        </div>
-
-                        <div class='column'>
-
-                            <div class='field'>
-                                <label class='label' for='password'>Password</label>
-                                <div class='control has-icons-left has-icons-right'>
-                                    <!-- TODO: Complete this -->
-                                    <input class='input' type='password' placeholder='Password' value='{{user.password}}' name='password' id='password'>
-                                    <span class='icon is-small is-left'>
-                                            <i class='fas fa-lock'></i>
-                                        </span>
-                                    <span class='icon is-small is-right'>
-                                            <i id='pw-help-icon'></i>
-                                        </span>
-                                </div>
-                                <p class='help' id='pw-help'></p>
-                            </div>
-
-                            <div class='field'>
-                                <label class='label' for='profession'>Profession in Cooking</label>
-                                <div class='control has-icons-left'>
-                                    <input class='input' type='text' placeholder='(Optional)' value='{{user.profession}}'
-                                           name='profession' id='profession'>
-                                    <span class='icon is-small is-left'>
-                                            <i class='fas fa-briefcase'></i>
-                                        </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class='field'>
-                        <label class='label' for='workplace'>Workplace</label>
-                        <div class='control has-icons-left has-icons-right'>
-                            <input class='input' type='text' placeholder='(Optional)' name='workplace' id='workplace' value='{{user.workplace}}'>
-                            <span class='icon is-small is-left'>
+                <div class='field'>
+                    <label class='label' for='workplace'>Workplace</label>
+                    <div class='control has-icons-left has-icons-right'>
+                        <input class='input' type='text' placeholder='(Optional)' name='workplace' id='workplace'
+                               value='{{user.workplace}}'>
+                        <span class='icon is-small is-left'>
                                     <i class='fas fa-building'></i>
                                 </span>
-                            <p class='help'></p>
-                        </div>
+                        <p class='help'></p>
                     </div>
+                </div>
 
                     <div class='field'>
                         <label class='label' for='desc'>Short Description</label>
@@ -122,7 +133,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
 
+
+                {{#if (isEqual user._id session._id)}}
                     <!-- Buttons -->
                     <div class='field is-grouped is-grouped-right form-buttons'>
                         <div class='control'>
@@ -133,7 +147,12 @@
                             <button class='button is-link is-light' id='cancel-edit-profile'>Cancel</button>
                         </div>
                     </div>
-                </div>
+                {{/if}}
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
+
+    {{#unless (isEqual user._id session._id)}}
+        </fieldset>
+    {{/unless}}
+</div>

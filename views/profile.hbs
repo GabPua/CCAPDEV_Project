@@ -3,39 +3,39 @@
 <main class='is-fullhd fill page-height parallax vegetable-bg flex-col'>
     <div class='tabs is-centered is-boxed is-large profile-tab'>
         <ul>
-            <li {{#ifEquals template 'profile'}}class='is-active'{{/ifEquals}}>
+            <li {{#if (isEqual template 'profile')}}class='is-active'{{/if}}>
                 <a href='/user/{{user._id}}'>
                     <span class='icon is-small'><i class='fas fa-user' aria-hidden='true'></i></span>
                     <span>Profile</span>
                 </a>
             </li>
-            <li {{#ifEquals template 'posts'}}class='is-active'{{/ifEquals}}>
+            <li {{#if (isEqual template 'posts')}}class='is-active'{{/if}}>
                 <a href='/user/{{user._id}}/posts'>
                     <span class='icon is-small'><i class='fas fa-hamburger' aria-hidden='true'></i></span>
-                    <span>My Recipes</span>
+                    <span>Recipes</span>
                 </a>
             </li>
-            <li {{#ifEquals template 'likes'}}class='is-active'{{/ifEquals}}>
+            <li {{#if (isEqual template 'likes')}}class='is-active'{{/if}}>
                 <a href='/user/{{user._id}}/likes'>
                     <span class='icon is-small'><i class='fas fa-heart' aria-hidden='true'></i></span>
                     <span>Liked Recipes</span>
                 </a>
             </li>
 
-            {{#ifEquals user._id session._id}}
-                <li {{#ifEquals ../path 'followers'}}class='is-active'{{/ifEquals}}>
+            {{#if (isEqual user._id session._id)}}
+                <li {{#if (isEqual path 'followers')}}class='is-active'{{/if}}>
                     <a href='/followers'>
                         <span class='icon is-small'><i class='fas fa-users' aria-hidden='true'></i></span>
                         <span>Followers</span>
                     </a>
                 </li>
-                <li {{#ifEquals ../path 'following'}}class='is-active'{{/ifEquals}}>
+                <li {{#if (isEqual path 'following')}}class='is-active'{{/if}}>
                     <a href='/following'>
                         <span class='icon is-small'><i class='fas fa-user-plus' aria-hidden='true'></i></span>
                         <span>Following</span>
                     </a>
                 </li>
-            {{/ifEquals}}
+            {{/if}}
         </ul>
     </div>
 
