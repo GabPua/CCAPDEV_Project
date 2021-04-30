@@ -275,6 +275,10 @@ header .navbar-link:not(.is-arrowless) {
     margin: auto 30px;
 }
 
+#create-post script + li {
+    margin-top: 0.25em;
+}
+
 #edit-ingredients li * {
     margin-right: 10px;
 }
@@ -334,6 +338,10 @@ header .navbar-link:not(.is-arrowless) {
 #create-post .file-name.is-danger {
     border-color: #f14668;
     color: #f14668;
+}
+
+#create-post .file-name.is-success {
+    border-color: #48c774;
 }
 
 #cook-time-help, #prep-time-help {
