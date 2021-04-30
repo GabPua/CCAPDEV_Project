@@ -8,8 +8,8 @@ let recipeSchema = new mongoose.Schema({
     picture: {type: Array, require: true},
     prep_time: {type: Number, require: true},
     cook_time: {type: Number, require: true},
-    direction: {type: String, require: true},
-    ingredient: {type: String, require: true},
+    direction: {type: Array, require: true},
+    ingredient: {type: Array, require: true},
     date: {type: Date, require: true}
 });
 
