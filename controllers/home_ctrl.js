@@ -1,4 +1,5 @@
 const page_title = 'ShefHub | Free Recipes & More';
+const User = require('../models/user');
 
 const home_controller = {
     getIndex: (req, res) => {
@@ -11,15 +12,35 @@ const home_controller = {
         }
     },
 
-    getAbout: (req, res) => {
+    getAbout: async (req, res) => {
+        let user = null;
+
+        if (req.session._id && req.cookies.user_sid) {
+            // get user
+            await User.findById(req.session._id ,(err, result) => {
+                user = result;
+            }).lean().exec();
+        }
+
         res.render('about', {
-            title: page_title
+            title: page_title,
+            user: user
         });
     },
 
-    getFeatured: (req, res) => {
+    getFeatured: async (req, res) => {
+        let user = null;
+
+        if (req.session._id && req.cookies.user_sid) {
+            // get user
+            await User.findById(req.session._id ,(err, result) => {
+                user = result;
+            }).lean().exec();
+        }
+
         res.render('featured', {
-            title: page_title
+            title: page_title,
+            user: user
         });
     }
 }
