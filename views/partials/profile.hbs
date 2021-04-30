@@ -12,13 +12,13 @@
                     <label class='file-label'>
                         <input class='file-input' type='file'>
                         <span class='file-cta'>
-                                <span class='file-icon'>
-                                    <i class='fas fa-upload'></i>
-                                </span>
-                                <span class='file-label'>
-                                    Choose a profile picture
-                                </span>
+                            <span class='file-icon'>
+                                <i class='fas fa-upload'></i>
                             </span>
+                            <span class='file-label'>
+                                Choose a profile picture
+                            </span>
+                        </span>
                     </label>
                 </div>
                 {{else}}
@@ -38,7 +38,7 @@
                     </div>
                     <div class='icon-group-item'>
                         <i class='fas fa-clipboard-list fa-lg fa-fw' title='Recipes'></i>
-                        {{post}} <!-- TODO: complete this -->
+                        {{post}}
                     </div>
 
                 </div>
@@ -67,33 +67,59 @@
                                 <input class='input' type='email' placeholder='Email'
                                        value='{{user.email}}' name='email' id='email'>
                                 <span class='icon is-small is-left'>
-                                                <i class='fas fa-envelope'></i>
-                                            </span>
+                                    <i class='fas fa-envelope'></i>
+                                </span>
                                 <span class='icon is-small is-right'>
-                                                <i id='email-help-icon'></i>
-                                            </span>
+                                    <i id='email-help-icon'></i>
+                                </span>
                             </div>
                             <p class='help' id='email-help'></p>
                         </div>
                     </div>
 
                     <div class='column'>
-
                         {{#if (isEqual user._id session._id)}}
+                        <p id='pw-change-feedback' class='help'></p>
                         <div class='field'>
-                            <label class='label' for='password'>Password</label>
-                            <div class='control has-icons-left has-icons-right'>
-                                <!-- TODO: Complete this -->
-                                <input class='input' type='password' placeholder='Password' value='{{user.password}}'
-                                       name='password' id='password'>
-                                <span class='icon is-small is-left'>
-                                            <i class='fas fa-lock'></i>
-                                        </span>
-                                <span class='icon is-small is-right'>
-                                            <i id='pw-help-icon'></i>
-                                        </span>
+                            <a class='button is-primary' id='change-password-button'>Change Password</a>
+                            <div class="modal">
+                                <div class="modal-background"></div>
+                                <div class="modal-card">
+                                    <header class="modal-card-head">
+                                        <p class="modal-card-title">Change Password</p>
+                                        <button class="delete close" aria-label="close"></button>
+                                    </header>
+                                    <section class="modal-card-body">
+                                        <div class='field'>
+                                            <label class='label' for='old-pass'>Old Password</label>
+                                            <div class='control'>
+                                                <input class='input' type='password' id='old-pass' name='old-pass'>
+                                            </div>
+                                            <p class='help' id='old-pass-help'></p>
+                                        </div>
+
+                                        <div class='field'>
+                                            <label class='label' for='new-pass'>New Password</label>
+                                            <div class='control'>
+                                                <input class='input' type='password' id='new-pass' name='new-pass'>
+                                            </div>
+                                            <p class='help' id='new-pass-help'></p>
+                                        </div>
+
+                                        <div class='field'>
+                                            <label class='label' for='confirm-pass'>Confirm New Password</label>
+                                            <div class='control'>
+                                                <input class='input' type='password' id='confirm-pass' name='confirm-pass'>
+                                            </div>
+                                            <p class='help' id='confirm-pass-help'></p>
+                                        </div>
+                                    </section>
+                                    <footer class="modal-card-foot">
+                                        <a class="button is-success">Save changes</a>
+                                        <a class="button close">Cancel</a>
+                                    </footer>
+                                </div>
                             </div>
-                            <p class='help' id='pw-help'></p>
                         </div>
                         {{/if}}
 
@@ -103,8 +129,8 @@
                                 <input class='input' type='text' placeholder='(Optional)' value='{{user.profession}}'
                                        name='profession' id='profession'>
                                 <span class='icon is-small is-left'>
-                                            <i class='fas fa-briefcase'></i>
-                                        </span>
+                                    <i class='fas fa-briefcase'></i>
+                                </span>
                             </div>
                         </div>
                     </div>
