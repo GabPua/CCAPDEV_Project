@@ -48,7 +48,7 @@
                 {{#if session._id}}
                     <div class='navbar-item has-dropdown is-hoverable'>
                         <a class='navbar-link'>
-                            <img id='header-dp' src='/public/img/default_dp.jpg' alt='profile_picture'>
+                            <img id='header-dp' src='{{user.picture_path}}' alt='profile_picture'>
                         </a>
                         <div class='navbar-dropdown'>
                             <a class='navbar-item' href='/profile'>My Profile</a>

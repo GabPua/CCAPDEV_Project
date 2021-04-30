@@ -16,9 +16,9 @@
             {{/ifMod}}
 
             <div class='tile is-parent is-4'>
-                <a class='tile is-child box' href='/user/{{this}}'>
-                    <img src='public/img/default_dp.jpg' alt='default'>
-                    <p class='subtitle'>{{this}}</p>
+                <a class='tile is-child box' href='/user/{{this._id}}'>
+                    <img src='{{this.picture_path}}' alt='default'>
+                    <p class='subtitle'>{{this._id}}</p>
                 </a>
             </div>
 

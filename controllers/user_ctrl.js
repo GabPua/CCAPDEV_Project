@@ -22,7 +22,12 @@ function redirect (req, res, toRun) {
 const user_controller = {
     // this is only accessible from home_ctrl, which already verifies login; no need to call for redirect().
     getNewsfeed: async (req, res) => {
-        let friends = [], posts = [];
+        let user, friends = [], posts = [];
+
+        // get user
+        await User.findById(req.session._id ,(err, result) => {
+            user = result;
+        }).lean().exec();
 
         // get users that are followed by the logged-in user
         await Follow.find({follower: req.session._id}, 'following', (err, result) => {
@@ -44,14 +49,23 @@ const user_controller = {
 
         res.render('newsfeed', {
             title: 'ShefHub | Home',
-            post: posts
+            post: posts,
+            user: user
         });
     },
 
     getCreate: (req, res) => {
-        redirect(req, res, () => {
+        redirect(req, res, async () => {
+            let user;
+
+            // get user
+            await User.findById(req.session._id ,(err, result) => {
+                user = result;
+            }).lean().exec();
+
             res.render('create', {
-                title: 'Create a new recipe'
+                title: 'Create a new recipe',
+                user: user
             });
         });
     },
@@ -130,9 +144,17 @@ const user_controller = {
                     }
                 });
             } else {
+                let user;
+                
+                // get user
+                await User.findById(req.session._id ,(err, result) => {
+                    user = result;
+                }).lean().exec();
+
                 res.render('./create', {
                     post: req.body,
-                    err: err
+                    err: err,
+                    user: user
                 });
             }
         });
@@ -217,8 +239,14 @@ const user_controller = {
                posts = result;
             }).lean().exec();
 
+            let user;
+            // get user
+            await User.findById(req.session._id ,(err, result) => {
+                user = result;
+            }).lean().exec();
+
             res.render('profile', {
-                user: {_id: id},
+                user: user,
                 title: "ShefHub | " + req.session._id,
                 posts: posts,
                 template: 'posts'
@@ -239,19 +267,32 @@ const user_controller = {
 
             if (path === 'followers') {
                 await Follow.find({following: req.session._id}, 'follower', (err, result) => {
-                    result.forEach((item) => {
-                        users.push(item.follower);
+                    result.forEach(async (item) => {
+                        let id = item.follower;
+                        await User.findById(id, (err, result) => {
+                            users.push(result);
+                        }).lean().exec();
                     });
                 }).lean().exec();
             } else {
                 await Follow.find({follower: req.session._id}, 'following', (err, result) => {
-                    result.forEach((item) => {
-                        users.push(item.following);
+                    result.forEach(async (item) => {
+                        let id = item.following;
+                        await User.findById(id, (err, result) => {
+                            users.push(result);
+                        }).lean().exec();
                     });
                 }).lean().exec();
             }
+
+            let user;
+            // get user
+            await User.findById(req.session._id ,(err, result) => {
+                user = result;
+            }).lean().exec();
+
             res.render('profile', {
-                user: { _id: req.session._id },
+                user: user,
                 title: "ShefHub | " + req.session._id,
                 users: users,
                 template: 'follow',
@@ -280,9 +321,16 @@ const user_controller = {
                 return;
             }
 
+            let user;
+            // get user
+            await User.findById(req.session._id ,(err, result) => {
+                user = result;
+            }).lean().exec();
+
             res.render('post', {
                 title: 'ShefHub | ' + post.title,
-                post: post
+                post: post,
+                user: user
             });
         });
     },
@@ -290,6 +338,12 @@ const user_controller = {
     getSearch: (req, res) => {
         redirect(req, res, async () => {
             const { keyword } = req.query
+
+            let user;
+            // get user
+            await User.findById(req.session._id ,(err, result) => {
+                user = result;
+            }).lean().exec();
 
             if (keyword) {
                 let results;
@@ -303,11 +357,13 @@ const user_controller = {
                 res.render('query', {
                     title: 'Shefhub Search | ' + keyword,
                     query: keyword,
-                    results: results
+                    results: results,
+                    user: user
                 });
             } else {
                 res.render('search', {
-                    title: 'ShefHub | Search Recipes'
+                    title: 'ShefHub | Search Recipes',
+                    user: user
                 });
             }
         });
