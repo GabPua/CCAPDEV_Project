@@ -223,6 +223,20 @@ const user_controller = {
                 desc: desc
             };
 
+            if (req.files && Object.keys(req.files).length > 0) {
+                let pic = req.files.file;
+                let uploadPath = './public/img/profile/' + req.session._id + '.jpg';
+
+                pic.mv(uploadPath, (err) => {
+                    if (err)
+                        console.log('Upload failed');
+                    else {
+                        console.log(req.session._id + '.jpg uploaded successfully');
+                        user['picture_path'] = uploadPath;
+                    }
+                });
+            }
+
             await User.updateOne({_id: req.session._id}, user).lean().exec();
 
             res.redirect('/profile');

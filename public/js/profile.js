@@ -29,7 +29,7 @@ $(document).ready(function () {
     }
 
     const dp = $('.profile-picture');
-    const sub = $("input[type='file']");
+    const sub = $('input[type="file"]');
 
     const cancel = $('#cancel-edit-profile');
     const submit = $('#submit-edit-profile');
@@ -82,7 +82,7 @@ $(document).ready(function () {
             }
 
             if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
                 submit.prop('disabled', false);
             } else {
                 submit.prop('disabled', true);
@@ -112,7 +112,7 @@ $(document).ready(function () {
             }
 
             if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
                 submit.prop('disabled', false);
             } else {
                 submit.prop('disabled', true);
@@ -131,7 +131,7 @@ $(document).ready(function () {
             }
 
             if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
                 submit.prop('disabled', false);
             } else {
                 submit.prop('disabled', true);
@@ -150,7 +150,7 @@ $(document).ready(function () {
             }
 
             if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
                 submit.prop('disabled', false);
             } else {
                 submit.prop('disabled', true);
@@ -169,7 +169,7 @@ $(document).ready(function () {
             }
 
             if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
                 submit.prop('disabled', false);
             } else {
                 submit.prop('disabled', true);
@@ -190,8 +190,10 @@ $(document).ready(function () {
                 dp.attr('src', e.target.result);
                 dp.height(dp.width());
             }
+            sub.addClass('is-updated');
+            submit.prop('disabled', false);
 
-           reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(input.files[0]);
         }
     });
 
