@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const mongoStore = require('connect-mongodb-session')(session);
+const fileUpload = require('express-fileupload');
 
 // get environment variables
 dotenv.config();
@@ -84,6 +85,7 @@ const app = express();
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.use(cookieParser());
+app.use(fileUpload());
 
 // configure user session
 app.use(session({
