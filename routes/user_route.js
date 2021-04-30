@@ -29,7 +29,9 @@ router.get('/logout', ctrl.getLogout);
 
 router.get('/getCheckEmail', ctrl.getCheckEmail);
 
-router.get('/getCheckPassword', ctrl.getCheckPassword);
+router.post('/verifyPassword', ctrl.verifyPassword);
+
+router.post('/updatePassword', ctrl.updatePassword);
 
 router.get('/getCheckProf', ctrl.getCheckProf);
 
