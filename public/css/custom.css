@@ -1,6 +1,11 @@
 /*noinspection CssUnknownTarget*/
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 
+time {
+    color: grey;
+    size: 13px;
+}
+
 /* scrollbar customization */
 .scroll {
     overflow-y: scroll;
@@ -413,4 +418,10 @@ header .navbar-link:not(.is-arrowless) {
     font-weight: normal;
     margin-left: 20px;
     margin-bottom: 10px;
+}
+
+#newsfeed-end {
+    width: 60vw;
+    flex-grow: 0;
+    padding: 2rem;
 }
