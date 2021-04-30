@@ -186,6 +186,16 @@ const user_controller = {
         redirect(req, res, async () => {
 
             // TODO: verify info and update profile in db
+            const { email, password, profession, workplace, desc } = req.body;
+            let user = {
+                email: email,
+                password: password,
+                profession: profession,
+                workplace: workplace,
+                desc: desc
+            };
+
+            await User.updateOne({_id: req.session._id}, user).lean().exec();
 
             res.redirect('/profile');
         });

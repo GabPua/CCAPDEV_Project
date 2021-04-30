@@ -35,9 +35,6 @@ $(document).ready(function () {
 
             if (mail === '') {
                 help_text = 'Cannot be left blank';
-            } else if (result === 'good') {
-                help_text = '';
-                email.removeClass('is-updated');
             } else if (result.email === mail) {
                 help_text = 'Email taken';
             }
@@ -46,6 +43,13 @@ $(document).ready(function () {
                 updateInputFields(true, email, email_help, email_help_icon, 'Valid email address');
             } else {
                 updateInputFields(false, email, email_help, email_help_icon, help_text);
+            }
+
+            if (result === 'good') {
+                email.removeClass('is-updated');
+                email_help.html('');
+                email_help.removeClass('is-danger is-success');
+                email_help_icon.removeClass('fas fa-exclamation-triangle fa-check');
             }
 
             if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
@@ -65,15 +69,17 @@ $(document).ready(function () {
             
             pw.addClass('is-updated');
 
-            if (result === 'good') {
-                help_text = '';
-                pw.removeClass('is-updated');
-            }
-
             if (help_text === '') {
                 updateInputFields(true, pw, pw_help, pw_help_icon, 'Valid password');
             } else {
                 updateInputFields(false, pw, pw_help, pw_help_icon, help_text);
+            }
+
+            if (result === 'good') {
+                pw.removeClass('is-updated');
+                pw_help.html('');
+                pw_help.removeClass('is-danger is-success');
+                pw_help_icon.removeClass('fas fa-exclamation-triangle fa-check');
             }
 
             if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
