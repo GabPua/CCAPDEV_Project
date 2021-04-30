@@ -37,4 +37,8 @@ router.get('/getCheckPlace', ctrl.getCheckPlace);
 
 router.get('/getCheckDesc', ctrl.getCheckDesc);
 
+router.route('/follow')
+    .get(ctrl.getCheckFollow)
+    .post(ctrl.postFollow);
+
 module.exports = router;

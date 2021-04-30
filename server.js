@@ -36,8 +36,8 @@ store.on('error', (error) => {
 const hbs = exphbs.create({
     extname: '.hbs',
     helpers: {
-        ifEquals: (arg1, arg2, options) => {
-            return arg1 === arg2 ? options.fn(this) : options.inverse(this);
+        isEqual: (arg1, arg2) => {
+            return arg1 === arg2;
         },
 
         ifMod: (a, b, c, options) => {

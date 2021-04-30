@@ -1,4 +1,33 @@
 $(document).ready(function () {
+    const follow = $('#follow-button');
+
+    if (follow.length === 1) {
+        const user_id = $('#name').val();
+        const count = $('#follower-count');
+
+        getFollowId(user_id, (isFollowing) => {
+            follow.html(isFollowing? 'Unfollow' : 'Follow');
+        });
+
+        follow.click(async function (event) {
+            event.preventDefault();
+
+            getFollowId(user_id, (follow_id) => {
+                if (follow_id) {
+                    $.post('/follow', {follow_id: follow_id}, () => {
+                        follow.html('Follow');
+                        count.html(parseInt(count.html()) - 1);
+                    });
+                } else {
+                    $.post('/follow', { user_id: user_id }, () => {
+                        follow.html('Unfollow')
+                        count.html(parseInt(count.html()) + 1);
+                    });
+                }
+            });
+        });
+    }
+
     const dp = $('.profile-picture');
     const sub = $("input[type='file']");
 
@@ -204,4 +233,16 @@ $(document).ready(function () {
         place.removeClass('is-updated');
         desc.removeClass('is-updated');
     });
-})
+});
+
+function getFollowId(user_id, callback) {
+    let res;
+
+    $.get('/follow/', {user_id: user_id}, (result) => {
+        res = result;
+    }).done(() => {
+        callback(res);
+    }).fail(() => {
+        callback(false);
+    });
+}
