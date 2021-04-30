@@ -3,9 +3,7 @@ const page_title = 'ShefHub | Free Recipes & More';
 const home_controller = {
     getIndex: (req, res) => {
         if (req.session._id && req.cookies.user_sid) {
-            res.render('newsfeed', {
-                title: 'ShefHub | Home'
-            });
+            require('./user_ctrl').getNewsfeed(req, res);
         } else {
             res.render('home', {
                 title: page_title

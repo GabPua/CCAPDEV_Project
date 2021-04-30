@@ -20,6 +20,34 @@ function redirect (req, res, toRun) {
 }
 
 const user_controller = {
+    // this is only accessible from home_ctrl, which already verifies login; no need to call for redirect().
+    getNewsfeed: async (req, res) => {
+        let friends = [], posts = [];
+
+        // get users that are followed by the logged-in user
+        await Follow.find({follower: req.session._id}, 'following', (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                result.forEach(e => friends.push(e.following));
+            }
+        }).exec();
+
+        // get all posts from followed users sorted from most to least recent
+        await Post.find({user_id: {$in: friends}}, (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                posts = result;
+            }
+        }).sort({ date: -1 }).lean().exec();
+
+        res.render('newsfeed', {
+            title: 'ShefHub | Home',
+            post: posts
+        });
+    },
+
     getCreate: (req, res) => {
         redirect(req, res, () => {
             res.render('create', {
