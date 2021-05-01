@@ -3,16 +3,27 @@
     background-color: white;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    max-width: 1152px;
+    width: 1100px;
+    display: flex;
+    height: 70px;
 }
 
 .profile-tab.tabs.is-boxed li.is-active a {
     color: white;
     background-color: #ffb21c;
+
 }
 
 .tabs.is-boxed.profile-tab ul a {
     border-width: 0;
     border-bottom-width: 1px;
+    height: 100%;
+}
+
+.tabs.is-boxed li {
+    flex-grow: 1;
+    height: 100%;
 }
 
 /* posts/tiles to display recipes */
@@ -118,6 +129,8 @@
     width: 1100px;
     min-height: 580px;
     padding: 40px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 
 #profile .field {
@@ -150,12 +163,22 @@
 
 #profile .file + .icon-group {
     margin-top: 30px;
-
 }
 
-#profile .icon-group-item {
-    display: inline-block;
-    margin: 20px auto;
+#profile .icon-group>div {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#profile .icon-group p {
+    font-size: 18px;
+}
+
+#profile .fa-user-plus {
+    position: relative;
+    left: 5px;
 }
 
 /* profile view */
@@ -207,4 +230,18 @@ fieldset[disabled] .columns {
 
 #profile .form-buttons .control:first-child {
     flex: auto;
+}
+
+#field-columns .column:nth-child(2) {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+#profession {
+    margin-bottom: 22px;
+}
+
+#sensitive-fields {
+    display: flex;
+
 }
