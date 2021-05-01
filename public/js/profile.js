@@ -225,6 +225,13 @@ $(document).ready(function () {
         }
     });
 
+    $('body').click(function (event) {
+        if (event.target.classList.contains('modal-background')) {
+            $('.modal').removeClass('is-active');
+            $('html').removeClass('is-clipped');
+        }     
+    });
+
     $('#change-password-button').click(() => {
         $('.modal').addClass('is-active');
         $('html').addClass('is-clipped');
