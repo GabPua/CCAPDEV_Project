@@ -1,6 +1,11 @@
 const User = require('../models/user');
 const Follow = require('../models/follow');
 const Post = require('../models/recipe');
+const crypto = require('crypto-js');
+const dotenv = require('dotenv');
+
+dotenv.config();
+const key = process.env.SECRET || 'hushPuppy123';
 
 function isEmpty(str) {
     return str == null || str.trim() === '';
@@ -213,11 +218,9 @@ const user_controller = {
     postProfile: (req, res) => {
         redirect(req, res, async () => {
 
-            // TODO: verify info and update profile in db
-            const { email, password, profession, workplace, desc } = req.body;
+            const { email, profession, workplace, desc } = req.body;
             let user = {
                 email: email,
-                password: password,
                 profession: profession,
                 workplace: workplace,
                 desc: desc
@@ -237,7 +240,7 @@ const user_controller = {
                 });
             }
 
-            await User.updateOne({_id: req.session._id}, user).lean().exec();
+            await User.updateOne({_id: req.session._id}, user).exec();
 
             res.redirect('/profile');
         });
@@ -266,9 +269,12 @@ const user_controller = {
                 path = result.picture_path;
             }).lean().exec();
 
+            console.log(id);
+
             res.render('profile', {
+                user: { _id: id },
                 path: path,
-                title: "ShefHub | " + req.session._id,
+                title: "ShefHub | " + id,
                 posts: posts,
                 template: 'posts'
             });
@@ -314,6 +320,7 @@ const user_controller = {
             }).lean().exec();
 
             res.render('profile', {
+                user: { _id: req.session._id },
                 title: "ShefHub | " + req.session._id,
                 users: users,
                 template: 'follow',
@@ -412,16 +419,29 @@ const user_controller = {
         }).lean().exec();
     },
 
-    getCheckPassword: async (req, res) => {
-        let password = req.query.password;
-        let _id = req.session._id;
+    verifyPassword: async (req, res) => {
+        let password = req.body.password;
 
-        await User.findOne({_id: _id, password: password}, null, null, (err, result) => {
-            if (result !== null)
-                res.send('good');
-            else
-                res.send(result);
+        await User.findById( req.session._id, (err, result) => {
+            res.send(result != null && password === crypto.AES.decrypt(result.password, key).toString(crypto.enc.Utf8));
         }).lean().exec();
+    },
+
+    updatePassword: async (req, res) => {
+        const { old_pass, new_pass } = req.body;
+        let isValid;
+
+        // final verification
+        await User.findById(req.session._id, (err, result) => {
+            isValid = result != null && old_pass === crypto.AES.decrypt(result.password, key).toString(crypto.enc.Utf8);
+            console.log(result);
+        }).lean().exec();
+
+        if (isValid) {
+            await User.findByIdAndUpdate(req.session._id, { password: crypto.AES.encrypt(new_pass, key).toString() }).lean().exec();
+        }
+
+        res.send(isValid);
     },
 
     getCheckProf: async (req, res) => {

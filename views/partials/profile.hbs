@@ -2,7 +2,7 @@
     {{#unless (isEqual user._id session._id)}}
         <fieldset disabled class='profile-view'>
     {{/unless}}
-    <form method='POST' id='profile-form' action='/profile' enctype='multipart/form-data'>
+    <form method='POST' id='profile-form' action='/profile' enctype='multipart/form-data' autocomplete='off'>
         <div class='columns'>
             <div class='column is-one-quarter'>
                 <img class='profile-picture center' src='{{user.picture_path}}' alt='profile_picture'>
@@ -12,54 +12,113 @@
                     <label class='file-label'>
                         <input class='file-input' name='file' type='file'>
                         <span class='file-cta'>
-                                <span class='file-icon'>
-                                    <i class='fas fa-upload'></i>
-                                </span>
-                                <span class='file-label'>
-                                    Choose a profile picture
-                                </span>
+                            <span class='file-icon'>
+                                <i class='fas fa-upload'></i>
                             </span>
+                            <span class='file-label'>
+                                Choose a profile picture
+                            </span>
+                        </span>
                     </label>
                 </div>
                 {{else}}
                     <a class='button' id='follow-button'></a>
                 {{/if}}
-
-
                 <div class='icon-group'>
-
-                    <div class='icon-group-item'>
-                        <i class='fas fa-users fa-lg fa-fw' title='Followers'></i>
-                        <span id='follower-count'>{{followers}}</span>
-                    </div>
-                    <div class='icon-group-item'>
-                        <i class='fas fa-user-plus fa-lg fa-fw' title='Following'></i>
-                        {{following}}
-                    </div>
-                    <div class='icon-group-item'>
-                        <i class='fas fa-clipboard-list fa-lg fa-fw' title='Recipes'></i>
-                        {{post}} <!-- TODO: complete this -->
+                    <div>
+                        <div class='icon-text'>
+                            <span class='icon is-large'>
+                                <i class='fas fa-users fa-2x fa-fw' title='Followers'></i>
+                            </span>
+                        </div>
+                        <p class='block' id='follower-count'>{{followers}}</p>
                     </div>
 
+                    <div>
+                        <div class='icon-text'>
+                            <span class='icon is-large'>
+                                <i class='fas fa-user-plus fa-2x fa-fw' title='Following'></i>
+                            </span>
+                        </div>
+                        <p class='block'>{{following}}</p>
+                    </div>
+
+                    <div>
+                        <div class='icon-text'>
+                            <span class='icon is-large'>
+                                <i class='fas fa-clipboard-list fa-2x fa-fw' title='Recipes'></i>
+                            </span>
+                        </div>
+                        <p class='block'>{{post}}</p>
+                    </div>
                 </div>
             </div>
 
-            <div class='column'>
+            <div class='column' id='field-columns'>
                 <!-- Inner columns -->
                 <div class='columns'>
                     <div class='column'>
-                        <fieldset disabled>
-                            <div class='field'>
-                                <label class='label' for='name'>Username</label>
-                                <div class='control has-icons-left has-icons-right'>
-                                    <input class='input' type='text' name='name' value='{{user._id}}' id='name'>
-                                    <span class='icon is-small is-left'>
+                        <div id='sensitive-fields'>
+                            <fieldset disabled>
+                                <div class='field'>
+                                    <label class='label' for='name'>Username</label>
+                                    <div class='control has-icons-left has-icons-right'>
+                                        <input class='input' type='text' name='name' value='{{user._id}}' id='name'>
+                                        <span class='icon is-small is-left'>
                                         <i class='fas fa-user'></i>
                                     </span>
+                                    </div>
+                                    <p class='help' id='name-help'></p>
                                 </div>
-                                <p class='help' id='name-help'></p>
-                            </div>
-                        </fieldset>
+                            </fieldset>
+                            {{#if (isEqual user._id session._id)}}
+                                <div>
+                                    <p id='pw-change-feedback' class='help'></p>
+                                    <div class='field'>
+                                        <a class='button is-primary' id='change-password-button'>Change Password</a>
+                                        <div class="modal">
+                                            <div class="modal-background"></div>
+                                            <div class="modal-card">
+                                                <header class="modal-card-head">
+                                                    <p class="modal-card-title">Change Password</p>
+                                                    <button class="delete close" aria-label="close"></button>
+                                                </header>
+                                                <section class="modal-card-body">
+                                                    <div class='field'>
+                                                        <label class='label' for='old-pass'>Old Password</label>
+                                                        <div class='control'>
+                                                            <input class='input' type='password' id='old-pass' name='old-pass'>
+                                                        </div>
+                                                        <p class='help' id='old-pass-help'></p>
+                                                    </div>
+
+                                                    <div class='field'>
+                                                        <label class='label' for='new-pass'>New Password</label>
+                                                        <div class='control'>
+                                                            <input class='input' type='password' id='new-pass' name='new-pass'>
+                                                        </div>
+                                                        <p class='help' id='new-pass-help'></p>
+                                                    </div>
+
+                                                    <div class='field'>
+                                                        <label class='label' for='confirm-pass'>Confirm New Password</label>
+                                                        <div class='control'>
+                                                            <input class='input' type='password' id='confirm-pass' name='confirm-pass'>
+                                                        </div>
+                                                        <p class='help' id='confirm-pass-help'></p>
+                                                    </div>
+                                                </section>
+                                                <footer class="modal-card-foot">
+                                                    <a class="button is-success">Save changes</a>
+                                                    <a class="button close">Cancel</a>
+                                                </footer>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {{/if}}
+                        </div>
 
                         <div class='field'>
                             <label class='label' for='email'>Email</label>
@@ -67,44 +126,25 @@
                                 <input class='input' type='email' placeholder='Email'
                                        value='{{user.email}}' name='email' id='email'>
                                 <span class='icon is-small is-left'>
-                                                <i class='fas fa-envelope'></i>
-                                            </span>
+                                    <i class='fas fa-envelope'></i>
+                                </span>
                                 <span class='icon is-small is-right'>
-                                                <i id='email-help-icon'></i>
-                                            </span>
+                                    <i id='email-help-icon'></i>
+                                </span>
                             </div>
                             <p class='help' id='email-help'></p>
                         </div>
                     </div>
 
                     <div class='column'>
-
-                        {{#if (isEqual user._id session._id)}}
-                        <div class='field'>
-                            <label class='label' for='password'>Password</label>
-                            <div class='control has-icons-left has-icons-right'>
-                                <!-- TODO: Complete this -->
-                                <input class='input' type='password' placeholder='Password' value='{{user.password}}'
-                                       name='password' id='password'>
-                                <span class='icon is-small is-left'>
-                                            <i class='fas fa-lock'></i>
-                                        </span>
-                                <span class='icon is-small is-right'>
-                                            <i id='pw-help-icon'></i>
-                                        </span>
-                            </div>
-                            <p class='help' id='pw-help'></p>
-                        </div>
-                        {{/if}}
-
                         <div class='field'>
                             <label class='label' for='profession'>Profession in Cooking</label>
                             <div class='control has-icons-left'>
                                 <input class='input' type='text' placeholder='(Optional)' value='{{user.profession}}'
                                        name='profession' id='profession'>
                                 <span class='icon is-small is-left'>
-                                            <i class='fas fa-briefcase'></i>
-                                        </span>
+                                    <i class='fas fa-briefcase'></i>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -136,6 +176,9 @@
                 {{#if (isEqual user._id session._id)}}
                     <!-- Buttons -->
                     <div class='field is-grouped is-grouped-right form-buttons'>
+                        <div class='control'>
+                            <button class='button is-link is-danger' id='delete-profile'>Delete Account</button>
+                        </div>
                         <div class='control'>
                             <input type='submit' class='button is-link' id='submit-edit-profile' value='Update Profile'
                                    disabled>

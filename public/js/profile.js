@@ -1,6 +1,11 @@
 $(document).ready(function () {
     const follow = $('#follow-button');
 
+    $(window).resize(function() {
+        $('.tabs.profile-tab').width($('#profile').outerWidth());
+    });
+
+    // if there is a follow button
     if (follow.length === 1) {
         const user_id = $('#name').val();
         const count = $('#follower-count');
@@ -26,6 +31,8 @@ $(document).ready(function () {
                 }
             });
         });
+
+        return;
     }
 
     const dp = $('.profile-picture');
@@ -35,7 +42,6 @@ $(document).ready(function () {
     const submit = $('#submit-edit-profile');
 
     const email = $('input[type="email"]');
-    const pw = $('input[type="password"]');
     const prof = $('#profession');
     const place = $('#workplace');
     const desc = $('textarea');
@@ -43,14 +49,19 @@ $(document).ready(function () {
     const email_help = $('#email-help');
     const email_help_icon = $('#email-help-icon');
 
-    const pw_help = $('#pw-help');
-    const pw_help_icon = $('#pw-help-icon');
-
     let def_email = email.val();
-    let def_pw = pw.val();
     let def_prof = prof.val();
     let def_place = place.val();
     let def_desc = desc.val();
+
+    function updateSubmitButton() {
+        if (email.hasClass('is-updated') || prof.hasClass('is-updated') ||
+            place.hasClass('is-updated') || desc.hasClass('is-updated')) {
+            submit.prop('disabled', false);
+        } else {
+            submit.prop('disabled', true);
+        }
+    }
 
     // Validators
     email.on('focusout', function() {
@@ -81,46 +92,11 @@ $(document).ready(function () {
                 email_help_icon.removeClass('fas fa-exclamation-triangle fa-check');
             }
 
-            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
-                submit.prop('disabled', false);
-            } else {
-                submit.prop('disabled', true);
-            }
+            updateSubmitButton();
         });
     });
 
-    pw.on('focusout', function() {
-        let pass = pw.val();
-
-        $.get('/getCheckPassword', {password: pass}, function (result) {
-            let help_text = isValidPassword(pass);
-            
-            pw.addClass('is-updated');
-
-            if (help_text === '') {
-                updateInputFields(true, pw, pw_help, pw_help_icon, 'Valid password');
-            } else {
-                updateInputFields(false, pw, pw_help, pw_help_icon, help_text);
-            }
-
-            if (result === 'good') {
-                pw.removeClass('is-updated');
-                pw_help.html('');
-                pw_help.removeClass('is-danger is-success');
-                pw_help_icon.removeClass('fas fa-exclamation-triangle fa-check');
-            }
-
-            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
-                submit.prop('disabled', false);
-            } else {
-                submit.prop('disabled', true);
-            }
-        });
-    });
-
-    prof.on('focusout', function () {
+    prof.focusout(function () {
         let profession = prof.val();
 
         $.get('/getCheckProf', {profession: profession}, function (result) {
@@ -130,16 +106,11 @@ $(document).ready(function () {
                 prof.removeClass('is-updated');
             }
 
-            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
-                submit.prop('disabled', false);
-            } else {
-                submit.prop('disabled', true);
-            }
+            updateSubmitButton();
         });
     });
 
-    place.on('focusout', function () {
+    place.focusout(function () {
         let workplace = place.val();
 
         $.get('/getCheckPlace', {place: workplace}, function (result) {
@@ -149,16 +120,11 @@ $(document).ready(function () {
                 place.removeClass('is-updated');
             }
 
-            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
-                submit.prop('disabled', false);
-            } else {
-                submit.prop('disabled', true);
-            }
+            updateSubmitButton();
         });
     });
 
-    desc.on('focusout', function () {
+    desc.focusout(function () {
         let descript = desc.val();
 
         $.get('/getCheckDesc', {desc: descript}, function (result) {
@@ -168,12 +134,7 @@ $(document).ready(function () {
                 desc.removeClass('is-updated');
             }
 
-            if (email.hasClass('is-updated') || pw.hasClass('is-updated') || prof.hasClass('is-updated') ||
-                place.hasClass('is-updated') || desc.hasClass('is-updated') || sub.hasClass('is-updated')) {
-                submit.prop('disabled', false);
-            } else {
-                submit.prop('disabled', true);
-            }
+            updateSubmitButton();
         });
     });
 
@@ -198,26 +159,21 @@ $(document).ready(function () {
     });
 
     // Button effects
-    submit.on('click', function(event) {
+    submit.click(function(event) {
         event.preventDefault();
-
         email.trigger('focusout');
-        pw.trigger('focusout');
 
-        let valid = email.hasClass('is-success') && pw.hasClass('is-success');
-
-        if (valid) {
+        if (email.hasClass('is-success')) {
             $('#profile-form').submit();
         }
     })
 
-    cancel.on('click', function(event) {
+    cancel.click(function(event) {
         event.preventDefault();
 
         // refresh data
         submit.prop('disabled', true);
         email.val(def_email);
-        pw.val(def_pw);
         prof.val(def_prof);
         place.val(def_place);
         desc.val(def_desc);
@@ -227,13 +183,85 @@ $(document).ready(function () {
         email_help.html('')
         email_help_icon.removeClass();
 
-        pw.removeClass('is-danger is-success is-updated');
-        pw_help.html('');
-        pw_help_icon.removeClass();
-
         prof.removeClass('is-updated');
         place.removeClass('is-updated');
         desc.removeClass('is-updated');
+    });
+
+    // change password
+
+    const old_pass = $('#old-pass');
+    const new_pass = $('#new-pass');
+    const confirm_pass = $('#confirm-pass');
+    const pw_inputs = $('.modal .input');
+
+    const old_pass_help = $('#old-pass-help');
+    const new_pass_help = $('#new-pass-help');
+    const confirm_pass_help = $('#confirm-pass-help');
+
+    const pw_feedback = $('#pw-change-feedback');
+
+    old_pass.focusout(() => {
+        $.post('/verifyPassword', { password: old_pass.val() }, function (isMatch) {
+            if (isMatch) {
+                updateInputFields(true, old_pass, old_pass_help, null, '');
+            } else {
+                updateInputFields(false, old_pass, old_pass_help, null, 'Password is incorrect');
+            }
+        });
+    });
+
+    new_pass.focusout(() => {
+        let help_text = isValidPassword(new_pass.val());
+
+        updateInputFields(help_text === '', new_pass, new_pass_help, null, help_text);
+    });
+
+    confirm_pass.focusout(() => {
+        if (new_pass.val() === confirm_pass.val()) {
+            updateInputFields(true, confirm_pass, confirm_pass_help, null, 'Matches with new password')
+        } else {
+            updateInputFields(false, confirm_pass, confirm_pass_help, null, 'Does not match with new password');
+        }
+    });
+
+    $('#change-password-button').click(() => {
+        $('.modal').addClass('is-active');
+        $('html').addClass('is-clipped');
+    });
+
+    $('.close').click((event) => {
+        event.preventDefault();
+        $('.modal').removeClass('is-active');
+        $('html').removeClass('is-clipped');
+
+        pw_inputs.val('').removeClass('is-success is-danger');
+        $('.modal .help').html('');
+        pw_feedback.html('');
+    });
+
+    pw_inputs.keydown(event => {
+       if (event.keyCode === 13) {
+           event.preventDefault();
+           $('.modal a.is-success').trigger('click');
+       }
+    });
+
+    $('.modal a.is-success').click(() => {
+        pw_inputs.trigger('focusout');
+
+        if (pw_inputs.filter('.is-success').length === pw_inputs.length) {
+            $.post('/updatePassword', {old_pass: old_pass.val(), new_pass: new_pass.val()}, (isSuccess) => {
+                if (isSuccess) {
+                    pw_feedback.html('Password has been changed').addClass('is-success');
+                } else {
+                    pw_feedback.html('An error has occurred. Password was not changed.').addClass('is-danger');
+                }
+
+                $('.modal').removeClass('is-active');
+                $('html').removeClass('is-clipped');
+            });
+        }
     });
 });
 
