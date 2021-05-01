@@ -204,3 +204,7 @@ fieldset[disabled] .columns {
 #profile .modal-card-title {
     margin-bottom: 0;
 }
+
+#profile .form-buttons .control:first-child {
+    flex: auto;
+}
