@@ -1,34 +1,40 @@
 <div class='container content box profile-box people-display'>
-    <div class='container search-bar-container'>
-        <p class='control has-icons-left'>
-            <input class='input is-rounded search' type='text' aria-label='search input' aria-expanded='false'
-                   placeholder='Search from {{route}}'>
-            <span class='icon is-small is-left'>
+    {{#if users}}
+        <div class='container search-bar-container'>
+            <p class='control has-icons-left'>
+                <input class='input is-rounded search' type='text' aria-label='search input' aria-expanded='false'
+                       placeholder='Search from {{route}}'>
+                <span class='icon is-small is-left'>
                 <i class='fas fa-search'></i>
             </span>
-        </p>
-    </div>
+            </p>
+        </div>
+    {{/if}}
 
-    <div class='container tile-root scroll'>
+    {{#if users}}
+        <div class='container tile-root scroll'>
         {{#each users}}
             {{#ifMod @index 3 0}}
                 <div class='tile is-ancestor'>
             {{/ifMod}}
 
-            <div class='tile is-parent is-4 data'>
-                <a class='tile is-child box' href='/user/{{this._id}}'>
-                    <img src='{{this.picture_path}}' alt='default'>
-                    <p class='subtitle'>{{this._id}}</p>
-                </a>
-            </div>
+                <div class='tile is-parent is-4 data'>
+                    <a class='tile is-child box' href='/user/{{this._id}}'>
+                        <img src='{{this.picture_path}}' alt='default'>
+                        <p class='subtitle'>{{this._id}}</p>
+                    </a>
+                </div>
 
             {{#if @last}}
                 </div>
             {{else}}
                 {{#ifMod @index 3 2}}
-                </div>
+                    </div>
                 {{/ifMod}}
             {{/if}}
         {{/each}}
-    </div>
+        </div>
+    {{else}}
+        <h1 class='no-content'>No {{route}} yet</h1>
+    {{/if}}
 </div>

@@ -1,4 +1,5 @@
 <div class='container content box profile-box menu-display'>
+    {{#if posts}}
     <div class='container search-bar-container'>
         <p class='control has-icons-left'>
             <input class='input is-rounded search' type='text' aria-label='search input' aria-expanded='false'
@@ -8,6 +9,7 @@
             </span>
         </p>
     </div>
+    {{/if}}
 
     {{#if posts}}
         <div class='tile is-ancestor scroll'>
@@ -33,7 +35,7 @@
             {{/each}}
         </div>
     {{else}}
-        <h1 class='no-posts'>No favorites yet</h1>
+        <h1 class='no-content'>No favorites yet</h1>
     {{/if}}
     </div>
 </div>

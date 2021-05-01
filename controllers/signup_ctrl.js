@@ -5,12 +5,12 @@ dotenv.config();
 const key = process.env.SECRET || 'hushPuppy1234';
 
 function isValidPassword(pw) {
-    if (pw === '') {
-        return false;
-    } else if (pw == null) {    // TODO: Addition check stuff
+    const re = /\d/g;
+
+    if (pw == null || pw.trim() === '') {
         return false;
     } else {
-        return true;
+        return re.test(pw);
     }
 }
 
@@ -54,7 +54,8 @@ const signup_ctrl = {
             let user = {
                 _id: name,
                 email: email,
-                password: crypto.AES.encrypt(password, key).toString()
+                password: crypto.AES.encrypt(password, key).toString(),
+                picture_path: '/public/img/profile/default_dp.jpg'
             };
 
             User.create(user, (err) => {
