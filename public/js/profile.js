@@ -52,7 +52,7 @@ $(document).ready(function () {
     });
 
     const dp = $('.profile-picture');
-    const sub = $("input[type='file']");
+    const sub = $('input[type="file"]');
 
     const cancel = $('#cancel-edit-profile');
     const submit = $('#submit-edit-profile');
@@ -167,8 +167,10 @@ $(document).ready(function () {
                 dp.attr('src', e.target.result);
                 dp.height(dp.width());
             }
+            sub.addClass('is-updated');
+            submit.prop('disabled', false);
 
-           reader.readAsDataURL(input.files[0]);
+            reader.readAsDataURL(input.files[0]);
         }
     });
 
@@ -237,6 +239,13 @@ $(document).ready(function () {
         } else {
             updateInputFields(false, confirm_pass, confirm_pass_help, null, 'Does not match with new password');
         }
+    });
+
+    $('body').click(function (event) {
+        if (event.target.classList.contains('modal-background')) {
+            $('.modal').removeClass('is-active');
+            $('html').removeClass('is-clipped');
+        }     
     });
 
     $('#change-password-button').click(() => {
