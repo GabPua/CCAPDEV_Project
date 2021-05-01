@@ -153,8 +153,14 @@
                 <div class='field'>
                     <label class='label' for='workplace'>Workplace</label>
                     <div class='control has-icons-left has-icons-right'>
-                        <input class='input' type='text' placeholder='(Optional)' name='workplace' id='workplace'
-                               value='{{user.workplace}}'>
+                        {{#if (isEqual user._id session._id)}}
+                            <input class='input' type='text' placeholder='(Optional)' name='workplace' id='workplace'
+                                   value='{{user.workplace}}'>
+                        {{else}}
+                            <input class='input' type='text' name='workplace' id='workplace'
+                                   value='{{#if user.workplace}}{{user.workplace}}{{else}}N/A{{/if}}'>
+                        {{/if}}
+
                         <span class='icon is-small is-left'>
                                     <i class='fas fa-building'></i>
                                 </span>
@@ -167,7 +173,12 @@
                     <div class='field-body'>
                         <div class='field'>
                             <div class='control'>
-                                <textarea class='textarea' placeholder='(Optional)' name='desc' id='desc'>{{user.desc}}</textarea>
+                                {{#if (isEqual user._id session._id)}}
+                                    <textarea class='textarea' placeholder='(Optional)' name='desc' id='desc'>{{user.desc}}</textarea>
+                                {{else}}
+                                    <textarea class='textarea' name='desc' id='desc'>{{#if user.desc}}{{user.desc}}{{else}}N/A{{/if}}</textarea>
+                                {{/if}}
+
                             </div>
                         </div>
                     </div>

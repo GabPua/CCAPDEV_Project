@@ -27,7 +27,7 @@
 }
 
 /* posts/tiles to display recipes */
-.profile-box .no-posts {
+.profile-box .no-content {
     align-self: center;
     color: gray;
 }
