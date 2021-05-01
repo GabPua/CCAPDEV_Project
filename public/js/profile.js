@@ -1,6 +1,10 @@
 $(document).ready(function () {
     const follow = $('#follow-button');
 
+    $(window).resize(function() {
+        $('.tabs.profile-tab').width($('#profile').outerWidth());
+    });
+
     // if there is a follow button
     if (follow.length === 1) {
         const user_id = $('#name').val();
