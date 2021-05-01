@@ -245,3 +245,7 @@ fieldset[disabled] .columns {
     display: flex;
 
 }
+
+#name {
+    padding-right: 0.5em;
+}

@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    const follow = $('#follow-button');
-
     $(window).resize(function() {
         $('.tabs.profile-tab').width($('#profile').outerWidth());
     });
+
+    const follow = $('#follow-button');
 
     // if there is a follow button
     if (follow.length === 1) {
@@ -34,6 +34,22 @@ $(document).ready(function () {
 
         return;
     }
+
+    const search = $('.search');
+    const data = $('.data');
+
+    search.keyup(() => {
+        const val = $.trim(search.val()).toUpperCase();
+
+        if (val === '') {
+            data.show();
+        } else {
+            data.hide();
+            data.filter(function() {
+                return -1 !== $(this).find('p').html().toUpperCase().indexOf(val);
+            }).show();
+        }
+    });
 
     const dp = $('.profile-picture');
     const sub = $("input[type='file']");

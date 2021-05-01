@@ -1,12 +1,22 @@
 <div class='container content box profile-box menu-display'>
+    <div class='container search-bar-container'>
+        <p class='control has-icons-left'>
+            <input class='input is-rounded search' type='text' aria-label='search input' aria-expanded='false'
+                   placeholder='Search from {{route}}'>
+            <span class='icon is-small is-left'>
+                <i class='fas fa-search'></i>
+            </span>
+        </p>
+    </div>
+
     {{#if posts}}
-        <div class='tile is-ancestor'>
+        <div class='tile is-ancestor scroll'>
             <div class='tile is-vertical'>
             {{#each posts}}
                 {{#ifMod @index 2 0}}
                 <div class='tile'>
                 {{/ifMod}}
-                <div class='tile is-parent' style='background: url(/public/img/roasted_potatoes1.jpg)'>
+                <div class='tile is-parent data' style='background: url(/public/img/roasted_potatoes1.jpg)'>
                     <a href='/post/{{this._id}}'>
                         <div class='is-child box'>
                             <p class='title'>{{this.title}}</p>
@@ -25,15 +35,5 @@
     {{else}}
         <h1 class='no-posts'>No favorites yet</h1>
     {{/if}}
-</div>
-
-    <section class='section post-navigation'>
-        <nav class='pagination is-centered is-small' role='navigation' aria-label='pagination'>
-            <a class='pagination-previous' disabled='true'>＜</a>
-            <a class='pagination-next' disabled='true'>＞</a>
-            <ul class='pagination-list'>
-                <li><a class='pagination-link is-current' aria-label='Goto page 1'>1</a></li>
-            </ul>
-        </nav>
-    </section>
+    </div>
 </div>
