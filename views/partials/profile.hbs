@@ -2,7 +2,7 @@
     {{#unless (isEqual user._id session._id)}}
         <fieldset disabled class='profile-view'>
     {{/unless}}
-    <form method='POST' id='profile-form' action='/profile' autocomplete='off'>
+    <form method='POST' id='profile-form' action='/profile' enctype='multipart/form-data' autocomplete='off'>
         <div class='columns'>
             <div class='column is-one-quarter'>
                 <img class='profile-picture center' src='{{user.picture_path}}' alt='profile_picture'>
@@ -10,7 +10,7 @@
                 {{#if (isEqual user._id session._id)}}
                 <div class='file is-small is-centered'>
                     <label class='file-label'>
-                        <input class='file-input' type='file'>
+                        <input class='file-input' name='file' type='file'>
                         <span class='file-cta'>
                             <span class='file-icon'>
                                 <i class='fas fa-upload'></i>
@@ -76,7 +76,7 @@
                                     <p id='pw-change-feedback' class='help'></p>
                                     <div class='field'>
                                         <a class='button is-primary' id='change-password-button'>Change Password</a>
-                                        <div class="modal">
+                                        <div class="modal" id='modal-body'>
                                             <div class="modal-background"></div>
                                             <div class="modal-card">
                                                 <header class="modal-card-head">
