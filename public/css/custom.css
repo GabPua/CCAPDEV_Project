@@ -9,6 +9,8 @@ time {
 /* scrollbar customization */
 .scroll {
     overflow-y: scroll;
+    padding-left: 10px;
+    padding-right: 15px;
 }
 
 ::-webkit-scrollbar {
