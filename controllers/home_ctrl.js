@@ -1,5 +1,6 @@
 const page_title = 'ShefHub | Free Recipes & More';
 const User = require('../models/user');
+const Post = require('../models/recipe');
 
 const home_controller = {
     getIndex: (req, res) => {
@@ -38,9 +39,19 @@ const home_controller = {
             }).lean().exec();
         }
 
-        res.render('featured', {
-            title: page_title,
-            path: path
+        let post;
+        Post.count().exec((err, count) => {
+            const random = Math.floor(Math.random() * count);
+
+            Post.findOne().skip(random).lean().exec((err, result) => {
+                post = result;
+                console.log(post);
+                res.render('post', {
+                    title: 'ShefHub | ' + post.title,
+                    post: post,
+                    path: path
+                });
+            });
         });
     }
 }

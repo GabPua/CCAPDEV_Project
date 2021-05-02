@@ -10,6 +10,28 @@
                 <strong id='votes'>{{sum}}</strong>
                 <i class='fas fa-chevron-down fa-2x downvote'></i>
             </div>
+
+            {{#if session._id}}
+                <div class='modal' id='modal-body'>
+                <div class='modal-background'></div>
+                <div class='modal-card'>
+                    <header class='modal-card-head'>
+                        <p class='modal-card-title'>Sign up to vote!</p>
+                        <button class='delete' aria-label='close' id='close'></button>
+                    </header>
+                    <section class='modal-card-body'>
+                        Log-in or register to vote on posts and see more recipes.
+                        Join our community to improve your cooking skills and interact with other chefs
+                        around the globe!
+                    </section>
+                    <footer class='modal-card-foot'>
+                        <a class='button is-primary' href='/signup'><strong>Sign up</strong></a>
+                        <a class='button' href='/login'>Log in</a>
+                    </footer>
+                </div>
+            </div>
+            {{/if}}
+
             <div class='column slider'>
                 <!-- Inner columns -->
                 <div class='columns' id='food-pic'
