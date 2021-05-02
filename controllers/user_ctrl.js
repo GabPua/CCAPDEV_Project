@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Follow = require('../models/follow');
 const Post = require('../models/recipe');
+const Vote = require('../models/vote');
 const crypto = require('crypto-js');
 const dotenv = require('dotenv');
 
@@ -200,7 +201,7 @@ const user_controller = {
             }).lean().exec();
 
             // get number of posts
-            await Post.find( { user_id: id }, (err, result) => {
+            await Post.find( { user: id }, (err, result) => {
                 posts = result.length;
             }).lean().exec();
 
@@ -250,41 +251,45 @@ const user_controller = {
     getPosts: (req, res) => {
         redirect(req, res, async () => {
             let id = req.params.id;
+            const route = req.path.split('/').pop();
 
             if (id == null) {
                 id = req.session._id;
             } else if (id === req.session._id) {
-                res.redirect('/posts');
+                res.redirect('/' + route);
                 return;
             }
 
             let posts;
-            await Post.find( { user_id: id }, (err, result) => {
-               posts = result;
-            }).lean().exec();
+            if (route === 'posts') {
+                await Post.find( { user: id }, (err, result) => {
+                    posts = result;
+                }).lean().exec();
+            } else {
+                let post_ids;
+                await Vote.find({user: id, value: 1}, (err, result) => {
+                    post_ids = result.map(a => a.recipe);
+                }).lean().exec();
+
+                await Post.find({_id: {$in: post_ids}}, (err, result) => {
+                    posts = result;
+                }).lean().exec();
+            }
 
             let path;
-
             // get user picture
             await User.findById(req.session._id ,(err, result) => {
                 path = result.picture_path;
             }).lean().exec();
-
-            console.log(id);
 
             res.render('profile', {
                 user: { _id: id },
                 path: path,
                 title: "ShefHub | " + id,
                 posts: posts,
-                template: 'posts'
+                template: 'posts',
+                route: route
             });
-        });
-    },
-
-    getLikes: (req, res) => {
-        redirect(req, res, async () => {
-
         });
     },
 
