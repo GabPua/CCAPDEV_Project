@@ -249,7 +249,12 @@ $(document).ready(function () {
     });
 
     $('#change-password-button').click(() => {
-        $('.modal').addClass('is-active');
+        $('#pw-modal').addClass('is-active');
+        $('html').addClass('is-clipped');
+    });
+
+    $('#delete-profile').click(() => {
+        $('#delete-modal').addClass('is-active');
         $('html').addClass('is-clipped');
     });
 
