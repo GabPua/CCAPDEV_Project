@@ -76,7 +76,7 @@
                                     <p id='pw-change-feedback' class='help'></p>
                                     <div class='field'>
                                         <a class='button is-primary' id='change-password-button'>Change Password</a>
-                                        <div class="modal" id='modal-body'>
+                                        <div class="modal" id='pw-modal'>
                                             <div class="modal-background"></div>
                                             <div class="modal-card">
                                                 <header class="modal-card-head">
@@ -187,8 +187,25 @@
                 {{#if (isEqual user._id session._id)}}
                     <!-- Buttons -->
                     <div class='field is-grouped is-grouped-right form-buttons'>
-                        <div class='control'>
-                            <button class='button is-link is-danger' id='delete-profile'>Delete Account</button>
+                        <div class='field'>
+                            <a class='button is-link is-danger' id='delete-profile'>Delete Account</a>
+                            <div class='modal' id='delete-modal'>
+                                <div class='modal-background'></div>
+                                <div class='modal-card'>
+                                    <header class='modal-card-head'>
+                                        <p class='modal-card-title'>Warning!</p>
+                                        <button class='delete close' aria-label='close'></button>
+                                    </header>
+                                    <section class='modal-card-body'>
+                                        Deleting your account will result to a loss of all of your data.
+                                        Are you sure you want to delete your account?
+                                    </section>
+                                    <footer class='modal-card-foot'>
+                                        <a class='button is-primary' href='/getDeleteAccount'><strong>Yes</strong></a>
+                                        <a class='button close'>Cancel</a>
+                                    </footer>
+                                </div>
+                            </div>
                         </div>
                         <div class='control'>
                             <input type='submit' class='button is-link' id='submit-edit-profile' value='Update Profile'

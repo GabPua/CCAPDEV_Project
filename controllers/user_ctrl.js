@@ -131,7 +131,7 @@ const user_controller = {
                 ingredient.forEach(e => ingredient_list.push(Object.values(e).join(" ")));
 
                 let post = {
-                    user_id: req.session._id,
+                    user: req.session._id,
                     title: title,
                     desc: desc,
                     serving: serving,
@@ -203,6 +203,7 @@ const user_controller = {
             // get number of posts
             await Post.find( { user: id }, (err, result) => {
                 posts = result.length;
+                console.log(result);
             }).lean().exec();
 
             res.render('profile', {
@@ -523,6 +524,30 @@ const user_controller = {
                 res.send(await Follow.findOneAndUpdate(follow, follow, {new: true, upsert: true}));
             }
         }
+    },
+
+    getDeleteAccount: (req, res) => {
+        redirect(req, res, async () => {
+            const id = req.session._id;
+
+            // delete user's following and followers
+            let delFollowing = await Follow.deleteMany({follower: id}).exec();
+            let delFollower = await Follow.deleteMany({following: id}).exec();
+
+            // TODO: Delete user's comments and comments of others on user's posts
+
+            // deleete user's posts
+            let delPost = await Post.deleteMany({user: id}).exec();
+
+            // delete user
+            await User.findByIdAndDelete(id).exec();
+
+            console.log('Followings removed: ' + delFollowing.deletedCount);
+            console.log('Followers removed: ' + delFollower.deletedCount);
+            console.log('Posts removed: ' + delPost.deletedCount);
+
+            res.redirect('/logout');
+        });
     }
 }
 

@@ -30,11 +30,12 @@ const home_controller = {
     },
 
     getFeatured: async (req, res) => {
-        let path = null;
+        let user = null, path = null;
 
         if (req.session._id && req.cookies.user_sid) {
-            // get user picture
-            await User.findById(req.session._id ,(err, result) => {
+            // get user
+            await User.findById(req.session._id, (err, result) => {
+                user = result;
                 path = result.picture_path;
             }).lean().exec();
         }
@@ -49,7 +50,8 @@ const home_controller = {
                 res.render('post', {
                     title: 'ShefHub | ' + post.title,
                     post: post,
-                    path: path
+                    path: path,
+                    user: user
                 });
             });
         });
