@@ -44,13 +44,14 @@ const user_controller = {
         }).exec();
 
         // get all posts from followed users sorted from most to least recent
-        await Post.find({user_id: {$in: friends}}, (err, result) => {
+        await Post.find({user: {$in: friends}}, (err, result) => {
             if (err) {
                 console.log(err);
             } else {
+                console.log(result)
                 posts = result;
             }
-        }).sort({ date: -1 }).lean().exec();
+        }).sort({ date: -1 }).populate('user').lean().exec();
 
         res.render('newsfeed', {
             title: 'ShefHub | Home',
@@ -383,7 +384,7 @@ const user_controller = {
                 // query
                 await Post.find({title: {$regex: pattern} },(err, result) => {
                     results = result;
-                }).lean().exec();
+                }).populate('user').lean().exec();
 
                 res.render('query', {
                     title: 'Shefhub Search | ' + keyword,

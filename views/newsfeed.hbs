@@ -13,14 +13,14 @@
             <div class='card-content'>
                 <div class='media'>
                     <div class='media-left'>
-                        <a href='/user/{{this.user_id}}' class='image is-48x48'>
-                            <img class='is-rounded' src='/public/img/profile/foodelicious.jpg' alt='Placeholder image'>
+                        <a href='/user/{{this.user._id}}' class='image is-48x48'>
+                            <img class='is-rounded' src='{{this.user.picture_path}}' alt='Placeholder image'>
                         </a>
                     </div>
                     <div class='media-content'>
                         <a href='/post/{{this._id}}' class='title is-4'>{{this.title}}</a>
                         <br>
-                        <a href='/user/{{this.user_id}}' class='subtitle is-6'>{{this.user_id}}</a>
+                        <a href='/user/{{this.user._id}}' class='subtitle is-6'>{{this.user._id}}</a>
                     </div>
                 </div>
 
