@@ -9,7 +9,6 @@ $(document).ready(function () {
     const downvote = $('.downvote');
     const votes = $('#votes');
 
-    const outside = $('.logged-out');
     const close = $('#close');
 
     carousel.on('click', function () {
@@ -58,54 +57,65 @@ $(document).ready(function () {
         pic.attr('style', newUrl);
     });
 
-    upvote.on('click', function () {
-        if (upvote.hasClass('is-active')) {
-            upvote.removeClass('is-active');
-            let num_votes = Number(votes.html());
-            votes.html(num_votes - 1);
-        } else {
-            let num_votes = Number(votes.html());
+    const modal = $('.modal');
 
-            if (downvote.hasClass('is-active')) {
-                downvote.removeClass('is-active');
-                num_votes += 1;
+    if (modal.length > 0) {
+        $(document).on('click', function (e) {
+            if (e.target.id !== 'modal-body' && !e.target.classList.contains('logged-out')) {
+                modal.removeClass('is-active');
+                $('html').removeClass('is-clipped');
             }
-            upvote.addClass('is-active');
-            votes.html(num_votes + 1);
-        }
-    });
+        });
 
-    downvote.on('click', function () {
-        if (downvote.hasClass('is-active')) {
-            downvote.removeClass('is-active');
-            let num_votes = Number(votes.html());
-            votes.html(num_votes + 1);
-        } else {
-            let num_votes = Number(votes.html());
+        close.on('click', function () {
+            modal.removeClass('is-active');
+            $('html').removeClass('is-clipped');
+        });
 
+        upvote.click(e => {
+           modal.addClass('is-active');
+            $('html').addClass('is-clipped');
+            e.stopPropagation();
+        });
+
+        downvote.click(e => {
+            modal.addClass('is-active');
+            $('html').addClass('is-clipped');
+            e.stopPropagation();
+        });
+    } else {
+        upvote.on('click', function () {
             if (upvote.hasClass('is-active')) {
                 upvote.removeClass('is-active');
-                num_votes -= 1;
+                let num_votes = Number(votes.html());
+                votes.html(num_votes - 1);
+            } else {
+                let num_votes = Number(votes.html());
+
+                if (downvote.hasClass('is-active')) {
+                    downvote.removeClass('is-active');
+                    num_votes += 1;
+                }
+                upvote.addClass('is-active');
+                votes.html(num_votes + 1);
             }
-            downvote.addClass('is-active');
-            votes.html(num_votes - 1);
-        }
-    });
+        });
 
-    $(document).on('click', function (e) {
-        if (e.target.id !== 'modal-body' && !e.target.classList.contains('logged-out')) {
-            $('.modal').removeClass('is-active');
-            $('html').removeClass('is-clipped');
-        }
-    });
+        downvote.on('click', function () {
+            if (downvote.hasClass('is-active')) {
+                downvote.removeClass('is-active');
+                let num_votes = Number(votes.html());
+                votes.html(num_votes + 1);
+            } else {
+                let num_votes = Number(votes.html());
 
-    outside.on('click', function () {
-        $('.modal').addClass('is-active');
-        $('html').addClass('is-clipped');
-    });
-
-    close.on('click', function () {
-        $('.modal').removeClass('is-active');
-        $('html').removeClass('is-clipped');
-    });
+                if (upvote.hasClass('is-active')) {
+                    upvote.removeClass('is-active');
+                    num_votes -= 1;
+                }
+                downvote.addClass('is-active');
+                votes.html(num_votes - 1);
+            }
+        });
+    }
 });
