@@ -46,7 +46,7 @@ const home_controller = {
 
             Post.findOne().skip(random).lean().exec((err, result) => {
                 post = result;
-                console.log(post);
+
                 res.render('post', {
                     title: 'ShefHub | ' + post.title,
                     post: post,
