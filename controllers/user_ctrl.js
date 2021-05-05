@@ -49,7 +49,6 @@ const user_controller = {
             if (err) {
                 console.log(err);
             } else {
-                console.log(result)
                 posts = result;
             }
         }).sort({ date: -1 }).populate('user').lean().exec();
@@ -203,7 +202,6 @@ const user_controller = {
             // get number of posts
             await Post.find( { user: id }, (err, result) => {
                 posts = result.length;
-                console.log(result);
             }).lean().exec();
 
             res.render('profile', {
@@ -357,17 +355,38 @@ const user_controller = {
                 return;
             }
 
-            let path;
+            let path, user;
 
             // get user picture
             await User.findById(req.session._id ,(err, result) => {
+                user = result;
                 path = result.picture_path;
             }).lean().exec();
 
-            res.render('post', {
-                title: 'ShefHub | ' + post.title,
-                post: post,
-                path: path
+            let comments;
+
+            await Comment.find({recipe: post._id, reply_to: null}).sort({date: 1}).populate('user').lean().exec((err, results) => {
+                let ctr = 0;
+                comments = results;
+
+                // get replies for each comment and append the array to the comment object
+                comments.forEach(async e => {
+                    await Comment.find({reply_to: e._id}, (err, replies) => {
+                        e.replies = replies;
+                    }).sort({date: 1}).populate('user').lean().exec();
+                    ctr++;
+
+
+                    if (ctr === results.length) {
+                        res.render('post', {
+                            title: 'ShefHub | ' + post.title,
+                            post: post,
+                            path: path,
+                            user: user,
+                            comments: comments
+                        });
+                    }
+                });
             });
         });
     },
@@ -441,7 +460,6 @@ const user_controller = {
         // final verification
         await User.findById(req.session._id, (err, result) => {
             isValid = result != null && old_pass === crypto.AES.decrypt(result.password, key).toString(crypto.enc.Utf8);
-            console.log(result);
         }).lean().exec();
 
         if (isValid) {
@@ -492,7 +510,6 @@ const user_controller = {
         const follower = req.session._id;
 
         await Follow.findOne({follower: follower, following: following}, null, null, (err, result) => {
-            console.log(result);
             res.send(result);
         }).exec();
     },

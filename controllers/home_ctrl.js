@@ -45,8 +45,8 @@ const home_controller = {
         await Post.countDocuments().exec(async (err, count) => {
             const random = Math.floor(Math.random() * count);
 
-            // Post.findOne().skip(random).lean().exec( (err, result) => {
-            Post.findById("608973abcf8aff3cbc15ea43").lean().exec( (err, result) => {
+            // find a post
+            Post.findOne().skip(random).lean().exec( (err, result) => {
                 post = result;
 
                 // get comments in post
@@ -54,6 +54,7 @@ const home_controller = {
                     let ctr = 0;
                     comments = results;
 
+                    // get replies for each comment and append the array to the comment object
                     comments.forEach(async e => {
                         await Comment.find({reply_to: e._id}, (err, replies) => {
                             e.replies = replies;
@@ -62,8 +63,6 @@ const home_controller = {
 
 
                         if (ctr === results.length) {
-                            console.log('RENDERING RESULTS')
-                            console.log(comments);
                             res.render('post', {
                                 title: 'ShefHub | ' + post.title,
                                 post: post,
