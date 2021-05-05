@@ -427,3 +427,7 @@ header .navbar-link:not(.is-arrowless) {
     flex-grow: 0;
     padding: 2rem;
 }
+
+.media a strong {
+    color: #363636;
+}

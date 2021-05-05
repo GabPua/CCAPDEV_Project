@@ -1,6 +1,7 @@
 const page_title = 'ShefHub | Free Recipes & More';
 const User = require('../models/user');
 const Post = require('../models/recipe');
+const Comment = require('../models/comment');
 
 const home_controller = {
     getIndex: (req, res) => {
@@ -40,18 +41,38 @@ const home_controller = {
             }).lean().exec();
         }
 
-        let post;
-        Post.count().exec((err, count) => {
+        let post, comments;
+        await Post.countDocuments().exec(async (err, count) => {
             const random = Math.floor(Math.random() * count);
 
-            Post.findOne().skip(random).lean().exec((err, result) => {
+            // Post.findOne().skip(random).lean().exec( (err, result) => {
+            Post.findById("608973abcf8aff3cbc15ea43").lean().exec( (err, result) => {
                 post = result;
 
-                res.render('post', {
-                    title: 'ShefHub | ' + post.title,
-                    post: post,
-                    path: path,
-                    user: user
+                // get comments in post
+                Comment.find({recipe: post._id, reply_to: null}).sort({date: 1}).populate('user').lean().exec( (err, results) => {
+                    let ctr = 0;
+                    comments = results;
+
+                    comments.forEach(async e => {
+                        await Comment.find({reply_to: e._id}, (err, replies) => {
+                            e.replies = replies;
+                        }).sort({date: 1}).populate('user').lean().exec();
+                        ctr++;
+
+
+                        if (ctr === results.length) {
+                            console.log('RENDERING RESULTS')
+                            console.log(comments);
+                            res.render('post', {
+                                title: 'ShefHub | ' + post.title,
+                                post: post,
+                                path: path,
+                                user: user,
+                                comments: comments
+                            });
+                        }
+                    });
                 });
             });
         });
