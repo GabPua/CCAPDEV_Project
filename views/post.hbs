@@ -90,119 +90,70 @@
         </div>
 
         <h3 class='title'>Comments</h3>
-        <article class='media'>
-            <figure class='media-left'>
-                <p class='image is-64x64'>
-                    <img class='is-rounded' src='/public/img/suzanne.jpg' alt='suzanne'>
-                </p>
-            </figure>
-            <div class='media-content'>
-                <div class='content'>
-                    <p>
-                        <strong>Suzanne</strong>
-                        <br>
-                        Wow, this is so good!
-                        <br>
-                        <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
+        {{#each comments}}
+            <article class='media'>
+                <figure class='media-left'>
+                    <p class='image is-64x64'>
+                        <img class='is-rounded' src='{{this.user.picture_path}}' alt='{{this.user._id}}'>
                     </p>
-                </div>
-
-                <article class='media'>
-                    <figure class='media-left'>
-                        <p class='image is-48x48'>
-                            <img class='is-rounded' src='/public/img/default_dp.jpg' alt='default'>
+                </figure>
+                <div class='media-content'>
+                    <div class='content'>
+                        <p>
+                            <a href='/user/{{this.user._id}}'><strong>{{this.user._id}}</strong></a>
+                            <br>
+                            {{this.body}}
+                            <br>
+                            <small><a>Reply</a> · 1 hr</small>
                         </p>
-                    </figure>
-                    <div class='media-content'>
-                        <div class='content'>
-                            <p>
-                                <strong>MasterChef1001</strong>
-                                <br>
-                                I know, right? And it's so easy to prepare too.
-                                <br>
-                                <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                            </p>
-                        </div>
                     </div>
-                </article>
 
-                <article class='media'>
-                    <figure class='media-left'>
-                        <p class='image is-48x48'>
-                            <img class='is-rounded' src='/public/img/foodelicious.jpg' alt='foodelicious'>
+                    {{#each this.replies}}
+                        <article class='media'>
+                            <figure class='media-left'>
+                                <p class='image is-48x48'>
+                                    <img class='is-rounded' src='{{this.user.picture_path}}' alt='{{this.user._id}}'>
+                                </p>
+                            </figure>
+                            <div class='media-content'>
+                                <div class='content'>
+                                    <p>
+                                        <a href='/user/{{this.user._id}}'><strong>{{this.user._id}}</strong></a>
+                                        <br>
+                                        {{this.body}}
+                                        <br>
+                                        <small>1 hr</small>
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    {{/each}}
+                </div>
+            </article>
+        {{/each}}
+
+
+        {{#if session._id}}
+            <article class='media'>
+                <figure class='media-left'>
+                    <p class='image is-64x64'>
+                        <img class='is-rounded' src='{{user.picture_path}}' alt='{{user._id}}'>
+                    </p>
+                </figure>
+                <div class='media-content'>
+                    <div class='field'>
+                        <p class='control'>
+                            <textarea class='textarea has-fixed-size' placeholder='Add a comment...'></textarea>
                         </p>
-                    </figure>
-                    <div class='media-content'>
-                        <div class='content'>
-                            <p>
-                                <strong>foodelicious</strong>
-                                <br>
-                                Thanks for the support, guys!
-                                <br>
-                                <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                            </p>
-                        </div>
                     </div>
-                </article>
-            </div>
-        </article>
-
-        <article class='media'>
-            <figure class='media-left'>
-                <p class='image is-64x64'>
-                    <img class='is-rounded' src='/public/img/esmee.jpg' alt='suzanne'>
-                </p>
-            </figure>
-            <div class='media-content'>
-                <div class='content'>
-                    <p>
-                        <strong>Esmee</strong>
-                        <br>
-                        Way too simple, but so deliciousss
-                        <br>
-                        <small><a>Like</a> · <a>Reply</a> · 1 hr</small>
-                    </p>
-                </div>
-
-                <article class='media'>
-                    <figure class='media-left'>
-                        <p class='image is-48x48'>
-                            <img class='is-rounded' src='/public/img/foodelicious.jpg' alt='default'>
+                    <div class='field'>
+                        <p class='control'>
+                            <button class='button'>Post comment</button>
                         </p>
-                    </figure>
-                    <div class='media-content'>
-                        <div class='content'>
-                            <p>
-                                <strong>foodelicious</strong>
-                                <br>
-                                Glad to hear that, Esmee!
-                                <br>
-                                <small><a>Like</a> · <a>Reply</a> · 1 hr</small>
-                            </p>
-                        </div>
                     </div>
-                </article>
-            </div>
-        </article>
+                </div>
+            </article>
+        {{/if}}
 
-        <article class='media'>
-            <figure class='media-left'>
-                <p class='image is-64x64'>
-                    <img class='is-rounded' src='{{user.picture_path}}' alt='{{user._id}}'>
-                </p>
-            </figure>
-            <div class='media-content'>
-                <div class='field'>
-                    <p class='control'>
-                        <textarea class='textarea has-fixed-size' placeholder='Add a comment...'></textarea>
-                    </p>
-                </div>
-                <div class='field'>
-                    <p class='control'>
-                        <button class='button'>Post comment</button>
-                    </p>
-                </div>
-            </div>
-        </article>
     </div>
 </main>
