@@ -4,6 +4,7 @@ const Post = require('../models/recipe');
 const Vote = require('../models/vote');
 const crypto = require('crypto-js');
 const dotenv = require('dotenv');
+const home_ctrl = require('./home_ctrl');
 
 dotenv.config();
 const key = process.env.SECRET || 'hushPuppy123';
@@ -231,7 +232,7 @@ const user_controller = {
                 let pic = req.files.file;
                 let uploadPath = './public/img/profile/' + req.session._id + '.jpg';
 
-                pic.mv(uploadPath, (err) => {
+                await pic.mv(uploadPath, (err) => {
                     if (err)
                         console.log('Upload failed');
                     else {
@@ -338,56 +339,20 @@ const user_controller = {
     getRecipe: (req, res) => {
         redirect(req, res, async () => {
             const id = req.params.id;
-            let post, invalid = false;
 
             try {
                 await Post.findById(id, (err, result) => {
-                    if (!err) {
-                        post = result;
+                    if (result) {
+                        // pass recipe_id as post info
+                        req.body.recipe_id = id;
+                        home_ctrl.getFeatured(req, res);
+                    } else {
+                        res.redirect('/404NotFound');
                     }
                 }).lean().exec();
-            } catch (err) {
-                invalid = true;
-            }
-
-            if (invalid || post == null) {
+            } catch(e) {
                 res.redirect('/404NotFound');
-                return;
             }
-
-            let path, user;
-
-            // get user picture
-            await User.findById(req.session._id ,(err, result) => {
-                user = result;
-                path = result.picture_path;
-            }).lean().exec();
-
-            let comments;
-
-            await Comment.find({recipe: post._id, reply_to: null}).sort({date: 1}).populate('user').lean().exec((err, results) => {
-                let ctr = 0;
-                comments = results;
-
-                // get replies for each comment and append the array to the comment object
-                comments.forEach(async e => {
-                    await Comment.find({reply_to: e._id}, (err, replies) => {
-                        e.replies = replies;
-                    }).sort({date: 1}).populate('user').lean().exec();
-                    ctr++;
-
-
-                    if (ctr === results.length) {
-                        res.render('post', {
-                            title: 'ShefHub | ' + post.title,
-                            post: post,
-                            path: path,
-                            user: user,
-                            comments: comments
-                        });
-                    }
-                });
-            });
         });
     },
 
