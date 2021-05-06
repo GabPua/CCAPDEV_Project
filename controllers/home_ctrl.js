@@ -43,10 +43,15 @@ const home_controller = {
 
         let post, comments;
         await Post.countDocuments().exec(async (err, count) => {
-            const random = Math.floor(Math.random() * count);
+            let random = Math.floor(Math.random() * count), id = {};
+
+            if (req.body.recipe_id) {
+                id = { _id: req.body.recipe_id };
+                random = 0;
+            }
 
             // find a post
-            Post.findOne().skip(random).lean().exec( (err, result) => {
+            Post.findOne(id).skip(random).lean().exec( (err, result) => {
                 post = result;
 
                 // get comments in post
@@ -61,7 +66,7 @@ const home_controller = {
                         }).sort({date: 1}).populate('user').lean().exec();
                         ctr++;
 
-
+                        // load page when all replies have been found
                         if (ctr === results.length) {
                             res.render('post', {
                                 title: 'ShefHub | ' + post.title,
@@ -72,6 +77,16 @@ const home_controller = {
                             });
                         }
                     });
+
+                    // no comments were found
+                    if (comments.length === 0) {
+                        res.render('post', {
+                            title: 'ShefHub | ' + post.title,
+                            post: post,
+                            path: path,
+                            user: user
+                        });
+                    }
                 });
             });
         });
