@@ -10,12 +10,13 @@ $(document).ready(function () {
     const votes = $('#votes');
 
     const close = $('#close');
+    const len = $('.pagination-list').children().length;
 
-    carousel.on('click', function () {
+    carousel.click(function () {
         let val = $(this).attr('aria-label').slice(-1);
 
-        carousel.removeClass('is-current');
-        $(this).addClass('is-current');
+        carousel.toggleClass('is-current');
+        $(this).toggleClass('is-current');
 
         let url = pic.attr('style');
         let newUrl = url.substr(0, url.length - 7) + val + '.jpg")';
@@ -23,39 +24,8 @@ $(document).ready(function () {
         pic.attr('style', newUrl);
     });
 
-    left.on('click', function () {
-        const curr = $('.post-header .pagination a.pagination-link.is-current');
-
-        let val = Number(curr.attr('aria-label').slice(-1)) - 1;
-        if (val < 1) val += 4;
-
-        const next = $('.post-header .pagination').find('[aria-label=\'image ' + val + '\']');
-
-        curr.removeClass('is-current');
-        next.addClass('is-current');
-
-        let url = pic.attr('style');
-        let newUrl = url.substr(0, url.length - 7) + val + '.jpg")';
-
-        pic.attr('style', newUrl);
-    });
-
-    right.on('click', function () {
-        const curr = $('.post-header .pagination a.pagination-link.is-current');
-
-        let val = Number(curr.attr('aria-label').slice(-1)) + 1;
-        if (val > 4) val -= 4;
-        
-        const next = $('.post-header .pagination').find('[aria-label=\'image ' + val + '\']');
-
-        curr.removeClass('is-current');
-        next.addClass('is-current');
-
-        let url = pic.attr('style');
-        let newUrl = url.substr(0, url.length - 7) + val + '.jpg")';
-
-        pic.attr('style', newUrl);
-    });
+    left.click(() => loadPicture(-1, len, pic));
+    right.click(() => loadPicture(1, len, pic));
 
     const modal = $('.modal');
 
@@ -119,3 +89,21 @@ $(document).ready(function () {
         });
     }
 });
+
+function loadPicture(value, len, pic) {
+    const curr = $('.post-header a.pagination-link.is-current');
+
+    let val = Number(curr.attr('aria-label').slice(-1)) + value;
+    if (val === len) val -= len;
+    else if (val < 0) val += len;
+
+    const next = $('.post-header .pagination').find('[aria-label=\'image ' + val + '\']');
+
+    curr.toggleClass('is-current');
+    next.toggleClass('is-current');
+
+    let url = pic.attr('style');
+    let newUrl = url.substr(0, url.length - 7) + val + '.jpg")';
+
+    pic.attr('style', newUrl);
+}
