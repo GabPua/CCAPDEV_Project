@@ -76,6 +76,16 @@ const hbs = exphbs.create({
 
         getMin: (time) => {
             return time??0 % 60;
+        },
+
+        range: (start, end, block) => {
+            let accum = '';
+
+            for (let i = start; i < end; i++) {
+                accum += block.fn(i);
+            }
+
+            return accum;
         }
     }
 });
