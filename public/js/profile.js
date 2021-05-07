@@ -177,9 +177,8 @@ $(document).ready(function () {
     // Button effects
     submit.click(function(event) {
         event.preventDefault();
-        email.trigger('focusout');
 
-        if (email.hasClass('is-success')) {
+        if (!email.hasClass('is-danger')) {
             $('#profile-form').submit();
         }
     })
