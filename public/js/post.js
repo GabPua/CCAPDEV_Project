@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    const recipe_id = $('input[name="recipe_id"]').val();
     const carousel = $('.post-header .pagination a.pagination-link');
     const pic = $('#food-pic');
 
@@ -28,15 +29,21 @@ $(document).ready(function () {
     right.click(() => loadPicture(1, len, pic));
 
     const modal = $('.modal');
+    const options = $('#post-options');
 
+    $(document).click(function (e) {
+        if (e.target.id !== 'modal-body') {
+            modal.removeClass('is-active');
+            $('html').removeClass('is-clipped');
+        }
+
+        if (e.target.id !== 'post-options') {
+            options.parent().removeClass('is-active');
+        }
+    });
+
+    // a user is not logged in
     if (modal.length > 0) {
-        $(document).on('click', function (e) {
-            if (e.target.id !== 'modal-body' && !e.target.classList.contains('logged-out')) {
-                modal.removeClass('is-active');
-                $('html').removeClass('is-clipped');
-            }
-        });
-
         close.on('click', function () {
             modal.removeClass('is-active');
             $('html').removeClass('is-clipped');
@@ -54,6 +61,26 @@ $(document).ready(function () {
             e.stopPropagation();
         });
     } else {
+        options.siblings().click(function (e) {
+            $(this).parent().toggleClass('is-active');
+            e.stopPropagation();
+        });
+
+        $('#edit-post').click(() => {
+            window.location.replace('/edit/' + recipe_id);
+        });
+
+        $('#delete-post').click(() => {
+            console.log('CLICKED')
+            $.post('/post/delete', {recipe_id: recipe_id}, (success) => {
+                if (success) {
+                    window.location.replace('/posts');
+                } else {
+                    location.reload();
+                }
+            });
+        });
+
         upvote.on('click', function () {
             if (upvote.hasClass('is-active')) {
                 upvote.removeClass('is-active');
