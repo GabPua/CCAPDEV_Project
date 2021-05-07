@@ -1,16 +1,27 @@
 const mongoose = require('mongoose');
+const Comment = require('./comment');
 
 let recipeSchema = new mongoose.Schema({
     user: {type: String, require: true, ref: 'User'},
     title: {type: String, require: true},
     desc: {type: String, require: false},
     serving: {type: Number, require: true},
-    picture: {type: Array, require: true},
+    n_pictures: {type: Number, require: true},
     prep_time: {type: Number, require: true},
     cook_time: {type: Number, require: true},
     direction: {type: Array, require: true},
     ingredient: {type: Array, require: true},
     date: {type: Date, require: true}
+});
+
+async function clearComments(id) {
+    await Comment.deleteMany({ recipe : id }, (err, results) => {
+        console.log(err, results);
+    }).exec()
+}
+
+recipeSchema.post('findOneAndDelete', (recipe) => {
+    clearComments(recipe._id).then(() => console.log('Deleted comments for post'));
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema, 'recipe');

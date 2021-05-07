@@ -436,9 +436,14 @@ header .navbar-link:not(.is-arrowless) {
     display: flex;
     justify-content: space-between;
     padding-right: 10px;
+    align-items: baseline;
 }
 
 .post-title i:hover {
     cursor: pointer;
     color: black;
+}
+
+#post-options {
+    min-width: auto;
 }

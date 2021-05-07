@@ -214,6 +214,14 @@ const user_controller = {
         });
     },
 
+    deletePost: (req, res) => {
+        const id = req.body.recipe_id;
+
+        Post.findByIdAndDelete(id, (err) => {
+            res.send(err == null);
+        });
+    },
+
     getProfile: (req, res) => {
         redirect(req, res, async () => {
             let id = req.params.id;
@@ -567,7 +575,7 @@ const user_controller = {
 
             // TODO: Delete user's comments and comments of others on user's posts
 
-            // deleete user's posts
+            // delete user's posts
             let delPost = await Post.deleteMany({user: id}).exec();
 
             // delete user
