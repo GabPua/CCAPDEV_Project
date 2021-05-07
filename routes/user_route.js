@@ -19,6 +19,8 @@ router.get(['/user/:id/posts', '/user/:id/likes'], ctrl.getPosts);
 
 router.get('/post/:id', ctrl.getRecipe);
 
+router.post('/post/delete', ctrl.deletePost);
+
 router.get('/search', ctrl.getSearch);
 
 router.get('/logout', ctrl.getLogout);
