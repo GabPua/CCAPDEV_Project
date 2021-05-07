@@ -146,6 +146,8 @@ const user_controller = {
                 err.direction = 'Please remove empty entries';
             }
 
+            console.log(req.files.pictures);
+
             if (Object.keys(err).length === 0) {
                 const ingredient_list = [];
                 for (let i = 0; i < ingredients.length; i++) {
@@ -169,30 +171,32 @@ const user_controller = {
                         console.log(err);
                     } else {
                         let n_pictures = 0;
-                        if (Object.keys(req.files).length === 1) {
+                        if (!Array.isArray(req.files.pictures)) {
                             let pic = req.files.pictures;
                             let uploadPath = './public/img/' + result._id + '_' + n_pictures + '.jpg';
-                            pic.mv(uploadPath, (err) => {
+                            pic.mv(uploadPath, async (err) => {
                                 if (err)
                                     console.log('Upload failed');
                                 else {
                                     n_pictures += 1;
+                                    await Post.updateOne({_id: result._id}, {n_pictures: n_pictures}).exec();
                                 }
                             });
                         } else {
-                            req.files.pictures.forEach(pic => {
-                                let uploadPath = './public/img/' + result._id + '_' + n_pictures + '.jpg';
+                            for (let i = 0; i < req.files.pictures.length; i++) {
+                                let pic = req.files.pictures[i];
+                                let uploadPath = './public/img/' + result._id + '_' + i + '.jpg';
                                 pic.mv(uploadPath, (err) => {
                                     if (err)
                                         console.log('Upload failed');
                                     else {
+                                        console.log(uploadPath + ' uploaded successfully');
                                         n_pictures += 1;
+                                        Post.updateOne({_id: result._id}, {n_pictures: n_pictures}).exec();
                                     }
                                 });
-                            });
+                            }
                         }
-
-                        await Post.updateOne({_id: result._id}, {n_pictures: n_pictures}).exec();
 
                         res.redirect('/post/' + result._id);
                     }
