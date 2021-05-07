@@ -1,4 +1,5 @@
 <script src='/public/js/post.js'></script>
+<input type='hidden' name='recipe_id' value='{{post._id}}'>
 <main class='is-fullhd fill page-height parallax vegetable-bg'>
     <div class='container content box recipe-view'>
         <div class='post-title'>
@@ -7,7 +8,17 @@
                 <h5 class='subtitle'> By <a {{#if user}}href='/user/{{post.user}}'{{/if}}>{{post.user}}</a> <span id='post-date'>{{formatDate post.date}}</span></h5>
             </div>
             {{#if (isEqual session._id post.user)}}
-                <i class="fas fa-ellipsis-v fa-2x"></i>
+                <div class='dropdown'>
+                    <div class='dropdown-trigger'>
+                        <i class="fas fa-ellipsis-v fa-2x" aria-haspopup='true' aria-controls='post-options'></i>
+                    </div>
+                    <div class='dropdown-menu' id='post-options' role='menu'>
+                        <div class='dropdown-content'>
+                            <a id='edit-post' class='dropdown-item'>Edit</a>
+                            <a id='delete-post' class='dropdown-item'>Delete</a>
+                        </div>
+                    </div>
+                </div>
             {{/if}}
         </div>
 
@@ -95,6 +106,7 @@
             </p>
         </div>
 
+
         <h3 class='title'>Comments</h3>
         {{#each comments}}
             <article class='media'>
@@ -136,6 +148,8 @@
                     {{/each}}
                 </div>
             </article>
+        {{else}}
+            <p>No comments on this post yet</p>
         {{/each}}
 
 
