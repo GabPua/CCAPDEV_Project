@@ -133,7 +133,8 @@ app.use('/', user_route);
 
 // Error 404: File not found
 app.use((req, res) => {
-    res.status(404).send('File not in server!');
+    res.status(404);
+    res.render('404');
 });
 
 // initialize server
