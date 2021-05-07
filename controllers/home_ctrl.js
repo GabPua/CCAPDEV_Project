@@ -31,7 +31,7 @@ const home_controller = {
     },
 
     getFeatured: async (req, res) => {
-        let user = null, path = null;
+        let post, comments, user = null, path = null;
 
         if (req.session._id && req.cookies.user_sid) {
             // get user
@@ -41,7 +41,6 @@ const home_controller = {
             }).lean().exec();
         }
 
-        let post, comments;
         await Post.countDocuments().exec(async (err, count) => {
             let random = Math.floor(Math.random() * count), id = {};
 
