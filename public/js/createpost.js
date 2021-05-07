@@ -86,7 +86,7 @@ function updateTime(str) {
     let hr = parseInt(p_hr.val() ?? 0) + parseInt(c_hr.val() ?? 0);
     let min = parseInt(p_min.val() ?? 0) + parseInt(c_min.val() ?? 0);
 
-    if (min > 60) {
+    while (min >= 60) {
         hr++;
         min -= 60;
     }
@@ -147,7 +147,7 @@ function addImgField() {
         `<div class='image-item'>
             <div class="file is-info has-name">
                 <label class="file-label">
-                    <input class="file-input" type="file" name="picture[]">
+                    <input class="file-input" type="file" name="pictures">
                     <span class="file-cta">
                         <span class="file-icon">
                             <i class="fas fa-upload"></i>
@@ -171,11 +171,11 @@ function addIngField(q = '', u= '', n= '') {
     const newItem = $(
         `<li> 
             <div class='field is-horizontal'>
-                <input class='input ing-qty' type='number' placeholder='Qty' name='ingredient[${ing_ctr}][qty]' min='1' value='${q}'>
+                <input class='input ing-qty' type='number' placeholder='Qty' name='quantity' min='1' value='${q}'>
 
-                <input class='input ing-unit' type='text' placeholder='Unit' name='ingredient[${ing_ctr}][unit]' value='${u}'>
+                <input class='input ing-unit' type='text' placeholder='Unit' name='unit' value='${u}'>
 
-                <input class='input ing-name' type='text' placeholder='Ingredient name' name='ingredient[${ing_ctr++}][name]' value='${n}'>     
+                <input class='input ing-name' type='text' placeholder='Ingredient name' name='ingredient' value='${n}'>     
 
                 <button class='button is-danger is-light'>Remove</button>
             </div>
@@ -205,7 +205,7 @@ function addDirField(content= '') {
     const newItem = $(
         `<li> 
             <div class='field is-horizontal'>
-                <textarea class='textarea' placeholder='Please include the steps here' name='direction[]'>${content}</textarea>
+                <textarea class='textarea' placeholder='Please include the steps here' name='direction'>${content}</textarea>
                 <button class='button is-danger is-light'>Remove</button>
             </div>
         </li>`);
