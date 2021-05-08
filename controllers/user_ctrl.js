@@ -29,12 +29,7 @@ function redirect (req, res, toRun) {
 const user_controller = {
     // this is only accessible from home_ctrl, which already verifies login; no need to call for redirect().
     getNewsfeed: async (req, res) => {
-        let path, friends = [], posts = [];
-
-        // get user picture
-        await User.findById(req.session._id ,(err, result) => {
-            path = result.picture_path;
-        }).lean().exec();
+        let friends = [], posts = [];
 
         // get users that are followed by the logged-in user
         await Follow.find({follower: req.session._id}, 'following', (err, result) => {
@@ -56,23 +51,14 @@ const user_controller = {
 
         res.render('newsfeed', {
             title: 'ShefHub | Home',
-            post: posts,
-            path: path
+            post: posts
         });
     },
 
     getCreate: (req, res) => {
-        redirect(req, res, async () => {
-            let path;
-
-            // get user picture
-            await User.findById(req.session._id ,(err, result) => {
-                path = result.picture_path;
-            }).lean().exec();
-
+        redirect(req, res, () => {
             res.render('create', {
-                title: 'Create a new recipe',
-                path: path
+                title: 'Create a new recipe'
             });
         });
     },
@@ -202,17 +188,9 @@ const user_controller = {
                     }
                 });
             } else {
-                let path;
-                
-                // get user picture
-                await User.findById(req.session._id ,(err, result) => {
-                    path = result.picture_path;
-                }).lean().exec();
-
                 res.render('./create', {
                     post: req.body,
-                    err: err,
-                    path: path
+                    err: err
                 });
             }
         });
@@ -237,12 +215,7 @@ const user_controller = {
                 return;
             }
 
-            let user, followers, following, posts, path;
-
-            // get user picture
-            await User.findById(req.session._id, (err, result) => {
-                path = result.picture_path;
-            }).lean().exec();
+            let user, followers, following, posts;
 
             // get user details using id stored in session
             await User.findById(id, (err, result) => {
@@ -270,8 +243,7 @@ const user_controller = {
                 followers: followers,
                 following: following,
                 post: posts,
-                template: 'profile',
-                path: path
+                template: 'profile'
             });
         });
     },
@@ -337,15 +309,8 @@ const user_controller = {
                 }).lean().exec();
             }
 
-            let path;
-            // get user picture
-            await User.findById(req.session._id ,(err, result) => {
-                path = result.picture_path;
-            }).lean().exec();
-
             res.render('profile', {
                 user: { _id: id },
-                path: path,
                 title: "ShefHub | " + id,
                 posts: posts,
                 template: 'posts',
@@ -379,19 +344,11 @@ const user_controller = {
                 }).lean().exec();
             }
 
-            let path;
-
-            // get user picture
-            await User.findById(req.session._id ,(err, result) => {
-                path = result.picture_path;
-            }).lean().exec();
-
             res.render('profile', {
                 user: { _id: req.session._id },
                 title: "ShefHub | " + req.session._id,
                 users: users,
                 template: 'follow',
-                path: path,
                 route: route
             });
         });
@@ -421,13 +378,6 @@ const user_controller = {
         redirect(req, res, async () => {
             const { keyword } = req.query
 
-            let path;
-
-            // get user picture
-            await User.findById(req.session._id ,(err, result) => {
-                path = result.picture_path;
-            }).lean().exec();
-
             if (keyword) {
                 let results;
                 const pattern = new RegExp(keyword, 'i');
@@ -440,13 +390,11 @@ const user_controller = {
                 res.render('query', {
                     title: 'Shefhub Search | ' + keyword,
                     query: keyword,
-                    results: results,
-                    path: path
+                    results: results
                 });
             } else {
                 res.render('search', {
-                    title: 'ShefHub | Search Recipes',
-                    path: path
+                    title: 'ShefHub | Search Recipes'
                 });
             }
         });
