@@ -15,9 +15,7 @@ let recipeSchema = new mongoose.Schema({
 });
 
 async function clearComments(id) {
-    await Comment.deleteMany({ recipe : id }, (err, results) => {
-        console.log(err, results);
-    }).exec()
+    await Comment.deleteMany({ recipe : id }).lean().exec();
 }
 
 recipeSchema.post('findOneAndDelete', (recipe) => {

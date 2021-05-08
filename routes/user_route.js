@@ -1,10 +1,6 @@
 const router = require('express')();
 const ctrl = require('../controllers/user_ctrl');
 
-router.route('/create')
-    .get(ctrl.getCreate)
-    .post(ctrl.postCreate);
-
 router.route('/profile')
     .get(ctrl.getProfile)
     .post(ctrl.postProfile);
@@ -16,10 +12,6 @@ router.get(['/following', '/followers'], ctrl.getFollow);
 router.get('/user/:id', ctrl.getProfile);
 
 router.get(['/user/:id/posts', '/user/:id/likes'], ctrl.getPosts);
-
-router.get('/post/:id', ctrl.getRecipe);
-
-router.post('/post/delete', ctrl.deletePost);
 
 router.get('/search', ctrl.getSearch);
 
