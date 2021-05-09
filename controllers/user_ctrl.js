@@ -111,14 +111,15 @@ const user_controller = {
 
             if (req.files && Object.keys(req.files).length > 0) {
                 let pic = req.files.file;
-                let uploadPath = './public/img/profile/' + req.session._id + '.jpg';
+                let path = '/public/img/profile/' + req.session._id + '.jpg';
+                let uploadPath = '.' + path;
 
                 await pic.mv(uploadPath, async (err) => {
                     if (err)
                         console.log('Upload failed');
                     else {
                         console.log(req.session._id + '.jpg uploaded successfully');
-                        user.picture_path = uploadPath;
+                        user.picture_path = path;
                         
                         await User.updateOne({_id: req.session._id}, user).exec();
                     }
