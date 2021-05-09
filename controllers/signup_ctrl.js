@@ -55,7 +55,7 @@ const signup_ctrl = {
                 _id: name,
                 email: email,
                 password: crypto.AES.encrypt(password, key).toString(),
-                picture_path: './public/img/profile/default_dp.jpg'
+                picture_path: '/public/img/profile/default_dp.jpg'
             };
 
             User.create(user, (err) => {
