@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const leanVirtual = require('mongoose-lean-virtuals');
 const Comment = require('./comment');
 
 let recipeSchema = new mongoose.Schema({
@@ -13,6 +14,15 @@ let recipeSchema = new mongoose.Schema({
     ingredient: {type: Array, require: true},
     date: {type: Date, require: true}
 });
+
+recipeSchema.virtual('likes', {
+    ref: 'Vote',
+    localField: '_id',
+    foreignField: 'recipe',
+    count: true
+});
+
+recipeSchema.plugin(leanVirtual);
 
 async function clearComments(id) {
     await Comment.deleteMany({ recipe : id }).lean().exec();

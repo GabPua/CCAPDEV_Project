@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let voteSchema = new mongoose.Schema({
-    recipe: {type: Number, require: true, ref: 'Recipe'},
+    recipe: {type: mongoose.ObjectId, require: true, ref: 'Recipe'},
     user: {type: String, require: true, ref: 'User'},
     value: {type: Number, require: true}
 });
