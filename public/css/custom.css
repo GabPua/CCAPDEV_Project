@@ -439,11 +439,17 @@ header .navbar-link:not(.is-arrowless) {
     align-items: baseline;
 }
 
-.post-title i:hover {
+.recipe-view .dropdown-trigger i:hover {
     cursor: pointer;
     color: black;
 }
 
-#post-options {
+.recipe-view .dropdown-menu {
     min-width: auto;
+}
+
+.comments + .media {
+    border-top: 1px solid rgba(219, 219, 219, 0.5);
+    margin-top: 1rem;
+    padding-top: 1rem;
 }
