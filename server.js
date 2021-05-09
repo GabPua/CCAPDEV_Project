@@ -86,6 +86,12 @@ const hbs = exphbs.create({
             }
 
             return accum;
+        },
+
+        timeDiff: (date) => {
+            const diff = new Date() - date;
+
+            return '2h';
         }
     }
 });
@@ -125,11 +131,13 @@ const signup_route = require('./routes/signup_route');
 const login_route = require('./routes/login_route');
 const user_route = require('./routes/user_route');
 const post_route = require('./routes/post_route');
+const comment_router = require('./routes/comment_route');
 
 app.use('/public', express.static('public'));
 app.use('/signup', signup_route);
 app.use('/login', login_route);
 app.use('/post', post_route);
+app.use('/comment', comment_router);
 app.use('/', home_route);
 app.use('/', user_route);
 
