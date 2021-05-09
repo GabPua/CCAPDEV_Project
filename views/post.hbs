@@ -24,9 +24,9 @@
 
         <div class='columns post-header'>
             <div class='column is-1 vote-header'>
-                <i class='fas fa-chevron-up fa-2x upvote'></i>
+                <i class='fas fa-chevron-up fa-2x upvote {{#if (isEqual post.is_liked 1)}}is-active{{/if}}'></i>
                 <strong id='votes'>{{post.likes}}</strong>
-                <i class='fas fa-chevron-down fa-2x downvote'></i>
+                <i class='fas fa-chevron-down fa-2x downvote {{#if (isEqual post.is_liked -1)}}is-active{{/if}}'></i>
             </div>
 
             {{#unless session._id}}
