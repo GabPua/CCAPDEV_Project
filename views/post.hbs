@@ -8,11 +8,11 @@
                 <h5 class='subtitle'> By <a {{#if user}}href='/user/{{post.user}}'{{/if}}>{{post.user}}</a> <span id='post-date'>{{formatDate post.date}}</span></h5>
             </div>
             {{#if (isEqual session._id post.user)}}
-                <div class='dropdown'>
+                <div class='dropdown' id='post-dropdown'>
                     <div class='dropdown-trigger'>
-                        <i class="fas fa-ellipsis-v fa-2x" aria-haspopup='true' aria-controls='post-options'></i>
+                        <i class='fas fa-ellipsis-v fa-2x' aria-haspopup='true' aria-controls='post-options'></i>
                     </div>
-                    <div class='dropdown-menu' id='post-options' role='menu'>
+                    <div class='dropdown-menu' role='menu'>
                         <div class='dropdown-content'>
                             <a id='edit-post' class='dropdown-item'>Edit</a>
                             <a id='delete-post' class='dropdown-item'>Delete</a>
@@ -109,6 +109,7 @@
 
         <h3 class='title'>Comments</h3>
         <div class='comments'>
+            <p id='no-comments'>No comments on this post yet</p>
         {{#each comments}}
             <article class='media'>
                 <figure class='media-left'>
@@ -145,12 +146,39 @@
                                     </p>
                                 </div>
                             </div>
+
+                            {{#if (isEqual ../../session._id this.user._id)}}
+                                <div class='dropdown comment-dropdown'>
+                                    <div class='dropdown-trigger'>
+                                        <i class='icon fas fa-ellipsis-h fa-lg' aria-haspopup='true' aria-controls='post-options'></i>
+                                    </div>
+                                    <div class='dropdown-menu' role='menu'>
+                                        <div class='dropdown-content'>
+                                            <input type='hidden' value='{{this._id}}'>
+                                            <a class='dropdown-item edit-comment'>Edit</a>
+                                            <a class='dropdown-item delete-comment'>Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/if}}
                         </article>
                     {{/each}}
                 </div>
+                {{#if (isEqual ../session._id this.user._id)}}
+                    <div class='dropdown comment-dropdown'>
+                        <div class='dropdown-trigger'>
+                            <i class='icon fas fa-ellipsis-h fa-lg' aria-haspopup='true' aria-controls='post-options'></i>
+                        </div>
+                        <div class='dropdown-menu' role='menu'>
+                            <div class='dropdown-content'>
+                                <input type='hidden' value='{{this._id}}'>
+                                <a class='dropdown-item edit-comment'>Edit</a>
+                                <a class='dropdown-item delete-comment'>Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
             </article>
-        {{else}}
-            <p>No comments on this post yet</p>
         {{/each}}
         </div>
 

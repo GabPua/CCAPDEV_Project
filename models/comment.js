@@ -12,7 +12,7 @@ async function clearReplies(id) {
     await mongoose.model('Comment').deleteMany({reply_to : id}).exec()
 }
 
-commentSchema.post('deleteOne', (comment) => {
+commentSchema.post(['deleteOne', 'findOneAndDelete'], (comment) => {
     clearReplies(comment._id).then(() => {
         console.log("Cleared replies");
     });

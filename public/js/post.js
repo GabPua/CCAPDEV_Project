@@ -1,3 +1,5 @@
+let no_comments_msg, comments;
+
 $(document).ready(function () {
     const recipe_id = $('input[name="recipe_id"]').val();
     const carousel = $('.post-header .pagination a.pagination-link');
@@ -12,6 +14,31 @@ $(document).ready(function () {
 
     const close = $('#close');
     const len = $('.pagination-list').children().length;
+
+    no_comments_msg = $('#no-comments');
+    comments = $('.comments');
+
+    comments.click(() => {
+        if (comments.children().length === 0) {
+            no_comments_msg.show();
+        } else {
+            no_comments_msg.hide();
+        }
+    }).trigger('click');
+
+    $(document).on('click', '.dropdown-trigger', function () {
+        $(this).parent().toggleClass('is-active');
+    });
+
+    comments.on('click', '.delete-comment', function () {
+        const id = $(this).siblings('input').val();
+
+        $.post('/comment/delete', {id: id, recipe_id: recipe_id}, (isSuccess) => {
+            if (isSuccess) {
+                $(this).closest('.media').remove();
+            }
+        });
+    });
 
     carousel.click(function () {
         let val = $(this).attr('aria-label').slice(-1);
@@ -29,7 +56,7 @@ $(document).ready(function () {
     right.click(() => loadPicture(1, len, pic));
 
     const modal = $('.modal');
-    const options = $('#post-options');
+    const post_dropdown = $('#post-dropdown');
 
     $(document).click(function (e) {
         if (e.target.id !== 'modal-body') {
@@ -37,14 +64,18 @@ $(document).ready(function () {
             $('html').removeClass('is-clipped');
         }
 
-        if (e.target.id !== 'post-options') {
-            options.parent().removeClass('is-active');
+        const dropdown = $(e.target).parent().parent();
+
+        if (dropdown.attr('id') !== 'post-dropdown') {
+            post_dropdown.removeClass('is-active');
         }
+
+        $('.comment-dropdown').not(dropdown).removeClass('is-active');
     });
 
     // a user is not logged in
     if (modal.length > 0) {
-        close.on('click', function () {
+        close.click(function () {
             modal.removeClass('is-active');
             $('html').removeClass('is-clipped');
         });
@@ -71,17 +102,11 @@ $(document).ready(function () {
             }
         });
 
-        options.siblings().click(function (e) {
-            $(this).parent().toggleClass('is-active');
-            e.stopPropagation();
-        });
-
         $('#edit-post').click(() => {
-            window.location.replace('/edit/' + recipe_id);
+            window.location = '/edit/' + recipe_id;
         });
 
         $('#delete-post').click(() => {
-            console.log('CLICKED')
             $.post('/post/delete', {recipe_id: recipe_id}, (success) => {
                 if (success) {
                     window.location.replace('/posts');
@@ -132,9 +157,9 @@ $(document).ready(function () {
                 const text = textarea.val();
 
                 $.post('/comment/add', {recipe_id: recipe_id, text: text}, (obj) => {
-                    const { user_id, picture_path } = obj;
-                    if (user_id) {
-                        const new_comment =
+                    const { comment_id, user_id, picture_path } = obj;
+                    if (comment_id) {
+                        const new_comment = $(
                             `<article class='media'>
                                 <figure class='media-left'>
                                     <p class='image is-64x64'>
@@ -152,9 +177,23 @@ $(document).ready(function () {
                                         </p>
                                     </div>
                                 </div>
-                            </article>`
+                                
+                                <div class='dropdown comment-dropdown'>
+                                    <div class='dropdown-trigger'>
+                                        <i class='icon fas fa-ellipsis-h fa-lg' aria-haspopup='true' aria-controls='post-options'></i>
+                                    </div>
+                                    <div class='dropdown-menu' role='menu'>
+                                        <div class='dropdown-content'>
+                                            <input type='hidden' value='${comment_id}'>
+                                            <a class='dropdown-item edit-comment'>Edit</a>
+                                            <a class='dropdown-item delete-comment'>Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>`);
 
-                        $('.comments').append(new_comment);
+                        comments.append(new_comment);
+                        textarea.val('');
                     } else {
                         textarea.val('ERROR ENCOUNTERED');
                     }
