@@ -18,8 +18,7 @@ let recipeSchema = new mongoose.Schema({
 recipeSchema.virtual('likes', {
     ref: 'Vote',
     localField: '_id',
-    foreignField: 'recipe',
-    count: true
+    foreignField: 'recipe'
 });
 
 recipeSchema.plugin(leanVirtual);
