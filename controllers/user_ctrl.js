@@ -27,18 +27,24 @@ const user_controller = {
             if (err) {
                 console.log(err);
             } else {
-                result.forEach(e => friends.push(e.following));
+                friends = result.map(e => e.following);
             }
-        }).exec();
+        }).lean().exec();
 
         // get all posts from followed users sorted from most to least recent
         await Post.find({user: {$in: friends}}, (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                posts = result;
-            }
+            posts = result;
         }).sort({ date: -1 }).populate('user').populate('likes').lean({virtuals: true}).exec();
+
+        for (const post of posts) {
+            // get sum of down votes and up votes
+            post.likes = post.likes.reduce((n, {value}) => n + value, 0);
+
+            // if up voted/down voted by the logged in user
+            await Vote.findOne({user: req.session._id, recipe: post._id}, 'value', (err, result) => {
+                post.is_liked = result? result.value : 0;
+            });
+        }
 
         res.render('newsfeed', {
             title: 'ShefHub | Home',
@@ -107,7 +113,7 @@ const user_controller = {
                 let pic = req.files.file;
                 let uploadPath = './public/img/profile/' + req.session._id + '.jpg';
 
-                pic.mv(uploadPath, async (err) => {
+                await pic.mv(uploadPath, async (err) => {
                     if (err)
                         console.log('Upload failed');
                     else {

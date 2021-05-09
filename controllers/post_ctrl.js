@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const Post = require('../models/recipe');
 const Comment = require('../models/comment');
+const Vote = require('../models/vote');
 
 function isEmpty(str) {
     return str == null || str.trim() === '';
@@ -130,7 +131,7 @@ const post_controller = {
                         if (!Array.isArray(req.files.pictures)) {
                             let pic = req.files.pictures;
                             let uploadPath = './public/img/' + result._id + '_' + n_pictures + '.jpg';
-                            pic.mv(uploadPath, async (err) => {
+                            await pic.mv(uploadPath, async (err) => {
                                 if (err)
                                     console.log('Upload failed');
                                 else {
@@ -142,7 +143,7 @@ const post_controller = {
                             for (let i = 0; i < req.files.pictures.length; i++) {
                                 let pic = req.files.pictures[i];
                                 let uploadPath = './public/img/' + result._id + '_' + i + '.jpg';
-                                pic.mv(uploadPath, (err) => {
+                                await pic.mv(uploadPath, (err) => {
                                     if (err)
                                         console.log('Upload failed');
                                     else {
@@ -199,9 +200,16 @@ const post_controller = {
         }
 
         // find the desired post
-        await Post.findOne(query, async (err, result) => {
+        await Post.findOne(query, (err, result) => {
             post = result;
         }).skip(skip).populate('likes').lean({virtuals: true}).exec();
+
+        // get sum of down votes and up votes
+        post.likes = post.likes.reduce((n, {value}) => n + value, 0);
+
+        await Vote.findOne({user: req.session._id, recipe: post._id}, 'value', (err, result) => {
+            post.is_liked = result? result.value : 0;
+        });
 
         // get top level comments only
         await Comment.find({recipe: post._id, reply_to: null}, (err, result) => {
