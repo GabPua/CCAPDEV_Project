@@ -90,8 +90,26 @@ const hbs = exphbs.create({
 
         timeDiff: (date) => {
             const diff = new Date() - date;
+            const year = 31536000000;
+            const month = 2592000000;
+            const day = 86400000;
+            const hour = 3600000;
+            const minute = 60000;
 
-            return '2h';
+            // years ago
+            if (diff >= year) {
+                return Math.floor(diff / year) + 'y';
+            } else if (diff >= month) {
+                return Math.floor(diff / month) + 'mo';
+            } else if (diff >= day) {
+                return Math.floor(diff / day) + 'd';
+            } else if (diff >= hour) {
+                return Math.floor(diff / hour) + 'h';
+            } else if (diff >= minute) {
+                return Math.floor(diff / minute) + 'm';
+            } else {
+                return 'Just Now';
+            }
         }
     }
 });
