@@ -61,6 +61,16 @@ $(document).ready(function () {
             e.stopPropagation();
         });
     } else {
+        const textarea = $('.textarea');
+
+        textarea.focusout(() => {
+            if (!textarea.val()) {
+                textarea.addClass('is-danger');
+            } else {
+                textarea.removeClass('is-danger');
+            }
+        });
+
         options.siblings().click(function (e) {
             $(this).parent().toggleClass('is-active');
             e.stopPropagation();
@@ -112,6 +122,43 @@ $(document).ready(function () {
                 }
                 downvote.addClass('is-active');
                 votes.html(num_votes - 1);
+            }
+        });
+
+        $('#post-comment').click(() => {
+            textarea.trigger('focusout');
+
+            if (!textarea.hasClass('is-danger')) {
+                const text = textarea.val();
+
+                $.post('/comment/add', {recipe_id: recipe_id, text: text}, (obj) => {
+                    const { user_id, picture_path } = obj;
+                    if (user_id) {
+                        const new_comment =
+                            `<article class='media'>
+                                <figure class='media-left'>
+                                    <p class='image is-64x64'>
+                                        <img class='is-rounded' src='${picture_path}' alt='${user_id}'>
+                                    </p>
+                                </figure>
+                                <div class='media-content'>
+                                    <div class='content'>
+                                        <p>
+                                            <a href='/user/${user_id}'><strong>${user_id}</strong></a>
+                                            <br>
+                                            ${text}
+                                            <br>
+                                            <small><a>Reply</a> · Just Now</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </article>`
+
+                        $('.comments').append(new_comment);
+                    } else {
+                        textarea.val('ERROR ENCOUNTERED');
+                    }
+                });
             }
         });
     }
