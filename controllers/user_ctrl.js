@@ -38,7 +38,7 @@ const user_controller = {
             } else {
                 posts = result;
             }
-        }).sort({ date: -1 }).populate('user').lean().exec();
+        }).sort({ date: -1 }).populate('user').populate('likes').lean({virtuals: true}).exec();
 
         res.render('newsfeed', {
             title: 'ShefHub | Home',
@@ -65,18 +65,18 @@ const user_controller = {
             }).lean().exec();
 
             // get number of followers
-            await Follow.find({ following: id },(err, result) => {
-                followers = result.length;
+            await Follow.countDocuments({ following: id },(err, result) => {
+                followers = result;
             }).lean().exec();
 
             // get number of following
-            await Follow.find({ follower: id },(err, result) => {
-                following = result.length;
+            await Follow.countDocuments({ follower: id },(err, result) => {
+                following = result;
             }).lean().exec();
 
             // get number of posts
-            await Post.find( { user: id }, (err, result) => {
-                posts = result.length;
+            await Post.countDocuments( { user: id }, (err, result) => {
+                posts = result;
             }).lean().exec();
 
             res.render('profile', {
@@ -168,22 +168,12 @@ const user_controller = {
 
             if (route === 'followers') {
                 await Follow.find({following: req.session._id}, 'follower', (err, result) => {
-                    result.forEach(async (item) => {
-                        let id = item.follower;
-                        await User.findById(id, (err, result) => {
-                            users.push(result);
-                        }).lean().exec();
-                    });
-                }).lean().exec();
+                    users = result.map(a => a.follower);
+                }).populate('follower').lean().exec();
             } else {
                 await Follow.find({follower: req.session._id}, 'following', (err, result) => {
-                    result.forEach(async (item) => {
-                        let id = item.following;
-                        await User.findById(id, (err, result) => {
-                            users.push(result);
-                        }).lean().exec();
-                    });
-                }).lean().exec();
+                    users = result.map(a => a.following);
+                }).populate('following').lean().exec();
             }
 
             res.render('profile', {

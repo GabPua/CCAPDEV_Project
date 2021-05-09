@@ -201,7 +201,7 @@ const post_controller = {
         // find the desired post
         await Post.findOne(query, async (err, result) => {
             post = result;
-        }).skip(skip).lean().exec();
+        }).skip(skip).populate('likes').lean({virtuals: true}).exec();
 
         // get top level comments only
         await Comment.find({recipe: post._id, reply_to: null}, (err, result) => {
