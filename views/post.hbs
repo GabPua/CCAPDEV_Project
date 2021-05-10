@@ -120,12 +120,9 @@
                 <div class='media-content'>
                     <div class='content'>
                         <p>
-                            <a href='/user/{{this.user._id}}'><strong>{{this.user._id}}</strong></a>
-                            <br>
-                            {{this.body}}
-                            <br>
-                            <small><a>Reply</a> · {{timeDiff this.date}}</small>
-                        </p>
+                        <p><a href='/user/{{this.user._id}}'><strong>{{this.user._id}}</strong></a></p>
+                        <p class='comment-body'>{{this.body}}</p>
+                        <p><small>{{timeDiff this.date}}</small></p>
                     </div>
 
                     {{#each this.replies}}
@@ -137,13 +134,9 @@
                             </figure>
                             <div class='media-content'>
                                 <div class='content'>
-                                    <p>
-                                        <a href='/user/{{this.user._id}}'><strong>{{this.user._id}}</strong></a>
-                                        <br>
-                                        {{this.body}}
-                                        <br>
-                                        <small>{{timeDiff this.date}}</small>
-                                    </p>
+                                    <p><a href='/user/{{this.user._id}}'><strong>{{this.user._id}}</strong></a></p>
+                                    <p class='comment-body'>{{this.body}}</p>
+                                    <p><small>{{timeDiff this.date}}</small></p>
                                 </div>
                             </div>
 

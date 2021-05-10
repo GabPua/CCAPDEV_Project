@@ -1,4 +1,3 @@
-const async = require('async');
 const Comment = require('../models/comment');
 
 const comment_controller = {
@@ -25,14 +24,31 @@ const comment_controller = {
     deleteComment: async (req, res) => {
         const { id, recipe_id } = req.body;
 
-        Comment.findOneAndDelete({_id: id, recipe: recipe_id, user: req.session._id},(err, result) => {
+        // verify
+        Comment.deleteOne({_id: id, recipe: recipe_id, user: req.session._id},(err, result) => {
             res.send(result != null);
         });
     },
 
-    // editComment: async (req, res) => {
-    //
-    // }
+    editComment: (req, res) => {
+        const { id, body } = req.body;
+
+        if (body) {
+            Comment.updateOne({_id: id, user: req.session._id}, {body: body.replace('<br>', '\n')}, (err) => {
+                res.send(err != null);
+            });
+        } else {
+            res.send(false);
+        }
+    },
+
+    getComment: (req, res) => {
+        const { id } = req.body;
+
+        Comment.findById(id, (err, result) => {
+            res.send(result? result.body : false);
+        });
+    }
 }
 
 module.exports = comment_controller;

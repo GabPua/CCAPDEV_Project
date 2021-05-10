@@ -40,6 +40,52 @@ $(document).ready(function () {
         });
     });
 
+    comments.on('click', '.edit-comment', function () {
+        const body = $(this).closest('.media').find('.comment-body');
+        body.attr('contenteditable', 'true').focus();
+        $(this).closest('.dropdown').hide();
+    });
+
+    comments.on('keydown', '.comment-body', function (event) {
+        if (event.keyCode === 13 && !event.shiftKey) {
+            return false;
+        }
+    });
+
+    comments.on('keyup', '.comment-body', function (event) {
+        const body = $(this);
+        const dropdown = body.closest('.media').find('.dropdown');
+
+        if (event.keyCode === 13 && !event.shiftKey) {
+            if (body.html()) {
+                console.log('GOING TO POST');
+                $.post('/comment/edit', {id: dropdown.find('input').val(), body: body.html()}, (isSuccess) => {
+                    if (isSuccess) {
+                        body.attr('contenteditable', 'false');
+                        dropdown.show();
+                    } else {
+                        location.reload();
+                    }
+                });
+            } else {
+                body.val('Must not be empty');
+            }
+
+            return false;
+        } else if (event.keyCode === 27) { // esc key
+            $.post('/comment', {id: dropdown.find('input').val()}, (text) => {
+                if (text) {
+                    body.html(text);
+                } else {
+                    location.reload();
+                }
+            });
+
+            body.attr('contenteditable', 'false');
+            dropdown.show();
+        }
+    });
+
     carousel.click(function () {
         let val = $(this).attr('aria-label').slice(-1);
 
