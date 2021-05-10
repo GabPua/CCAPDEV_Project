@@ -139,8 +139,6 @@ function updateLabel(input) {
     }
 }
 
-let ing_ctr = 0;
-
 function addImgField() {
     const img_list = $('#upload-images');
     const newItem = $(
