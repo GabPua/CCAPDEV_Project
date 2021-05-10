@@ -35,7 +35,7 @@
             {{/each}}
         </div>
     {{else}}
-        <h1 class='no-content'>No favorites yet</h1>
+        <h1 class='no-content'>No {{#if (isEqual route 'posts')}}posts{{else}}favorites{{/if}} yet</h1>
     {{/if}}
     </div>
 </div>
