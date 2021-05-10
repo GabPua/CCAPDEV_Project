@@ -9,13 +9,13 @@
                     <span>Profile</span>
                 </a>
             </li>
-            <li {{#if (isEqual template 'posts')}}class='is-active'{{/if}}>
+            <li {{#if (isEqual route 'posts')}}class='is-active'{{/if}}>
                 <a href='/user/{{user._id}}/posts'>
                     <span class='icon is-small'><i class='fas fa-hamburger' aria-hidden='true'></i></span>
                     <span>Recipes</span>
                 </a>
             </li>
-            <li {{#if (isEqual template 'likes')}}class='is-active'{{/if}}>
+            <li {{#if (isEqual route 'likes')}}class='is-active'{{/if}}>
                 <a href='/user/{{user._id}}/likes'>
                     <span class='icon is-small'><i class='fas fa-heart' aria-hidden='true'></i></span>
                     <span>Liked Recipes</span>
