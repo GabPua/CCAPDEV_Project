@@ -35,11 +35,9 @@ $(document).ready(() => {
 
         // check if already taken
         $.get('/signup/getCheckEmail', {email: mail}, function (result) {
-            let help_text = '';
+            let help_text = isValidEmail(mail);
 
-            if (mail === '') {
-                help_text = 'Cannot be left blank';
-            } else if (result.email === mail) {
+            if (help_text === '' && result.email === mail) {
                 help_text = 'Email taken';
             }
 
