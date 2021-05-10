@@ -161,7 +161,7 @@ $(document).ready(function () {
         });
 
         $('#edit-post').click(() => {
-            window.location = '/edit/' + recipe_id;
+            window.location = '/post/edit/' + recipe_id;
         });
 
         $('#delete-post').click(() => {
