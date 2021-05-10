@@ -453,3 +453,11 @@ header .navbar-link:not(.is-arrowless) {
     margin-top: 1rem;
     padding-top: 1rem;
 }
+
+.comments .media-content p + p{
+    margin-top: -15px;
+}
+
+.comment-body {
+    white-space: pre-line;
+}
