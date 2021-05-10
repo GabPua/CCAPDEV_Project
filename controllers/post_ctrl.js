@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Post = require('../models/recipe');
 const Comment = require('../models/comment');
 const Vote = require('../models/vote');
+const async = require('async');
 
 function isEmpty(str) {
     return str == null || str.trim() === '';
@@ -188,46 +189,61 @@ const post_controller = {
     },
 
     loadRecipe: async (req, res) => {
-        let post, comments, user;
+        // let post, comments, user;
         let skip = req.body.skip || 0;
         let query = req.body.query || null;
 
-        // get user
-        if (req.session._id && req.cookies.user_sid) {
-            await User.findById(req.session._id, (err, result) => {
-                user = result;
-            }).lean().exec();
-        }
+        async.waterfall([
+            function findPost(callback) {
+                Post.findOne(query, (err, result) => {
+                    // get sum of down votes and up votes
+                    result.likes = result.likes.reduce((n, {value}) => n + value, 0);
+                    callback(err, result);
+                }).skip(skip).populate('likes').lean({virtuals: true}).exec();
+            },
 
-        // find the desired post
-        await Post.findOne(query, (err, result) => {
-            post = result;
-        }).skip(skip).populate('likes').lean({virtuals: true}).exec();
+            function getComments(post, callback) {
+                Comment.find({recipe: post._id, reply_to: null}, (err, result) => {
+                    callback(err, post, result);
+                }).sort({date: 1}).populate('user').lean().exec();
+            },
 
-        // get sum of down votes and up votes
-        post.likes = post.likes.reduce((n, {value}) => n + value, 0);
+            function getRepliesForEachComment(post, comments, callback) {
+                for (const comment of comments) {
+                    Comment.find({reply_to: comment._id}, (err, replies) => {
+                        comment.replies = replies;
+                    }).sort({date: 1}).populate('user').lean().exec();
+                }
 
-        await Vote.findOne({user: req.session._id, recipe: post._id}, 'value', (err, result) => {
-            post.is_liked = result? result.value : 0;
-        });
+                callback(null, post, comments)
+            },
 
-        // get top level comments only
-        await Comment.find({recipe: post._id, reply_to: null}, (err, result) => {
-            comments = result;
-        }).sort({date: 1}).populate('user').lean().exec();
+            function getUser(post, comment, callback) {
+                if (req.session._id && req.cookies.user_sid) {
+                    User.findById(req.session._id, (err, result) => {
+                        callback(err, post, comment, result);
+                    }).lean().exec();
+                }
+            },
 
-        // get replies for each comment and append the array to the comment object
-        for (const comment of comments) {
-            await Comment.find({reply_to: comment._id}, (err, replies) => {
-                comment.replies = replies;
-            }).sort({date: 1}).populate('user').lean().exec();
-        }
-
-        res.render('post', {
-            title: 'ShefHub | ' + post.title,
-            post: post,
-            user: user,
-            comments: comments
+            function isLikedByUser(post, comment, user, callback) {
+                Vote.findOne({user: req.session._id, recipe: post._id}, 'value', (err, result) => {
+                    post.is_liked = result ? result.value : 0;
+                    callback(err, post, comment, user);
+                }).exec();
+            },
+        ], (err, post, comments, user) => {
+            if (err) {
+                console.log(err);
+                res.redirect('/Page404NotFound');
+            } else {
+                res.render('post', {
+                    title: 'ShefHub | ' + post.title,
+                    post: post,
+                    user: user,
+                    comments: comments
+                });
+            }
         });
     },
 

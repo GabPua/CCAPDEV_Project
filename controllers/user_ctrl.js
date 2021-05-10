@@ -4,6 +4,7 @@ const Post = require('../models/recipe');
 const Vote = require('../models/vote');
 const crypto = require('crypto-js');
 const dotenv = require('dotenv');
+const async = require('async');
 
 dotenv.config();
 const key = process.env.SECRET || 'hushPuppy123';
@@ -20,35 +21,37 @@ function redirect (req, res, toRun) {
 const user_controller = {
     // this is only accessible from home_ctrl, which already verifies login; no need to call for redirect().
     getNewsfeed: async (req, res) => {
-        let friends = [], posts = [];
+        async.waterfall([
+            function getFollowing(callback) {
+                Follow.find({follower: req.session._id}, 'following', (err, result) => {
+                    callback(err, result.map(e => e.following));
+                }).lean().exec();
+            },
 
-        // get users that are followed by the logged-in user
-        await Follow.find({follower: req.session._id}, 'following', (err, result) => {
-            if (err) {
-                console.log(err);
-            } else {
-                friends = result.map(e => e.following);
-            }
-        }).lean().exec();
+            function getPostsFromFollowing(friends, callback) {
+                Post.find({user: {$in: friends}}, (err, result) => {
+                    callback(err, result);
+                }).sort({ date: -1 }).populate('user').populate('likes').lean({virtuals: true}).exec();
+            },
 
-        // get all posts from followed users sorted from most to least recent
-        await Post.find({user: {$in: friends}}, (err, result) => {
-            posts = result;
-        }).sort({ date: -1 }).populate('user').populate('likes').lean({virtuals: true}).exec();
+            function getVoteStatus(posts, callback) {
+                for (const post of posts) {
+                    // get sum of down votes and up votes
+                    post.likes = post.likes.reduce((n, {value}) => n + value, 0);
 
-        for (const post of posts) {
-            // get sum of down votes and up votes
-            post.likes = post.likes.reduce((n, {value}) => n + value, 0);
+                    // if up voted/down voted by the logged in user
+                    Vote.findOne({user: req.session._id, recipe: post._id}, 'value', (err, result) => {
+                        post.is_liked = result? result.value : 0;
+                    }).exec();
+                }
 
-            // if up voted/down voted by the logged in user
-            await Vote.findOne({user: req.session._id, recipe: post._id}, 'value', (err, result) => {
-                post.is_liked = result? result.value : 0;
+                callback(null, posts);
+            },
+        ], (err, posts) => {
+            res.render('newsfeed', {
+                title: 'ShefHub | Home',
+                post: posts
             });
-        }
-
-        res.render('newsfeed', {
-            title: 'ShefHub | Home',
-            post: posts
         });
     },
 
