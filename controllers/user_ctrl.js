@@ -36,17 +36,18 @@ const user_controller = {
             },
 
             function getVoteStatus(posts, callback) {
-                for (const post of posts) {
+                async.each(posts, function (post, callback) {
                     // get sum of down votes and up votes
                     post.likes = post.likes.reduce((n, {value}) => n + value, 0);
 
-                    // if up voted/down voted by the logged in user
+                    // if user liked this post
                     Vote.findOne({user: req.session._id, recipe: post._id}, 'value', (err, result) => {
                         post.is_liked = result? result.value : 0;
+                        callback(err);
                     });
-                }
-
-                callback(null, posts);
+                }, (err) => {
+                    callback(err, posts);
+                });
             },
         ], (err, posts) => {
             res.render('newsfeed', {
