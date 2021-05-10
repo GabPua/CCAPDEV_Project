@@ -122,7 +122,8 @@
                         <p>
                         <p><a href='/user/{{this.user._id}}'><strong>{{this.user._id}}</strong></a></p>
                         <p class='comment-body'>{{this.body}}</p>
-                        <p><small>{{timeDiff this.date}}</small></p>
+                        <input type='hidden' value='{{this._id}}'>
+                        <p><small><a class='reply'>Reply</a> · {{timeDiff this.date}}</small></p>
                     </div>
 
                     {{#each this.replies}}
@@ -179,7 +180,7 @@
             <article class='media'>
                 <figure class='media-left'>
                     <p class='image is-64x64'>
-                        <img class='is-rounded' src='{{user.picture_path}}' alt='{{user._id}}'>
+                        <img class='is-rounded' src='{{user.picture_path}}' alt='{{user._id}}' id='comment-dp'>
                     </p>
                 </figure>
                 <div class='media-content'>

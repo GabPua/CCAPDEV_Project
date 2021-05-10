@@ -15,6 +15,8 @@ $(document).ready(function () {
     const close = $('#close');
     const len = $('.pagination-list').children().length;
 
+    const dp = $('#comment-dp');
+
     no_comments_msg = $('#no-comments');
     comments = $('.comments');
 
@@ -40,6 +42,35 @@ $(document).ready(function () {
 
     $(document).on('click', '.dropdown-trigger', function () {
         $(this).parent().toggleClass('is-active');
+    });
+
+    comments.on('click', '.reply', function () {
+        const reply = $(
+            `<article class='media'>
+                <figure class='media-left'>
+                    <p class='image is-48x48'>
+                        <img class='is-rounded' src='${dp.attr('src')}' alt='${dp.attr('alt')}'>
+                    </p>
+                </figure>
+                <div class='media-content'>
+                    <div class='field'>
+                        <p class='control'>
+                            <textarea class='textarea has-fixed-size' placeholder='Reply to a comment...' name='reply'></textarea>
+                        </p>
+                    </div>
+                    <div class='field'>
+                        <p class='control'>
+                            <button class='button post-reply'>Post reply</button>
+                        </p>
+                    </div>
+                </div>
+            </article>`);
+
+        $(this).closest('.media-content').append(reply);
+    });
+
+    comments.on('click', '.post-reply', function () {
+        // TODO: Implement this
     });
 
     comments.on('click', '.delete-comment', function () {

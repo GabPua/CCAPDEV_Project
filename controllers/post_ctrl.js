@@ -190,7 +190,7 @@ const post_controller = {
         });
     },
 
-    loadRecipe: async (req, res) => {
+    loadRecipe: (req, res) => {
         let skip = req.body.skip || 0;
         let query = req.body.query || null;
 
@@ -200,20 +200,20 @@ const post_controller = {
                     // get sum of down votes and up votes
                     result.likes = result.likes.reduce((n, {value}) => n + value, 0);
                     callback(err, result);
-                }).skip(skip).populate('likes').lean({virtuals: true}).exec();
+                }).skip(skip).populate('likes').lean({virtuals: true});
             },
 
             function getComments(post, callback) {
                 Comment.find({recipe: post._id, reply_to: null}, (err, result) => {
                     callback(err, post, result);
-                }).sort({date: 1}).populate('user').lean().exec();
+                }).sort({date: 1}).populate('user').lean();
             },
 
             function getRepliesForEachComment(post, comments, callback) {
                 for (const comment of comments) {
                     Comment.find({reply_to: comment._id}, (err, replies) => {
                         comment.replies = replies;
-                    }).sort({date: 1}).populate('user').lean().exec();
+                    }).sort({date: 1}).populate('user').lean();
                 }
 
                 callback(null, post, comments)
@@ -223,7 +223,7 @@ const post_controller = {
                 if (req.session._id && req.cookies.user_sid) {
                     User.findById(req.session._id, (err, result) => {
                         callback(err, post, comment, result);
-                    }).lean().exec();
+                    }).lean();
                 }
             },
 
@@ -231,7 +231,7 @@ const post_controller = {
                 Vote.findOne({user: req.session._id, recipe: post._id}, 'value', (err, result) => {
                     post.is_liked = result ? result.value : 0;
                     callback(err, post, comment, user);
-                }).exec();
+                });
             },
         ], (err, post, comments, user) => {
             if (err) {
