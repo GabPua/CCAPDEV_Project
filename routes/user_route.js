@@ -5,7 +5,7 @@ router.route('/profile')
     .get(ctrl.getProfile)
     .post(ctrl.postProfile);
 
-router.get(['/posts', 'likes'], ctrl.getPosts);
+router.get(['/posts', '/likes'], ctrl.getPosts);
 
 router.get(['/following', '/followers'], ctrl.getFollow);
 

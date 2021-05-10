@@ -148,14 +148,9 @@ const user_controller = {
                     posts = result;
                 }).lean().exec();
             } else {
-                let post_ids;
                 await Vote.find({user: id, value: 1}, (err, result) => {
-                    post_ids = result.map(a => a.recipe);
-                }).lean().exec();
-
-                await Post.find({_id: {$in: post_ids}}, (err, result) => {
-                    posts = result;
-                }).lean().exec();
+                    posts = result.map(a => a.recipe);
+                }).populate('recipe').lean().exec();
             }
 
             res.render('profile', {
