@@ -30,6 +30,7 @@
                     <time>{{formatDate this.date}}</time>
 
                     <div class='user-interactions'>
+                        <input type='hidden' value={{this._id}}>
                         <i class='fas fa-thumbs-up upvote {{#if (isEqual is_liked 1)}}is-active{{/if}}'></i>
                         <span class='display-count'>{{this.likes}}</span>
                         <i class='fas fa-thumbs-down downvote {{#if (isEqual is_liked -1)}}is-active{{/if}}'></i>
