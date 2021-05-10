@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Post = require('../models/recipe');
 const Comment = require('../models/comment');
 const Vote = require('../models/vote');
+const mongoose = require('mongoose');
 const async = require('async');
 
 function isEmpty(str) {
@@ -32,7 +33,7 @@ const post_controller = {
 
     insertToDB: (req, res) => {
         redirect(req, res, async () => {
-            const {title, desc, quantity, unit, ingredient, direction} = req.body;
+            let {id, title, desc, quantity, unit, ingredient, direction} = req.body;
 
             console.log(req.body);
 
@@ -46,11 +47,6 @@ const post_controller = {
             // final validation
             const err = {};
 
-            // if editing a post
-            if (req.body.is_editing) {
-                err.editing = true;
-            }
-
             if (isEmpty(title)) {
                 err.title = "Missing title";
             }
@@ -63,53 +59,43 @@ const post_controller = {
                 err.information = "Invalid inputs";
             }
 
-
             if (!req.files || Object.keys(req.files).length === 0) {
                 err.picture = 'At least 1 image required';
             }
 
-            let quantities, units, ingredients, directions;
             if (typeof ingredient === 'string') {
-                quantities = [quantity];
-                units = [unit];
-                ingredients = [ingredient];
-            } else {
-                quantities = quantity;
-                units = unit;
-                ingredients = ingredient;
+                req.body.quantity = quantity = [quantity];
+                req.body.unit = unit = [unit];
+                req.body.ingredient = ingredient = [ingredient];
             }
 
             if (typeof direction === 'string') {
-                directions = [direction];
-            } else {
-                directions = direction;
+                req.body.direction = direction = [direction];
             }
 
             let emptyCount = 0;
-            emptyCount += quantities.filter(isEmpty).length;
-            emptyCount += units.filter(isEmpty).length;
-            emptyCount += ingredients.filter(isEmpty).length;
+            emptyCount += quantity.filter(isEmpty).length;
+            emptyCount += unit.filter(isEmpty).length;
+            emptyCount += ingredient.filter(isEmpty).length;
 
-            if (3 * ingredients.length === emptyCount) {
+            if (3 * ingredient.length === emptyCount) {
                 err.ingredient = 'At least 1 ingredient required';
             } else if (emptyCount !== 0) {
                 err.ingredient = 'Please remove empty entries';
             }
 
-            emptyCount = directions.filter(isEmpty).length
+            emptyCount = direction.filter(isEmpty).length
 
-            if (directions.length === emptyCount) {
+            if (direction.length === emptyCount) {
                 err.direction = 'At least 1 procedure required';
             } else if (emptyCount !== 0) {
                 err.direction = 'Please remove empty entries';
             }
 
-            console.log(req.files.pictures);
-
             if (Object.keys(err).length === 0) {
                 const ingredient_list = [];
-                for (let i = 0; i < ingredients.length; i++) {
-                    ingredient_list.push(quantities[i] + ' ' + units[i] + ' ' + ingredients[i]);
+                for (let i = 0; i < ingredient.length; i++) {
+                    ingredient_list.push(quantity[i] + ' ' + unit[i] + ' ' + ingredient[i]);
                 }
 
                 let post = {
@@ -119,10 +105,21 @@ const post_controller = {
                     serving: serving,
                     prep_time: prep_hr * 60 + prep_min,
                     cook_time: cook_hr * 60 + cook_min,
-                    direction: directions,
+                    direction: direction,
                     ingredient: ingredient_list,
                     date: new Date()
                 };
+
+                async.waterfall([
+                    function upsertPost(callback) {
+                        Post.findByIdAndUpdate(id, {$push: post, $setOnInsert: new mongoose.Types.ObjectId()},
+                            {upsert: true}, (err, result) => {
+                            callback(err, result)
+                        });
+                    },
+
+                    // TODO: picture stuff
+                ])
 
                 await Post.create(post, async (err, result) => {
                     if (err) {
@@ -160,7 +157,7 @@ const post_controller = {
                     }
                 });
             } else {
-                res.render('./create', {
+                res.render('create', {
                     post: req.body,
                     err: err
                 });
@@ -170,26 +167,30 @@ const post_controller = {
 
     getRecipe: async (req, res) => {
         redirect(req, res, async () => {
-            const id = req.params.id;
 
-            try {
-                await Post.findById(id, (err, result) => {
-                    if (result) {
-                        // pass recipe_id as post info
-                        req.body.query = {_id: id};
-                        post_controller.loadRecipe(req, res);
-                    } else {
-                        res.redirect('/404NotFound');
+            async.waterfall([
+                function findPost(callback) {
+                    try {
+                        Post.findById(req.params.id, (err, result) => {
+                            callback(err, result);
+                        }).lean();
+                    } catch (e) {
+                        callback('Invalid ID');
                     }
-                }).lean().exec();
-            } catch (e) {
-                res.redirect('/404NotFound');
-            }
+                }
+            ], (err, result) => {
+                if (err) {
+                    console.log(err);
+                    res.redirect('/404NotFound');
+                } else {
+                    req.body.query = {_id: result._id};
+                    post_controller.loadRecipe(req, res);
+                }
+            });
         });
     },
 
     loadRecipe: async (req, res) => {
-        // let post, comments, user;
         let skip = req.body.skip || 0;
         let query = req.body.query || null;
 
@@ -235,7 +236,7 @@ const post_controller = {
         ], (err, post, comments, user) => {
             if (err) {
                 console.log(err);
-                res.redirect('/Page404NotFound');
+                res.redirect('/404NotFound');
             } else {
                 res.render('post', {
                     title: 'ShefHub | ' + post.title,
@@ -245,6 +246,52 @@ const post_controller = {
                 });
             }
         });
+    },
+
+    editPost: (req, res) => {
+        redirect(req, res, () => {
+            const recipe_id = req.params.id;
+
+            async.waterfall([
+                function validateUserIsAuthor(callback) {
+                    Post.findById(recipe_id, (err, result) => {
+                        if (result.user === req.session._id) {
+                            callback(err, result);
+                        } else {
+                            callback('Invalid User');
+                        }
+                    }).lean();
+                },
+            ], (err, post) => {
+                if (err) {
+                    res.redirect('/404NotFound');
+                } else {
+                    // processing to fit with hbs create.hbs template
+                    const quantity = [], unit = [], ingredient = [];
+
+                    for (let i = 0; i < post.ingredient.length; i++) {
+                        const substr = post.ingredient[i].split(' ', 3);
+
+                        quantity.push(substr[0]);
+                        unit.push(substr[1]);
+                        ingredient.push(substr[2]);
+                    }
+
+                    post.ingredient = ingredient;
+                    post.quantity = quantity;
+                    post.unit = unit;
+                    post.prep_hr = Math.floor(post.prep_time / 60);
+                    post.prep_min = post.prep_time % 60;
+                    post.cook_hr = Math.floor(post.cook_time / 60);
+                    post.cook_min = post.cook_time % 60;
+
+                    res.render('create', {
+                        post: post,
+                        err: err
+                    });
+                }
+            });
+        })
     },
 
     deletePost: (req, res) => {

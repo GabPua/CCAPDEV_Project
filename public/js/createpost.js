@@ -1,6 +1,9 @@
 let p_min, p_hr, c_min, c_hr, t_min, t_hr, c_help, p_help;
 
 $(document).ready(() => {
+    const id_field = $('input[name=id]');
+    const id = id_field.val();
+
     p_hr = $('#prep-hr');
     p_min = $('#prep-min');
     p_help = $('#prep-time-help');
@@ -50,7 +53,7 @@ $(document).ready(() => {
     // verify all input fields
     $('input:submit').click((event) => {
         event.preventDefault();
-        const input = $('input:not([type=submit])');
+        const input = $('input:not([type=submit]):not([type=hidden])');
         const textarea = $('textarea');
 
         input.trigger('focusout');
@@ -66,6 +69,7 @@ $(document).ready(() => {
         });
 
         if (input.length === filled.length && textarea.length === filledText.length) {
+            id_field.val(id);       // for security
             $('form').submit();
         }
     });

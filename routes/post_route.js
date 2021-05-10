@@ -9,4 +9,8 @@ router.get('/:id', ctrl.getRecipe);
 
 router.post('/delete', ctrl.deletePost);
 
+router.route('/edit/:id')
+    .get(ctrl.editPost)
+    .post(ctrl.insertToDB);
+
 module.exports = router;

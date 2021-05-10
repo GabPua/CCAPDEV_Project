@@ -2,6 +2,7 @@
 
 <main class='is-fullhd fill page-height parallax vegetable-bg' id='create-post'>
     <form class='container content box recipe-view' method='POST' enctype='multipart/form-data'>
+        <input type='hidden' value='{{post._id}}' name='id'>
         <h1><label for='recipe-title'>Recipe Title</label></h1>
         {{#if err.title}}
             <p class='help is-danger'>{{err.title}}</p>
@@ -31,13 +32,11 @@
             <p class='help is-danger'>{{err.ingredient}}</p>
         {{/if}}
         <ol class='content' id='edit-ingredients'>
-            {{#unless post.ingredient}}
-                <script type='text/javascript'>addIngField()</script>
-            {{/unless}}
-
-            {{#each post.ingredient}}
+            {{#loopIngredients post.quantity post.unit post.ingredient}}
                 <script type='text/javascript'>addIngField('{{this.qty}}', '{{this.unit}}', '{{this.name}}')</script>
-            {{/each}}
+            {{else}}
+                <script type='text/javascript'>addIngField()</script>
+            {{/loopIngredients}}
         </ol>
         <button class='button add-field is-primary is-light' onclick='addIngField()'>Add Ingredient</button>
 
@@ -47,12 +46,10 @@
             <p class='help is-danger'>{{err.direction}}</p>
         {{/if}}
         <ol class='content' id='edit-directions'>
-            {{#unless post.direction}}
-                <script type='text/javascript'>addDirField()</script>
-            {{/unless}}
-
             {{#each post.direction}}
                 <script type='text/javascript'>addDirField('{{this}}')</script>
+            {{else}}
+                <script type='text/javascript'>addDirField()</script>
             {{/each}}
         </ol>
         <button class='button add-field is-primary is-light' onclick='addDirField()'>Add Step</button>

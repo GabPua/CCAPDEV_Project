@@ -110,6 +110,20 @@ const hbs = exphbs.create({
             } else {
                 return 'Just Now';
             }
+        },
+
+        loopIngredients: (qty, unit, ingredient, block) => {
+            let accum = '';
+
+            if (qty) {
+                for (let i = 0; i < qty.length; i++) {
+                    accum += block.fn({qty: qty[i], unit: unit[i], name: ingredient[i]});
+                }
+            } else {
+                accum = block.inverse(this);
+            }
+
+            return accum;
         }
     }
 });
