@@ -203,22 +203,24 @@ const user_controller = {
     },
 
     getSearch: (req, res) => {
-        redirect(req, res, async () => {
+        redirect(req, res, () => {
             const { keyword } = req.query
 
             if (keyword) {
-                let results;
                 const pattern = new RegExp(keyword, 'i');
 
-                // query
-                await Post.find({title: {$regex: pattern} },(err, result) => {
-                    results = result;
-                }).populate('user').lean().exec();
-
-                res.render('query', {
-                    title: 'Shefhub Search | ' + keyword,
-                    query: keyword,
-                    results: results
+                async.waterfall([
+                    function findPosts(callback) {
+                        Post.find({title: {$regex: pattern} },(err, results) => {
+                            callback(err, results);
+                        }).populate('user').lean();
+                    }
+                ], (err, posts) => {
+                    res.render('query', {
+                        title: 'Shefhub Search | ' + keyword,
+                        query: keyword,
+                        results: posts
+                    });
                 });
             } else {
                 res.render('search', {
@@ -345,7 +347,7 @@ const user_controller = {
                 };
 
                 // prevents duplicates
-                res.send(await Follow.findOneAndUpdate(follow, follow, {new: true, upsert: true}));
+                res.send(await Follow.updateOne(follow, follow, {new: true, upsert: true}));
             }
         }
     },
