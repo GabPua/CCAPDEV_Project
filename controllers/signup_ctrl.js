@@ -1,5 +1,6 @@
 const dotenv = require('dotenv')
 const crypto = require('crypto-js');
+const async = require('async');
 
 dotenv.config();
 const key = process.env.SECRET || 'hushPuppy1234';
@@ -38,59 +39,71 @@ const signup_ctrl = {
         }
     },
 
-    postSignup: async (req, res) => {
+    postSignup: (req, res) => {
         const { email, name, password, tandc } = req.body;
 
         // final check before creating account
         let isValid = isValidEmail(email) && isValidPassword(password) && isValidUsername(name) && tandc === 'on';
-        
-        await User.findById(name, '_id', null, (err, result) => {
-            if (result !== null && result._id === name) {
-                isValid = false;
-            }
-        }).exec();
 
-        if (isValid) {
-            let user = {
-                _id: name,
-                email: email,
-                password: crypto.AES.encrypt(password, key).toString(),
-                picture_path: '/public/img/profile/default_dp.jpg'
-            };
-
-            User.create(user, (err) => {
-                if (err) {
-                    console.log(err);
-                    res.redirect('/');
+        async.waterfall([
+            function isNotTaken(callback) {
+                if (isValid) {
+                    User.findById(name, '_id', null, (err, result) => {
+                        if (err) {
+                            callback(err);
+                        } else if (result == null || result._id !== name) {
+                            callback(null);
+                        } else {
+                            callback(true);
+                        }
+                    });
                 } else {
-                    req.session._id = name;
-                    res.redirect('/profile');
+                    callback(true);
                 }
-            });
-        } else {
-            res.render('signup', {
-                title: 'Sign up | ShefHub',
-                signup: true,
-                email: email,
-                name: name
-            });
-        }
+            },
+
+            function createUser(callback) {
+                let user = {
+                    _id: name,
+                    email: email,
+                    password: crypto.AES.encrypt(password, key).toString(),
+                    picture_path: '/public/img/profile/default_dp.jpg'
+                };
+
+                User.create(user, (err) => {
+                    callback(err);
+                });
+            }
+        ], (err) => {
+            if (!err) {
+                req.session._id = name.toLowerCase();
+                req.session.picture_path = '/public/img/profile/default_dp.jpg';
+                res.redirect('/profile');
+            } else {
+                res.render('signup', {
+                    title: 'Sign up | ShefHub',
+                    signup: true,
+                    email: email,
+                    name: name
+                });
+            }
+        });
     },
 
-    getCheckUsername: async (req, res) => {
+    getCheckUsername: (req, res) => {
         let name = req.query._id;
 
-        await User.findById(name, '_id', null, (err, result) => {
+        User.findById(name, '_id', null, (err, result) => {
             res.send(result);
-        }).lean().exec();
+        }).lean();
     },
 
-    getCheckEmail: async (req, res) => {
+    getCheckEmail: (req, res) => {
         let email = req.query.email;
 
-        await User.findOne({email: email}, 'email', null, (err, result) => {
+        User.findOne({email: email}, 'email', null, (err, result) => {
             res.send(result);
-        }).lean().exec();
+        }).lean();
     }
 };
 
