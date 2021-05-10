@@ -257,6 +257,16 @@ $(document).ready(function () {
         $('html').addClass('is-clipped');
     });
 
+    $('#confirm-delete').click(() => {
+        $.post('/deleteAccount', (isSuccess) => {
+            if (isSuccess) {
+                window.location.replace('/logout');
+            } else {
+                location.reload();
+            }
+        });
+    })
+
     $('.close').click((event) => {
         event.preventDefault();
         $('.modal').removeClass('is-active');

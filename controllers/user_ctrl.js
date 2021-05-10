@@ -352,27 +352,12 @@ const user_controller = {
         }
     },
 
-    getDeleteAccount: (req, res) => {
-        redirect(req, res, async () => {
+    deleteAccount: (req, res) => {
+        redirect(req, res, () => {
             const id = req.session._id;
-
-            // delete user's following and followers
-            let delFollowing = await Follow.deleteMany({follower: id}).exec();
-            let delFollower = await Follow.deleteMany({following: id}).exec();
-
-            // TODO: Delete user's comments and comments of others on user's posts
-
-            // delete user's posts
-            let delPost = await Post.deleteMany({user: id}).exec();
-
-            // delete user
-            await User.findByIdAndDelete(id).exec();
-
-            console.log('Followings removed: ' + delFollowing.deletedCount);
-            console.log('Followers removed: ' + delFollower.deletedCount);
-            console.log('Posts removed: ' + delPost.deletedCount);
-
-            res.redirect('/logout');
+            User.findByIdAndDelete(id, (err, result) => {
+                res.send(result != null);
+            });
         });
     }
 }

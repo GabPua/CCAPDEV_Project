@@ -33,6 +33,6 @@ router.route('/follow')
     .get(ctrl.getCheckFollow)
     .post(ctrl.postFollow);
 
-router.get('/getDeleteAccount', ctrl.getDeleteAccount);
+router.post('/deleteAccount', ctrl.deleteAccount);
 
 module.exports = router;
