@@ -18,13 +18,25 @@ $(document).ready(function () {
     no_comments_msg = $('#no-comments');
     comments = $('.comments');
 
-    comments.click(() => {
-        if (comments.children().length === 0) {
-            no_comments_msg.show();
-        } else {
-            no_comments_msg.hide();
+    if (comments.children('.media').length === 0) {
+        no_comments_msg.show();
+    } else {
+        no_comments_msg.hide();
+    }
+
+    const observer = new MutationObserver((mutations) => {
+        for (let mutation of mutations) {
+            if (mutation.type === 'childList') {
+                if (comments.children('.media').length === 0) {
+                    no_comments_msg.show();
+                } else {
+                    no_comments_msg.hide();
+                }
+            }
         }
-    }).trigger('click');
+    });
+
+    observer.observe(comments[0], { childList: true });
 
     $(document).on('click', '.dropdown-trigger', function () {
         $(this).parent().toggleClass('is-active');
@@ -119,7 +131,7 @@ $(document).ready(function () {
         $('.comment-dropdown').not(dropdown).removeClass('is-active');
     });
 
-    // a user is not logged in
+    // user is not logged in
     if (modal.length > 0) {
         close.click(function () {
             modal.removeClass('is-active');
