@@ -35,7 +35,9 @@ const post_controller = {
         redirect(req, res, async () => {
             let {id, title, desc, quantity, unit, ingredient, direction} = req.body;
 
-            console.log(req.body);
+            if (!id) {
+                id = null;
+            }
 
             let {serving, prep_hr, prep_min, cook_hr, cook_min} = req.body;
             serving = parseInt(serving);
@@ -113,7 +115,7 @@ const post_controller = {
                 async.waterfall([
                     function upsertPost(callback) {
                         Post.findByIdAndUpdate(id, {$push: post, $setOnInsert: new mongoose.Types.ObjectId()},
-                            {upsert: true}, (err, result) => {
+                            {upsert: true, useFindAndModify: false}, (err, result) => {
                             callback(err, result)
                         });
                     },
@@ -179,7 +181,7 @@ const post_controller = {
                     }
                 }
             ], (err, result) => {
-                if (err) {
+                if (!result) {
                     console.log(err);
                     res.redirect('/404NotFound');
                 } else {
