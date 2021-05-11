@@ -25,7 +25,7 @@ const comment_controller = {
         const { id, recipe_id } = req.body;
 
         // verify
-        Comment.deleteOne({_id: id, recipe: recipe_id, user: req.session._id},(err, result) => {
+        Comment.findOneAndDelete({_id: id, recipe: recipe_id, user: req.session._id},(err, result) => {
             res.send(result != null);
         });
     },
