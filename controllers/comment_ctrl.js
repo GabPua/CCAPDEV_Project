@@ -2,12 +2,12 @@ const Comment = require('../models/comment');
 
 const comment_controller = {
     addComment: async (req, res) => {
-        const { text, recipe_id } = req.body;
+        const { text, recipe_id, reply_to } = req.body;
 
         let comment = {
             user: req.session._id,
             recipe: recipe_id,
-            reply_to: null,
+            reply_to: reply_to,
             body: text,
             date: new Date()
         }
