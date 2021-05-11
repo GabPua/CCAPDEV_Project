@@ -32,11 +32,11 @@ const post_controller = {
     },
 
     insertToDB: (req, res) => {
-        redirect(req, res, async () => {
+        redirect(req, res, () => {
             let {id, title, desc, quantity, unit, ingredient, direction} = req.body;
 
             if (!id) {
-                id = null;
+                id = new mongoose.Types.ObjectId();
             }
 
             let {serving, prep_hr, prep_min, cook_hr, cook_min} = req.body;
@@ -109,53 +109,65 @@ const post_controller = {
                     cook_time: cook_hr * 60 + cook_min,
                     direction: direction,
                     ingredient: ingredient_list,
-                    date: new Date()
+                    date: new Date(),
+                    n_pictures: 0
                 };
 
                 async.waterfall([
                     function upsertPost(callback) {
-                        Post.findByIdAndUpdate(id, {$push: post, $setOnInsert: new mongoose.Types.ObjectId()},
-                            {upsert: true, useFindAndModify: false}, (err, result) => {
-                            callback(err, result)
+                        Post.findByIdAndUpdate(id, post,
+                            {upsert: true, useFindAndModify: false, new: true}, (err, result) => {
+                            callback(err, result);
                         });
                     },
 
-                    // TODO: picture stuff
-                ])
-
-                await Post.create(post, async (err, result) => {
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        let n_pictures = 0;
+                    function uploadPics(result, callback) {
                         if (!Array.isArray(req.files.pictures)) {
                             let pic = req.files.pictures;
-                            let uploadPath = './public/img/' + result._id + '_' + n_pictures + '.jpg';
-                            await pic.mv(uploadPath, async (err) => {
-                                if (err)
+                            let uploadPath = './public/img/' + result._id + '_0.jpg';
+                            pic.mv(uploadPath, (err) => {
+                                if (err) {
                                     console.log('Upload failed');
-                                else {
-                                    n_pictures += 1;
-                                    await Post.updateOne({_id: result._id}, {n_pictures: n_pictures}).exec();
+                                } else {
+                                    post.n_pictures += 1;
                                 }
+                                callback(err, result._id);
                             });
                         } else {
-                            for (let i = 0; i < req.files.pictures.length; i++) {
-                                let pic = req.files.pictures[i];
-                                let uploadPath = './public/img/' + result._id + '_' + i + '.jpg';
-                                await pic.mv(uploadPath, (err) => {
-                                    if (err)
+                            async.eachSeries(req.files.pictures, (pic, callback) => {
+                                let uploadPath = './public/img/' + result._id + '_' + post.n_pictures + '.jpg';
+                                pic.mv(uploadPath, (err) => {
+                                    if (err) {
                                         console.log('Upload failed');
-                                    else {
+                                    } else {
                                         console.log(uploadPath + ' uploaded successfully');
-                                        n_pictures += 1;
-                                        Post.updateOne({_id: result._id}, {n_pictures: n_pictures}).exec();
+                                        post.n_pictures += 1;
                                     }
+                                    callback(err);
                                 });
-                            }
+                            }, (err) => {
+                                if (err) {
+                                    console.log('At least one upload failed');
+                                } else {
+                                    console.log('All pictures uploaded successfully');
+                                }
+                                callback(err, result._id);
+                            });
                         }
+                    },
 
-                        res.redirect('/post/' + result._id);
+                    function updatePicCount(recipe_id, callback) {
+                        Post.updateOne({_id: recipe_id}, post, (err) => {
+                            callback(err, recipe_id);
+                        });
+                    }
+
+                ], (err, recipe_id) => {
+                    if (err) {
+                        console.log(err);
+                        res.redirect('/404NotFound');
+                    } else {
+                        res.redirect('/post/' + recipe_id);
                     }
                 });
             } else {
