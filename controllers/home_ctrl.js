@@ -1,6 +1,7 @@
 const page_title = 'ShefHub | Free Recipes & More';
 const Post = require('../models/recipe');
 const post_ctrl = require('./post_ctrl');
+const async = require('async');
 
 const home_controller = {
     getIndex: (req, res) => {
@@ -19,11 +20,17 @@ const home_controller = {
         });
     },
 
-    getFeatured: async (req, res) => {
-        await Post.countDocuments(async (err, count) => {
+    getFeatured: (req, res) => {
+        async.waterfall([
+            function countPosts(callback) {
+                Post.countDocuments((err, count) => {
+                    callback(err, count);
+                }).lean();
+            },
+        ], (err, count) => {
             req.body.skip = Math.floor(Math.random() * count);
-            await post_ctrl.loadRecipe(req, res);
-        }).lean().exec();
+            post_ctrl.loadRecipe(req, res);
+        });
     }
 }
 

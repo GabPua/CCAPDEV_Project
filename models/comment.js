@@ -13,6 +13,7 @@ async function clearReplies(id) {
 }
 
 commentSchema.post('findOneAndDelete', (comment) => {
+    // is not a reply
     if (!comment.reply_to) {
         clearReplies(comment._id).then(() => {
             console.log("Cleared replies");

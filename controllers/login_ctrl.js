@@ -1,11 +1,12 @@
 const dotenv = require('dotenv')
 const crypto = require('crypto-js');
 const User = require('../models/user');
-const page_title = 'Shefhub | Login Page';
 const async = require('async');
 
 dotenv.config();
 const key = process.env.SECRET || 'hushPuppy123';
+
+const page_title = 'Shefhub | Login Page';
 
 const login_controller = {
     getLogin: (req, res) => {
