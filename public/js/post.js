@@ -44,6 +44,11 @@ $(document).ready(function () {
         $(this).parent().toggleClass('is-active');
     });
 
+    $(document).on('keydown', '.textarea', function() {
+        $(this).removeClass('is-danger')
+    })
+
+    // add new field when "Reply" is clicked
     comments.on('click', '.reply', function () {
         const reply = $(
             `<article class='media'>
@@ -55,7 +60,7 @@ $(document).ready(function () {
                 <div class='media-content'>
                     <div class='field'>
                         <p class='control'>
-                            <textarea class='textarea has-fixed-size' placeholder='Reply to a comment...' name='reply'></textarea>
+                            <textarea class='textarea has-fixed-size reply-body' placeholder='Reply to a comment...' name='reply'></textarea>
                         </p>
                     </div>
                     <div class='field'>
@@ -67,10 +72,31 @@ $(document).ready(function () {
             </article>`);
 
         $(this).closest('.media-content').append(reply);
+        reply.find('.textarea').focus();
     });
 
+    // when "post reply" is clicked
     comments.on('click', '.post-reply', function () {
-        // TODO: Implement this
+        const post_reply_wrapper = $(this).closest('.media');
+        const parent_comment = post_reply_wrapper.parent().closest('.media');
+        const textarea = post_reply_wrapper.find('.textarea');
+        const reply_to = parent_comment.find('input[type=hidden]').val();
+
+        if (textarea.val()) {
+            const text = textarea.val();
+
+            $.post('/comment/add', {recipe_id: recipe_id, text: text, reply_to: reply_to}, (obj) => {
+                const {comment_id, user_id, picture_path} = obj;
+                if (comment_id) {
+                    parent_comment.children('.media-content').append(createNewCommentDiv(comment_id, user_id, picture_path, true, text));
+                    post_reply_wrapper.remove();
+                } else {
+                    textarea.val('ERROR ENCOUNTERED');
+                }
+            });
+        } else {
+            textarea.addClass('is-danger');
+        }
     });
 
     comments.on('click', '.delete-comment', function () {
@@ -181,16 +207,6 @@ $(document).ready(function () {
             e.stopPropagation();
         });
     } else {
-        const textarea = $('.textarea');
-
-        textarea.focusout(() => {
-            if (!textarea.val()) {
-                textarea.addClass('is-danger');
-            } else {
-                textarea.removeClass('is-danger');
-            }
-        });
-
         $('#edit-post').click(() => {
             window.location = '/post/edit/' + recipe_id;
         });
@@ -280,53 +296,22 @@ $(document).ready(function () {
         });
 
         $('#post-comment').click(() => {
-            textarea.trigger('focusout');
+            const textarea = $('#new-comment');
 
-            if (!textarea.hasClass('is-danger')) {
+            if (textarea.val()) {
                 const text = textarea.val();
 
                 $.post('/comment/add', {recipe_id: recipe_id, text: text}, (obj) => {
                     const { comment_id, user_id, picture_path } = obj;
                     if (comment_id) {
-                        const new_comment = $(
-                            `<article class='media'>
-                                <figure class='media-left'>
-                                    <p class='image is-64x64'>
-                                        <img class='is-rounded' src='${picture_path}' alt='${user_id}'>
-                                    </p>
-                                </figure>
-                                <div class='media-content'>
-                                    <div class='content'>
-                                        <p>
-                                            <a href='/user/${user_id}'><strong>${user_id}</strong></a>
-                                            <br>
-                                            ${text}
-                                            <br>
-                                            <small><a>Reply</a> · Just Now</small>
-                                        </p>
-                                    </div>
-                                </div>
-                                
-                                <div class='dropdown comment-dropdown'>
-                                    <div class='dropdown-trigger'>
-                                        <i class='icon fas fa-ellipsis-h fa-lg' aria-haspopup='true' aria-controls='post-options'></i>
-                                    </div>
-                                    <div class='dropdown-menu' role='menu'>
-                                        <div class='dropdown-content'>
-                                            <input type='hidden' value='${comment_id}'>
-                                            <a class='dropdown-item edit-comment'>Edit</a>
-                                            <a class='dropdown-item delete-comment'>Delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>`);
-
-                        comments.append(new_comment);
+                        comments.append(createNewCommentDiv(comment_id, user_id, picture_path, false, text));
                         textarea.val('');
                     } else {
                         textarea.val('ERROR ENCOUNTERED');
                     }
                 });
+            } else {
+                textarea.addClass('is-danger');
             }
         });
     }
@@ -348,4 +333,38 @@ function loadPicture(value, len, pic) {
     let newUrl = url.substr(0, url.length - 7) + val + '.jpg")';
 
     pic.attr('style', newUrl);
+}
+
+function createNewCommentDiv(comment_id, user_id, picture_path, isReply, text) {
+    const size = isReply ? '48x48' : '64x64';
+
+    return $(
+        `<article class='media'>
+        <figure class='media-left'>
+            <p class='image is-${size}'>
+                <img class='is-rounded' src='${picture_path}' alt='${user_id}'>
+            </p>
+        </figure>
+        <div class='media-content'>
+            <div class='content'>
+            ${isReply ? '' : `<input type='hidden' value='${comment_id}'>`}
+                <p><a href='/user/${user_id}'><strong>${user_id}</strong></a></p>
+                <p>${text}</p>
+                <p><small>${isReply ? '' : "<a class='reply'>Reply</a> · "}Just Now</small></p>
+            </div>
+        </div>
+        
+        <div class='dropdown comment-dropdown'>
+            <div class='dropdown-trigger'>
+                <i class='icon fas fa-ellipsis-h fa-lg' aria-haspopup='true' aria-controls='post-options'></i>
+            </div>
+            <div class='dropdown-menu' role='menu'>
+                <div class='dropdown-content'>
+                    <input type='hidden' value='${comment_id}'>
+                    <a class='dropdown-item edit-comment'>Edit</a>
+                    <a class='dropdown-item delete-comment'>Delete</a>
+                </div>
+            </div>
+        </div>
+    </article>`);
 }
