@@ -32,6 +32,10 @@
     color: gray;
 }
 
+.profile-box .tile {
+    flex-wrap: wrap;
+}
+
 .profile-box .tile.is-parent {
     background-size: cover !important;
     background-position: center !important;
@@ -39,15 +43,17 @@
 
 .profile-box.menu-display .tile.is-parent {
     padding: 0;
-    /*border-radius: 20px;*/
-    /*margin: 10px;*/
+    border-radius: 20px;
+    margin: 10px;
+    min-height: 200px;
+    flex: 0 0 48%;
 }
 
 .profile-box.menu-display .tile.is-parent a  {
     width: 100%;
     backdrop-filter: brightness(60%);
     background-color: transparent;
-    /*border-radius: 20px;*/
+    border-radius: 20px;
 }
 
 .profile-box.menu-display .tile.is-parent .box  {
