@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const async = require('async');
 const leanVirtual = require('mongoose-lean-virtuals');
 const Comment = require('./comment');
+const Vote = require('./vote');
 
 let recipeSchema = new mongoose.Schema({
     user: {type: String, require: true, ref: 'User'},
@@ -23,12 +25,22 @@ recipeSchema.virtual('likes', {
 
 recipeSchema.plugin(leanVirtual);
 
-async function clearComments(id) {
-    await Comment.deleteMany({ recipe : id }).lean().exec();
-}
-
 recipeSchema.post('findOneAndDelete', (recipe) => {
-    clearComments(recipe._id).then(() => console.log('Deleted comments for post'));
+    async.series([
+        function deleteComments (callback) {
+            Comment.deleteMany({ recipe : recipe._id }, (err) => {
+                callback(err);
+            }).lean();
+        },
+
+        function deleteVotes (callback) {
+            Vote.deleteMany({recipe: recipe._id}, (err) => {
+                callback(err);
+            }).lean();
+        }
+    ], (err) => {
+        console.log('DELETING A POST... ERROR ENCOUNTERED:', err);
+    });
 });
 
 module.exports = mongoose.model('Recipe', recipeSchema, 'recipe');
