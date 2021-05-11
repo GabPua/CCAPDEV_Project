@@ -167,9 +167,8 @@ const post_controller = {
         });
     },
 
-    getRecipe: async (req, res) => {
-        redirect(req, res, async () => {
-
+    getRecipe: (req, res) => {
+        redirect(req, res, () => {
             async.waterfall([
                 function findPost(callback) {
                     try {
@@ -268,7 +267,7 @@ const post_controller = {
                 if (err) {
                     res.redirect('/404NotFound');
                 } else {
-                    // processing to fit with hbs create.hbs template
+                    // processing to fit with create.hbs template
                     const quantity = [], unit = [], ingredient = [];
 
                     for (let i = 0; i < post.ingredient.length; i++) {

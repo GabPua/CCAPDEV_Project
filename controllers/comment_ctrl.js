@@ -21,7 +21,7 @@ const comment_controller = {
         });
     },
 
-    deleteComment: async (req, res) => {
+    deleteComment: (req, res) => {
         const { id, recipe_id } = req.body;
 
         // verify

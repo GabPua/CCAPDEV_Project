@@ -1,8 +1,4 @@
-const User = require('../models/user');
-const Post = require('../models/recipe');
-const Comment = require('../models/comment');
 const Vote = require('../models/vote');
-const async = require('async');
 
 const vote_controller = {
     deleteVote: (req, res) => {
@@ -24,12 +20,12 @@ const vote_controller = {
         });
     },
 
-    addVote: (req, res) => {
+    addVote: async (req, res) => {
         const recipe = req.body.recipe_id;
         const user = req.session._id;
         const value = req.body.vote_value;
 
-        Vote.create({recipe: recipe, user: user, value: value}, (err) => {
+        await Vote.create({recipe: recipe, user: user, value: value}, (err) => {
             res.send(err === null);
         });
     }

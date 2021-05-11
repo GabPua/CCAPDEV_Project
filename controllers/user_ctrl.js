@@ -116,6 +116,7 @@ const user_controller = {
                 desc: desc
             };
 
+            // TODO: Waterfall
             await User.updateOne({_id: req.session._id}, user).exec();
 
             if (req.files && Object.keys(req.files).length > 0) {
@@ -255,7 +256,7 @@ const user_controller = {
 
         User.findById( req.session._id, (err, result) => {
             res.send(result != null && password === crypto.AES.decrypt(result.password, key).toString(crypto.enc.Utf8));
-        }).lean().exec();
+        }).lean();
     },
 
     updatePassword: (req, res) => {
@@ -324,32 +325,41 @@ const user_controller = {
         });
     },
 
-    postFollow: async (req, res) => {
+    postFollow: (req, res) => {
         const { follow_id = null,  user_id: following = null } = req.body;
 
-        // _id given for a follow doc
+        // _id given for a follow doc, therefore unfollow
         if (follow_id) {
-            await Follow.findByIdAndDelete(follow_id, (err, result) => {
+            Follow.findByIdAndDelete(follow_id, (err, result) => {
                 res.send(result);
-            }).exec();
-        } else {
-            const follower = req.session._id;
-            let isValid;
+            });
+        } else { // create new follow
+            async.waterfall([
+                function verifyExistingUser(callback) {
+                    User.findById(following, '_id', (err, result) => {
+                        callback(err, result != null);
+                    })
+                },
 
-            // verify user to be followed
-            await User.findById(following, '_id', null, (err, result) => {
-                isValid = result != null;
-            }).exec();
+                function createFollow(isValid, callback) {
+                    if (isValid) {
+                        let follow = {
+                            follower: req.session._id,
+                            following: following
+                        };
 
-            if (isValid) {
-                let follow = {
-                    follower: follower,
-                    following: following
-                };
-
-                // prevents duplicates
-                res.send(await Follow.updateOne(follow, follow, {new: true, upsert: true}));
-            }
+                        // use updateOne to prevent duplicates
+                        Follow.updateOne(follow, follow, {new: true, upsert: true}, (err) => {
+                            callback(err);
+                        });
+                    } else {
+                        callback('Invalid user');
+                    }
+                }
+            ], (err) => {
+                console.log(err);
+                res.send(err == null);
+            });
         }
     },
 
