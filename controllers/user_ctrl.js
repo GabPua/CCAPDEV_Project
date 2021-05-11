@@ -106,7 +106,7 @@ const user_controller = {
     },
 
     postProfile: (req, res) => {
-        redirect(req, res, async () => {
+        redirect(req, res, () => {
 
             const { email, profession, workplace, desc } = req.body;
             let user = {
@@ -116,25 +116,37 @@ const user_controller = {
                 desc: desc
             };
 
-            // TODO: Waterfall
-            await User.updateOne({_id: req.session._id}, user).exec();
-
-            if (req.files && Object.keys(req.files).length > 0) {
-                let pic = req.files.file;
-                let path = '/public/img/profile/' + req.session._id + '.jpg';
-                let uploadPath = '.' + path;
-
-                await pic.mv(uploadPath, async (err) => {
-                    if (err)
-                        console.log('Upload failed');
-                    else {
-                        console.log(req.session._id + '.jpg uploaded successfully');
-                        user.picture_path = path;
-                        
-                        await User.updateOne({_id: req.session._id}, user).exec();
+            async.series([
+                function uploadPic(callback) {
+                    if (req.files && Object.keys(req.files).length > 0) {
+                        let pic = req.files.file;
+                        let path = '/public/img/profile/' + req.session._id + '.jpg';
+                        let uploadPath = '.' + path;
+        
+                        pic.mv(uploadPath, (err) => {
+                            if (err) {
+                                console.log('Upload failed');
+                            } else {
+                                console.log(req.session._id + '.jpg uploaded successfully');
+                                user.picture_path = path;
+                                req.session.picture_path = path;
+                            }
+                            callback(err);
+                        });
                     }
-                });
-            }
+                },
+
+                function updateUser(callback) {
+                    User.updateOne({_id: req.session._id}, user, (err) => {
+                        if (err) {
+                            console.log('Update failed');
+                        } else {
+                            console.log('User updated successfully');
+                        }
+                        callback(err);
+                    }).lean();
+                }
+            ]);         
 
             res.redirect('/profile');
         });
