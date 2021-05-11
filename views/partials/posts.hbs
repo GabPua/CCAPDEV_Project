@@ -13,11 +13,8 @@
 
     {{#if posts}}
         <div class='tile is-ancestor scroll'>
-            <div class='tile is-vertical'>
+            <div class='tile'>
             {{#each posts}}
-                {{#ifMod @index 2 0}}
-                <div class='tile'>
-                {{/ifMod}}
                 <div class='tile is-parent data' style='background: url(/public/img/{{this._id}}_0.jpg)'>
                     <a href='/post/{{this._id}}'>
                         <div class='is-child box'>
@@ -25,13 +22,6 @@
                         </div>
                     </a>
                 </div>
-                {{#if @last}}
-                </div>
-                {{else}}
-                    {{#ifMod @index 2 1}}
-                    </div>
-                    {{/ifMod}}
-                {{/if}}
             {{/each}}
         </div>
     {{else}}
