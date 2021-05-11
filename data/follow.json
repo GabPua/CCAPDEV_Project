@@ -1,0 +1,53 @@
+[{
+  "_id": {
+    "$oid": "6088175f350c914c942b718f"
+  },
+  "follower": "masterchef1001",
+  "following": "chefjohn"
+},{
+  "_id": {
+    "$oid": "6088175f350c914c942b7191"
+  },
+  "follower": "foodelicious",
+  "following": "masterchef1001"
+},{
+  "_id": {
+    "$oid": "6088175f350c914c942b7192"
+  },
+  "follower": "chefjohn",
+  "following": "masterchef1001"
+},{
+  "_id": {
+    "$oid": "6088175f350c914c942b7193"
+  },
+  "follower": "suzanne",
+  "following": "masterchef1001"
+},{
+  "_id": {
+    "$oid": "608bec41fde99a6f6e5a441d"
+  },
+  "follower": "esmee",
+  "following": "chefjohn",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6097be38ac123ebca4b9e5b2"
+  },
+  "follower": "masterchef1001",
+  "following": "foodelicious",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6098ead4ac123ebca40057a5"
+  },
+  "follower": "masterchef1001",
+  "following": "esmee",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6098eae0ac123ebca4005aac"
+  },
+  "follower": "masterchef1001",
+  "following": "suzanne",
+  "__v": 0
+}]

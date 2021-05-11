@@ -1,0 +1,41 @@
+[{
+  "_id": "chefjohn",
+  "password": "U2FsdGVkX1/+3zpnFk47YA6NCD3kYY/0RXiVenjzieU=",
+  "profession": "Professional Chef",
+  "email": "chefjohn@allrecipes.com",
+  "workplace": "",
+  "desc": "I received my culinary degree from Paul Smith's College, NY, in 1983. After 15 plus years in the food industry, I was hired as a Chef Instructor at the prestigious California Culinary Academy. After five successful years of teaching, I left to follow my dream of teaching a larger audience online. 6 years later, I run the multiple award-winning blog, Food Wishes, which has become one of the most visited video recipe sites online, and is home to over 650 original recipe videos.",
+  "picture_path": "/public/img/profile/chefjohn.jpg"
+},{
+  "_id": "esmee",
+  "password": "U2FsdGVkX1/+3zpnFk47YA6NCD3kYY/0RXiVenjzieU=",
+  "profession": "Househusband",
+  "email": "esmee@allrecipes.com",
+  "workplace": "Manila Hotel",
+  "desc": "My love for cooking is a result of my passion for eating. Good food can make any day better. My mother is from France so food has always been a focus of conversation, travels, and special occasions. I also am the vice president of brand marketing at Allrecipes.com. I have been lucky enough to be part of Allrecipes for 10 years (since the early days). It has been one of the true pleasures of my life. Seeing all of the really great cooking ideas posted to the site everyday is a total joy.",
+  "picture_path": "/public/img/profile/esmee.jpg"
+},{
+  "_id": "foodelicious",
+  "password": "U2FsdGVkX1/HQe94SEZuL2iAa/DTh9FBLOgvY4EORT4=",
+  "profession": "Home cook",
+  "email": "foodelicious@allrecipes.com",
+  "workplace": "",
+  "desc": "Senior editor at Allrecipes. When I'm not cooking, photographing, eating, sharing, writing, or thinking about food, you can find me in my garden - where I attempt to grow food. And then there are the cocktails.",
+  "picture_path": "/public/img/profile/foodelicious.jpg"
+},{
+  "_id": "masterchef1001",
+  "password": "U2FsdGVkX1/8Tyrvf0N2TL5yVSJ3e+D0jHnDO3QLJm0=",
+  "profession": "Chef",
+  "email": "jared_sy@dlsu.edu.ph",
+  "workplace": "Pepper Lunch",
+  "desc": "A househusband who loves cooking for his family.",
+  "picture_path": "/public/img/profile/default_dp.jpg"
+},{
+  "_id": "suzanne",
+  "password": "U2FsdGVkX1+VdXUOGrk6t8KqWO5fB+q6wlmk/NBxRpw=",
+  "profession": "Home cook",
+  "email": "suzanne@allrecipes.com",
+  "workplace": "",
+  "desc": "Senior editor at Allrecipes. When I'm not cooking, photographing, eating, sharing, writing, or thinking about food, you can find me in my garden - where I attempt to grow food. And then there are the cocktails.",
+  "picture_path": "/public/img/profile/suzanne.jpg"
+}]
