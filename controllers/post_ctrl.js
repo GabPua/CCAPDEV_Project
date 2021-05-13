@@ -301,6 +301,7 @@ const post_controller = {
                     post.cook_min = post.cook_time % 60;
 
                     res.render('create', {
+                        title: 'ShefHub | Edit Recipe',
                         post: post,
                         err: err
                     });

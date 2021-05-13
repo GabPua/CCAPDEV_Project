@@ -70,6 +70,8 @@ $(document).ready(function () {
     let def_place = place.val();
     let def_desc = desc.val();
 
+    dp.height(dp.width());
+
     function updateSubmitButton() {
         if (email.hasClass('is-updated') || prof.hasClass('is-updated') ||
             place.hasClass('is-updated') || desc.hasClass('is-updated')) {
