@@ -461,3 +461,41 @@ header .navbar-link:not(.is-arrowless) {
 .comment-body {
     white-space: pre-line;
 }
+
+.content .modal p {
+    margin-bottom: 0;
+}
+
+#add-image-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 128px;
+    height: 128px;
+    background-color: lightgray;
+    border: 2px dashed darkgray;
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    margin-left: 5px;
+}
+
+#add-image-div:hover {
+    cursor: pointer;
+    background-color: darkgray;
+}
+
+#edit-image-modal figure:hover {
+    cursor: pointer;
+}
+
+#edit-image-modal .modal-card-body>div {
+    margin: 20px auto;
+    width: 552px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#edit-image-modal figure {
+    margin: 0 5px 10px;
+}
