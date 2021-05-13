@@ -29,6 +29,9 @@ $(document).ready(() => {
     const serving = $('#servings');
     const serving_help = $('#serving-help');
 
+    const img_modal = $('#edit-image-modal');
+    const add_img_button = $('#add-image-div');
+
     title.focusout(() => {
         const help_text = isNotEmpty(title.val());
         updateInputFields(help_text === '', title, title_help, null, help_text);
@@ -46,12 +49,58 @@ $(document).ready(() => {
         updateInputFields(help_text === '', serving, serving_help, null, help_text);
     });
 
-    $('button').click((event) => {
+    // img modal
+    $('#edit-images').click(() => {
+        img_modal.addClass('is-active');
+        $('html').addClass('is-clipped');
+    });
+
+    $('.modal').on('click', '.delete, .cancel', () => {
+        // remove changes
+        img_modal.removeClass('is-active');
+        $('html').removeClass('is-clipped');
+    });
+
+    add_img_button.click(function () {
+        const new_pic = $("<input type='file' style='display: none'>");
+        add_img_button.before(new_pic);
+        new_pic.trigger('click');
+    });
+
+    img_modal.on('change', 'input[type=file]', function () {
+        console.log('HELLO')
+        const new_img = $("<img src='' alt='food'>");
+
+        let input = this;
+        let url = $(this).val();
+        let ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+
+        if (input.files && input.files[0] && isValidImageFormat(ext)) {
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                new_img.attr('src', e.target.result);
+                new_img.height(new_img.width());
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+
+        const div = $('<div></div>');
+        const figure = $('<figure class="image is-128x128"></figure>').append(new_img);
+        add_img_button.before(div.append($(this), figure));
+    });
+
+    img_modal.on('click', 'figure', function () {
+        $(this).parent().remove();
+    });
+
+    $('button').click(event => {
         event.preventDefault();
     });
 
     // verify all input fields
-    $('input:submit').click((event) => {
+    $('input:submit').click(event => {
         event.preventDefault();
         const input = $('input:not([type=submit]):not([type=hidden])');
         const textarea = $('textarea');

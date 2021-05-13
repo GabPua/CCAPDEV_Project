@@ -10,12 +10,31 @@
         <input class='input' type='text' id='recipe-title' placeholder='Indicate name of recipe here' name='title' value='{{post.title}}'>
         <p class='help' id='recipe-title-help'></p>
 
-        <h3>Images</h3>
-        {{#if err.picture}}
-            <p class='help is-danger'>{{err.picture}}</p>
-        {{/if}}
-        <div id='upload-images'>
-
+        <a class='button' id='edit-images'>Edit Images</a>
+        <div class='modal' id='edit-image-modal'>
+            <div class='modal-background'></div>
+            <div class='modal-card'>
+                <header class='modal-card-head'>
+                    <p class='modal-card-title'>Edit Carousel</p>
+                    <button class='delete' aria-label='close'></button>
+                </header>
+                <section class='modal-card-body'>
+                    <div class='center'>
+                        {{#range 0 post.n_pictures}}
+                            <figure class='image is-128x128'>
+                                <img src='/public/img/{{../post._id}}_{{this}}.jpg' alt='{{this}}'>
+                            </figure>
+                        {{/range}}
+                        <div id='add-image-div'><p>+</p></div>
+                    </div>
+                </section>
+                <footer class='modal-card-foot'>
+                    <div class='buttons is-right'>
+                        <button class='button cancel'>Cancel</button>
+                        <button class='button is-success'>Save changes</button>
+                    </div>
+                </footer>
+            </div>
         </div>
         <button class='button is-primary is-light' onclick='addImgField()'>Add Image</button>
 
