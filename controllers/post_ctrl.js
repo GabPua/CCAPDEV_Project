@@ -237,6 +237,8 @@ const post_controller = {
                     User.findById(req.session._id, (err, result) => {
                         callback(err, post, comment, result);
                     }).lean();
+                } else {
+                    callback(null, post, comment, null);
                 }
             },
 
