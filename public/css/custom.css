@@ -503,3 +503,6 @@ header .navbar-link:not(.is-arrowless) {
 #edit-image-modal figure {
     margin: 0 5px 10px;
 }
+.media img.is-rounded {
+    height: 100%;
+}

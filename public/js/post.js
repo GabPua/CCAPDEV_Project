@@ -349,7 +349,7 @@ function createNewCommentDiv(comment_id, user_id, picture_path, isReply, text) {
             <div class='content'>
             ${isReply ? '' : `<input type='hidden' value='${comment_id}'>`}
                 <p><a href='/user/${user_id}'><strong>${user_id}</strong></a></p>
-                <p>${text}</p>
+                <p class='comment-body'>${text}</p>
                 <p><small>${isReply ? '' : "<a class='reply'>Reply</a> · "}Just Now</small></p>
             </div>
         </div>
