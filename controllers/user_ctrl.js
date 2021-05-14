@@ -130,6 +130,7 @@ const user_controller = {
                                 console.log(req.session._id + '.jpg uploaded successfully');
                                 user.picture_path = path;
                                 req.session.picture_path = path;
+                                req.session.save();
                             }
                             callback(err);
                         });
