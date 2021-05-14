@@ -383,7 +383,7 @@ header .navbar-link:not(.is-arrowless) {
     margin: auto 15px;
 }
 
-#menu .card img.is-rounded {
+.card img.is-rounded {
     height: 100%;
 }
 
