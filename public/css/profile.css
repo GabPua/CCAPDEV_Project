@@ -255,3 +255,7 @@ fieldset[disabled] .columns {
 #name {
     padding-right: 0.5em;
 }
+
+#profile-form figure.is-square {
+    margin: auto 0;
+}
