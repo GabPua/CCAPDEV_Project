@@ -223,13 +223,14 @@ const post_controller = {
             },
 
             function getRepliesForEachComment(post, comments, callback) {
-                for (const comment of comments) {
+                async.each(comments, (comment, callback) => {
                     Comment.find({reply_to: comment._id}, (err, replies) => {
                         comment.replies = replies;
+                        callback(err);
                     }).sort({date: 1}).populate('user').lean();
-                }
-
-                callback(null, post, comments)
+                }, (err) => {
+                    callback(err, post, comments)
+                });
             },
 
             function getUser(post, comment, callback) {

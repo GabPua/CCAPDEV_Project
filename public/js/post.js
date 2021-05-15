@@ -110,7 +110,7 @@ $(document).ready(function () {
     });
 
     comments.on('click', '.edit-comment', function () {
-        const body = $(this).closest('.media').find('.comment-body');
+        const body = $(this).closest('.media').find('.comment-body').first();
         body.attr('contenteditable', 'true').focus();
         $(this).closest('.dropdown').hide();
     });
@@ -127,7 +127,6 @@ $(document).ready(function () {
 
         if (event.keyCode === 13 && !event.shiftKey) {
             if (body.html()) {
-                console.log('GOING TO POST');
                 $.post('/comment/edit', {id: dropdown.find('input').val(), body: body.html()}, (isSuccess) => {
                     if (isSuccess) {
                         body.attr('contenteditable', 'false');
@@ -145,13 +144,12 @@ $(document).ready(function () {
             $.post('/comment', {id: dropdown.find('input').val()}, (text) => {
                 if (text) {
                     body.html(text);
+                    body.attr('contenteditable', 'false');
+                    dropdown.show();
                 } else {
                     location.reload();
                 }
             });
-
-            body.attr('contenteditable', 'false');
-            dropdown.show();
         }
     });
 
