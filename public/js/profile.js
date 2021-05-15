@@ -254,21 +254,6 @@ $(document).ready(function () {
         $('html').addClass('is-clipped');
     });
 
-    $('#delete-profile').click(() => {
-        $('#delete-modal').addClass('is-active');
-        $('html').addClass('is-clipped');
-    });
-
-    $('#confirm-delete').click(() => {
-        $.post('/deleteAccount', (isSuccess) => {
-            if (isSuccess) {
-                window.location.replace('/logout');
-            } else {
-                location.reload();
-            }
-        });
-    })
-
     $('.close').click((event) => {
         event.preventDefault();
         $('.modal').removeClass('is-active');
@@ -290,7 +275,7 @@ $(document).ready(function () {
         pw_inputs.trigger('focusout');
 
         if (pw_inputs.filter('.is-success').length === pw_inputs.length) {
-            $.post('/updatePassword', {old_pass: old_pass.val(), new_pass: new_pass.val()}, (isSuccess) => {
+            $.post('/updatePassword', {old_pass: old_pass.val(), new_pass: new_pass.val()}, isSuccess => {
                 if (isSuccess) {
                     pw_feedback.html('Password has been changed').addClass('is-success');
                 } else {
@@ -299,9 +284,29 @@ $(document).ready(function () {
 
                 $('.modal').removeClass('is-active');
                 $('html').removeClass('is-clipped');
+
+                pw_inputs.val('').removeClass('is-success is-danger');
+                $('.modal .help').html('');
             });
         }
     });
+
+    // delete profile
+    $('#delete-profile').click(() => {
+        $('#delete-modal').addClass('is-active');
+        $('html').addClass('is-clipped');
+    });
+
+    $('#confirm-delete').click(() => {
+        $.post('/deleteAccount', (isSuccess) => {
+            if (isSuccess) {
+                window.location.replace('/logout');
+            } else {
+                location.reload();
+            }
+        });
+    })
+
 });
 
 function getFollowId(user_id, callback) {

@@ -134,6 +134,8 @@ const user_controller = {
                             }
                             callback(err);
                         });
+                    } else {
+                        callback(null);
                     }
                 },
 
@@ -284,11 +286,17 @@ const user_controller = {
 
             function updatePassword(isValid, callback) {
                 if (isValid) {
-                    User.findByIdAndUpdate(req.session._id, {password: crypto.AES.encrypt(new_pass, key).toString()}).lean();
+                    User.updateOne({_id: req.session._id}, {password: crypto.AES.encrypt(new_pass, key).toString()}, (err) => {
+                        callback(err, isValid);
+                    }).lean();
+                } else {
+                    callback('Password was not updated');
                 }
-                callback(null, isValid);
             }
         ], (err, isValid) => {
+            if (err) {
+                console.log(err);
+            }
             res.send(isValid);
         });
     },
