@@ -35,7 +35,7 @@ const comment_controller = {
 
         if (body) {
             Comment.updateOne({_id: id, user: req.session._id}, {body: body.replace('<br>', '\n')}, (err) => {
-                res.send(err != null);
+                res.send(!err);
             });
         } else {
             res.send(false);
