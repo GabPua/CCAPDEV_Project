@@ -4,15 +4,26 @@ const Vote = require('./vote');
 const Post = require('./recipe');
 const Comment = require('./comment');
 const async = require('async')
+const dotenv = require('dotenv')
+
+dotenv.config();
+const key = process.env.SECRET || 'hushPuppy1234';
 
 let userSchema = new mongoose.Schema({
-    _id: {type: String, lowercase: true, require: true},
+    _id: {type: String, trim: true, lowercase: true, require: true},
     password: {type: String, require: true},
-    profession: {type: String, require: false},
-    email: {type: String, require: true},
-    workplace: {type: String, require: false},
-    desc: {type: String, require: false},
+    profession: {type: String, trim: true, require: false},
+    email: {type: String, trim: true, require: true},
+    workplace: {type: String, trim: true, require: false},
+    desc: {type: String, trim: true, require: false},
     picture_path: {type: String, require: false}
+});
+
+userSchema.pre('save', next => {
+    if (this.isModified('password')) {
+        this.password = crypto.AES.encrypt(this.password, key).toString();
+    }
+    next();
 });
 
 userSchema.post(['deleteOne', 'findOneAndDelete'], (user) => {

@@ -1,9 +1,4 @@
-const dotenv = require('dotenv')
-const crypto = require('crypto-js');
 const async = require('async');
-
-dotenv.config();
-const key = process.env.SECRET || 'hushPuppy1234';
 
 function isValidPassword(pw) {
     const re = /\d/g;
@@ -66,7 +61,7 @@ const signup_ctrl = {
                 let user = {
                     _id: name,
                     email: email,
-                    password: crypto.AES.encrypt(password, key).toString(),
+                    password: password,
                     picture_path: '/public/img/profile/default_dp.jpg'
                 };
 
