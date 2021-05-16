@@ -13,193 +13,178 @@ function isInvalidNum(n) {
     return n <= 0;
 }
 
-// checks if the credentials inside the cookie are valid
-function redirect(req, res, toRun) {
-    if (req.session._id && req.cookies.user_sid) {
-        toRun();
-    } else {
-        res.redirect('/');
-    }
-}
-
 const post_controller = {
     getCreateForm: (req, res) => {
-        redirect(req, res, () => {
-            res.render('create', {
-                title: 'Create a new recipe'
-            });
+        res.render('create', {
+            title: 'Create a new recipe'
         });
     },
 
     insertToDB: (req, res) => {
-        redirect(req, res, () => {
-            let {id, title, desc, quantity, unit, ingredient, direction} = req.body;
+        let {id, title, desc, quantity, unit, ingredient, direction} = req.body;
 
-            if (!id) {
-                id = new mongoose.Types.ObjectId();
+        if (!id) {
+            id = new mongoose.Types.ObjectId();
+        }
+
+        let {serving, prep_hr, prep_min, cook_hr, cook_min} = req.body;
+        serving = parseInt(serving);
+        prep_hr = parseInt(prep_hr);
+        prep_min = parseInt(prep_min);
+        cook_hr = parseInt(cook_hr);
+        cook_min = parseInt(cook_min);
+
+        // final validation
+        const err = {};
+
+        if (isEmpty(title)) {
+            err.title = "Missing title";
+        }
+
+        if (isEmpty(desc)) {
+            err.desc = "Missing description";
+        }
+
+        if (isInvalidNum(serving) || isInvalidNum(prep_hr + prep_min) || isInvalidNum(cook_hr + cook_min)) {
+            err.information = "Invalid inputs";
+        }
+
+        if (!req.files || Object.keys(req.files).length === 0) {
+            err.picture = 'At least 1 image required';
+        }
+
+        if (typeof ingredient === 'string') {
+            req.body.quantity = quantity = [quantity];
+            req.body.unit = unit = [unit];
+            req.body.ingredient = ingredient = [ingredient];
+        }
+
+        if (typeof direction === 'string') {
+            req.body.direction = direction = [direction];
+        }
+
+        let emptyCount = 0;
+        emptyCount += quantity.filter(isEmpty).length;
+        emptyCount += unit.filter(isEmpty).length;
+        emptyCount += ingredient.filter(isEmpty).length;
+
+        if (3 * ingredient.length === emptyCount) {
+            err.ingredient = 'At least 1 ingredient required';
+        } else if (emptyCount !== 0) {
+            err.ingredient = 'Please remove empty entries';
+        }
+
+        emptyCount = direction.filter(isEmpty).length
+
+        if (direction.length === emptyCount) {
+            err.direction = 'At least 1 procedure required';
+        } else if (emptyCount !== 0) {
+            err.direction = 'Please remove empty entries';
+        }
+
+        if (Object.keys(err).length === 0) {
+            const ingredient_list = [];
+            for (let i = 0; i < ingredient.length; i++) {
+                ingredient_list.push(quantity[i] + ' ' + unit[i] + ' ' + ingredient[i]);
             }
 
-            let {serving, prep_hr, prep_min, cook_hr, cook_min} = req.body;
-            serving = parseInt(serving);
-            prep_hr = parseInt(prep_hr);
-            prep_min = parseInt(prep_min);
-            cook_hr = parseInt(cook_hr);
-            cook_min = parseInt(cook_min);
+            let post = {
+                user: req.session._id,
+                title: title,
+                desc: desc,
+                serving: serving,
+                prep_time: prep_hr * 60 + prep_min,
+                cook_time: cook_hr * 60 + cook_min,
+                direction: direction,
+                ingredient: ingredient_list,
+                date: new Date(),
+                n_pictures: 0
+            };
 
-            // final validation
-            const err = {};
+            async.waterfall([
+                function upsertPost(callback) {
+                    Post.findByIdAndUpdate(id, post,
+                        {upsert: true, useFindAndModify: false, new: true}, (err, result) => {
+                        callback(err, result);
+                    });
+                },
 
-            if (isEmpty(title)) {
-                err.title = "Missing title";
-            }
-
-            if (isEmpty(desc)) {
-                err.desc = "Missing description";
-            }
-
-            if (isInvalidNum(serving) || isInvalidNum(prep_hr + prep_min) || isInvalidNum(cook_hr + cook_min)) {
-                err.information = "Invalid inputs";
-            }
-
-            if (!req.files || Object.keys(req.files).length === 0) {
-                err.picture = 'At least 1 image required';
-            }
-
-            if (typeof ingredient === 'string') {
-                req.body.quantity = quantity = [quantity];
-                req.body.unit = unit = [unit];
-                req.body.ingredient = ingredient = [ingredient];
-            }
-
-            if (typeof direction === 'string') {
-                req.body.direction = direction = [direction];
-            }
-
-            let emptyCount = 0;
-            emptyCount += quantity.filter(isEmpty).length;
-            emptyCount += unit.filter(isEmpty).length;
-            emptyCount += ingredient.filter(isEmpty).length;
-
-            if (3 * ingredient.length === emptyCount) {
-                err.ingredient = 'At least 1 ingredient required';
-            } else if (emptyCount !== 0) {
-                err.ingredient = 'Please remove empty entries';
-            }
-
-            emptyCount = direction.filter(isEmpty).length
-
-            if (direction.length === emptyCount) {
-                err.direction = 'At least 1 procedure required';
-            } else if (emptyCount !== 0) {
-                err.direction = 'Please remove empty entries';
-            }
-
-            if (Object.keys(err).length === 0) {
-                const ingredient_list = [];
-                for (let i = 0; i < ingredient.length; i++) {
-                    ingredient_list.push(quantity[i] + ' ' + unit[i] + ' ' + ingredient[i]);
-                }
-
-                let post = {
-                    user: req.session._id,
-                    title: title,
-                    desc: desc,
-                    serving: serving,
-                    prep_time: prep_hr * 60 + prep_min,
-                    cook_time: cook_hr * 60 + cook_min,
-                    direction: direction,
-                    ingredient: ingredient_list,
-                    date: new Date(),
-                    n_pictures: 0
-                };
-
-                async.waterfall([
-                    function upsertPost(callback) {
-                        Post.findByIdAndUpdate(id, post,
-                            {upsert: true, useFindAndModify: false, new: true}, (err, result) => {
-                            callback(err, result);
+                function uploadPics(result, callback) {
+                    if (!Array.isArray(req.files.pictures)) {
+                        let pic = req.files.pictures;
+                        let uploadPath = './public/img/' + result._id + '_0.jpg';
+                        pic.mv(uploadPath, (err) => {
+                            if (err) {
+                                console.log('Upload failed');
+                            } else {
+                                post.n_pictures += 1;
+                            }
+                            callback(err, result._id);
                         });
-                    },
-
-                    function uploadPics(result, callback) {
-                        if (!Array.isArray(req.files.pictures)) {
-                            let pic = req.files.pictures;
-                            let uploadPath = './public/img/' + result._id + '_0.jpg';
+                    } else {
+                        async.eachSeries(req.files.pictures, (pic, callback) => {
+                            let uploadPath = './public/img/' + result._id + '_' + post.n_pictures + '.jpg';
                             pic.mv(uploadPath, (err) => {
                                 if (err) {
                                     console.log('Upload failed');
                                 } else {
+                                    console.log(uploadPath + ' uploaded successfully');
                                     post.n_pictures += 1;
                                 }
-                                callback(err, result._id);
+                                callback(err);
                             });
-                        } else {
-                            async.eachSeries(req.files.pictures, (pic, callback) => {
-                                let uploadPath = './public/img/' + result._id + '_' + post.n_pictures + '.jpg';
-                                pic.mv(uploadPath, (err) => {
-                                    if (err) {
-                                        console.log('Upload failed');
-                                    } else {
-                                        console.log(uploadPath + ' uploaded successfully');
-                                        post.n_pictures += 1;
-                                    }
-                                    callback(err);
-                                });
-                            }, (err) => {
-                                if (err) {
-                                    console.log('At least one upload failed');
-                                } else {
-                                    console.log('All pictures uploaded successfully');
-                                }
-                                callback(err, result._id);
-                            });
-                        }
-                    },
-
-                    function updatePicCount(recipe_id, callback) {
-                        Post.updateOne({_id: recipe_id}, post, (err) => {
-                            callback(err, recipe_id);
+                        }, (err) => {
+                            if (err) {
+                                console.log('At least one upload failed');
+                            } else {
+                                console.log('All pictures uploaded successfully');
+                            }
+                            callback(err, result._id);
                         });
                     }
+                },
 
-                ], (err, recipe_id) => {
-                    if (err) {
-                        console.log(err);
-                        res.redirect('/404NotFound');
-                    } else {
-                        res.redirect('/post/' + recipe_id);
-                    }
-                });
-            } else {
-                res.render('create', {
-                    post: req.body,
-                    err: err
-                });
-            }
-        });
-    },
-
-    getRecipe: (req, res) => {
-        redirect(req, res, () => {
-            async.waterfall([
-                function findPost(callback) {
-                    try {
-                        Post.findById(req.params.id, (err, result) => {
-                            callback(err, result);
-                        }).lean();
-                    } catch (e) {
-                        callback('Invalid ID');
-                    }
+                function updatePicCount(recipe_id, callback) {
+                    Post.updateOne({_id: recipe_id}, post, (err) => {
+                        callback(err, recipe_id);
+                    });
                 }
-            ], (err, result) => {
-                if (!result) {
+
+            ], (err, recipe_id) => {
+                if (err) {
                     console.log(err);
                     res.redirect('/404NotFound');
                 } else {
-                    req.body.query = {_id: result._id};
-                    post_controller.loadRecipe(req, res);
+                    res.redirect('/post/' + recipe_id);
                 }
             });
+        } else {
+            res.render('create', {
+                post: req.body,
+                err: err
+            });
+        }
+    },
+
+    getRecipe: (req, res) => {
+        async.waterfall([
+            function findPost(callback) {
+                try {
+                    Post.findById(req.params.id, (err, result) => {
+                        callback(err, result);
+                    }).lean();
+                } catch (e) {
+                    callback('Invalid ID');
+                }
+            }
+        ], (err, result) => {
+            if (!result) {
+                console.log(err);
+                res.redirect('/404NotFound');
+            } else {
+                req.body.query = {_id: result._id};
+                post_controller.loadRecipe(req, res);
+            }
         });
     },
 
@@ -265,56 +250,52 @@ const post_controller = {
     },
 
     editPost: (req, res) => {
-        redirect(req, res, () => {
-            const recipe_id = req.params.id;
+        const recipe_id = req.params.id;
 
-            async.waterfall([
-                function validateUserIsAuthor(callback) {
-                    Post.findById(recipe_id, (err, result) => {
-                        if (result.user === req.session._id) {
-                            callback(err, result);
-                        } else {
-                            callback('Invalid User');
-                        }
-                    }).lean();
-                },
-            ], (err, post) => {
-                if (err) {
-                    res.redirect('/404NotFound');
-                } else {
-                    // processing to fit with create.hbs template
-                    const quantity = [], unit = [], ingredient = [];
-
-                    for (let i = 0; i < post.ingredient.length; i++) {
-                        const substr = post.ingredient[i].split(' ', 3);
-
-                        quantity.push(substr[0]);
-                        unit.push(substr[1]);
-                        ingredient.push(substr[2]);
+        async.waterfall([
+            function validateUserIsAuthor(callback) {
+                Post.findById(recipe_id, (err, result) => {
+                    if (result.user === req.session._id) {
+                        callback(err, result);
+                    } else {
+                        callback('Invalid User');
                     }
+                }).lean();
+            },
+        ], (err, post) => {
+            if (err) {
+                res.redirect('/404NotFound');
+            } else {
+                // processing to fit with create.hbs template
+                const quantity = [], unit = [], ingredient = [];
 
-                    post.ingredient = ingredient;
-                    post.quantity = quantity;
-                    post.unit = unit;
-                    post.prep_hr = Math.floor(post.prep_time / 60);
-                    post.prep_min = post.prep_time % 60;
-                    post.cook_hr = Math.floor(post.cook_time / 60);
-                    post.cook_min = post.cook_time % 60;
+                for (let i = 0; i < post.ingredient.length; i++) {
+                    const substr = post.ingredient[i].split(' ', 3);
 
-                    res.render('create', {
-                        title: 'ShefHub | Edit Recipe',
-                        post: post,
-                        err: err
-                    });
+                    quantity.push(substr[0]);
+                    unit.push(substr[1]);
+                    ingredient.push(substr[2]);
                 }
-            });
-        })
+
+                post.ingredient = ingredient;
+                post.quantity = quantity;
+                post.unit = unit;
+                post.prep_hr = Math.floor(post.prep_time / 60);
+                post.prep_min = post.prep_time % 60;
+                post.cook_hr = Math.floor(post.cook_time / 60);
+                post.cook_min = post.cook_time % 60;
+
+                res.render('create', {
+                    title: 'ShefHub | Edit Recipe',
+                    post: post,
+                    err: err
+                });
+            }
+        });
     },
 
     deletePost: (req, res) => {
-        const id = req.body.recipe_id;
-
-        Post.findByIdAndDelete(id, (err) => {
+        Post.findByIdAndDelete(req.body.recipe_id, (err) => {
             res.send(err == null);
         });
     }

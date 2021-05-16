@@ -1,6 +1,9 @@
 const router = require('express')();
 const ctrl = require('../controllers/user_ctrl');
 
+router.all(['/profile', '/posts', '/following', '/followers', '/logout', '/search', '/user/:id',
+                    '/user/:id/posts', '/user/:id/likes', '/deleteAccount'], ctrl.verifySession);
+
 router.route('/profile')
     .get(ctrl.getProfile)
     .post(ctrl.postProfile);
