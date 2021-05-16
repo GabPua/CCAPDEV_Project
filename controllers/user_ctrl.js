@@ -9,17 +9,17 @@ const async = require('async');
 dotenv.config();
 const key = process.env.SECRET || 'hushPuppy123';
 
-// checks if the credentials inside the cookie are valid
-function redirect (req, res, toRun) {
-    const { user_sid } = req.cookies;
-    if (req.session._id && user_sid) {
-        toRun();
-    } else {
-        res.redirect('/');
-    }
-}
-
 const user_controller = {
+    verifySession: (req, res, next) => {
+        // checks if the credentials inside the cookie are valid
+        const { user_sid } = req.cookies;
+        if (req.session._id && user_sid) {
+            next();
+        } else {
+            res.redirect('/');
+        }
+    },
+
     // this is only accessible from home_ctrl, which already verifies login; no need to call for redirect().
     getNewsfeed: (req, res) => {
         async.waterfall([
@@ -58,201 +58,188 @@ const user_controller = {
     },
 
     getProfile: (req, res) => {
-        redirect(req, res,  () => {
-            let id = req.params.id;
+        let id = req.params.id;
 
-            if (id == null) {
-                id = req.session._id;
-            } else if (id === req.session._id) {
-                res.redirect('/profile');
-                return;
+        if (id == null) {
+            id = req.session._id;
+        } else if (id === req.session._id) {
+            res.redirect('/profile');
+            return;
+        }
+
+        async.series([
+            function getLoggedInUser(callback) {
+                User.findById(id, (err, result) => {
+                    callback(err, result);
+                }).lean();
+            },
+
+            function getNumFollowers(callback) {
+                Follow.countDocuments({ following: id },(err, result) => {
+                    callback(err, result);
+                }).lean();
+            },
+
+            function getNumFollowing(callback) {
+                Follow.countDocuments({ follower: id },(err, result) => {
+                    callback(err, result);
+                }).lean();
+            },
+
+            function getNumPosts(callback) {
+                Post.countDocuments( { user: id }, (err, result) => {
+                    callback(err, result);
+                }).lean();
             }
-
-            async.series([
-                function getLoggedInUser(callback) {
-                    User.findById(id, (err, result) => {
-                        callback(err, result);
-                    }).lean();
-                },
-
-                function getNumFollowers(callback) {
-                    Follow.countDocuments({ following: id },(err, result) => {
-                        callback(err, result);
-                    }).lean();
-                },
-
-                function getNumFollowing(callback) {
-                    Follow.countDocuments({ follower: id },(err, result) => {
-                        callback(err, result);
-                    }).lean();
-                },
-
-                function getNumPosts(callback) {
-                    Post.countDocuments( { user: id }, (err, result) => {
-                        callback(err, result);
-                    }).lean();
-                }
-            ], (err, results) => {
-                res.render('profile', {
-                    title: "ShefHub | " + id,
-                    user: results[0],
-                    followers: results[1],
-                    following: results[2],
-                    post: results[3],
-                    template: 'profile'
-                });
+        ], (err, results) => {
+            res.render('profile', {
+                title: "ShefHub | " + id,
+                user: results[0],
+                followers: results[1],
+                following: results[2],
+                post: results[3],
+                template: 'profile'
             });
         });
     },
 
     postProfile: (req, res) => {
-        redirect(req, res, () => {
+        const { email, profession, workplace, desc } = req.body;
+        let user = {
+            email: email,
+            profession: profession,
+            workplace: workplace,
+            desc: desc
+        };
 
-            const { email, profession, workplace, desc } = req.body;
-            let user = {
-                email: email,
-                profession: profession,
-                workplace: workplace,
-                desc: desc
-            };
+        async.series([
+            function uploadPic(callback) {
+                if (req.files && Object.keys(req.files).length > 0) {
+                    let pic = req.files.file;
+                    let path = '/public/img/profile/' + req.session._id + '.jpg';
+                    let uploadPath = '.' + path;
 
-            async.series([
-                function uploadPic(callback) {
-                    if (req.files && Object.keys(req.files).length > 0) {
-                        let pic = req.files.file;
-                        let path = '/public/img/profile/' + req.session._id + '.jpg';
-                        let uploadPath = '.' + path;
-        
-                        pic.mv(uploadPath, (err) => {
-                            if (err) {
-                                console.log('Upload failed');
-                            } else {
-                                console.log(req.session._id + '.jpg uploaded successfully');
-                                user.picture_path = path;
-                                req.session.picture_path = path;
-                                req.session.save();
-                            }
-                            callback(err);
-                        });
-                    } else {
-                        callback(null);
-                    }
-                },
-
-                function updateUser(callback) {
-                    User.updateOne({_id: req.session._id}, user, (err) => {
+                    pic.mv(uploadPath, (err) => {
                         if (err) {
-                            console.log('Update failed');
+                            console.log('Upload failed');
                         } else {
-                            console.log('User updated successfully');
+                            console.log(req.session._id + '.jpg uploaded successfully');
+                            user.picture_path = path;
+                            req.session.picture_path = path;
+                            req.session.save();
                         }
                         callback(err);
-                    }).lean();
+                    });
+                } else {
+                    callback(null);
                 }
-            ]);         
+            },
 
-            res.redirect('/profile');
-        });
+            function updateUser(callback) {
+                User.updateOne({_id: req.session._id}, user, (err) => {
+                    if (err) {
+                        console.log('Update failed');
+                    } else {
+                        console.log('User updated successfully');
+                    }
+                    callback(err);
+                }).lean();
+            }
+        ]);
+
+        res.redirect('/profile');
     },
 
     getPosts: (req, res) => {
-        redirect(req, res, () => {
-            let id = req.params.id;
-            const route = req.path.split('/').pop();
+        let id = req.params.id;
+        const route = req.path.split('/').pop();
 
-            if (id == null) {
-                id = req.session._id;
-            } else if (id === req.session._id) {
-                res.redirect('/' + route);
-                return;
-            }
+        if (id == null) {
+            id = req.session._id;
+        } else if (id === req.session._id) {
+            res.redirect('/' + route);
+            return;
+        }
 
-            async.waterfall([
-                function getPosts(callback) {
-                    if (route === 'posts') {
-                        Post.find( { user: id }, (err, results) => {
-                            callback(err, results);
-                        }).lean();
-                    } else {
-                        Vote.find({user: id, value: 1}, (err, results) => {
-                            callback(err, results.map(a => a.recipe));
-                        }).populate('recipe').lean();
-                    }
+        async.waterfall([
+            function getPosts(callback) {
+                if (route === 'posts') {
+                    Post.find( { user: id }, (err, results) => {
+                        callback(err, results);
+                    }).lean();
+                } else {
+                    Vote.find({user: id, value: 1}, (err, results) => {
+                        callback(err, results.map(a => a.recipe));
+                    }).populate('recipe').lean();
                 }
-            ], (err, posts) => {
-                res.render('profile', {
-                    user: { _id: id },
-                    title: "ShefHub | " + id,
-                    posts: posts,
-                    template: 'posts',
-                    route: route
-                });
+            }
+        ], (err, posts) => {
+            res.render('profile', {
+                user: { _id: id },
+                title: "ShefHub | " + id,
+                posts: posts,
+                template: 'posts',
+                route: route
             });
         });
     },
 
     getFollow: (req, res) => {
-        redirect(req, res, () => {
-            const route = req.path.replace('/', '');
+        const route = req.path.replace('/', '');
 
-            async.waterfall([
-                function getUsers(callback) {
-                    if (route === 'followers') {
-                        Follow.find({following: req.session._id}, 'follower', (err, result) => {
-                            callback(err, result.map(a => a.follower));
-                        }).populate('follower').lean();
-                    } else {
-                        Follow.find({follower: req.session._id}, 'following', (err, result) => {
-                            callback(err, result.map(a => a.following));
-                        }).populate('following').lean();
-                    }
+        async.waterfall([
+            function getUsers(callback) {
+                if (route === 'followers') {
+                    Follow.find({following: req.session._id}, 'follower', (err, result) => {
+                        callback(err, result.map(a => a.follower));
+                    }).populate('follower').lean();
+                } else {
+                    Follow.find({follower: req.session._id}, 'following', (err, result) => {
+                        callback(err, result.map(a => a.following));
+                    }).populate('following').lean();
                 }
-            ], (err, users) => {
-                res.render('profile', {
-                    user: { _id: req.session._id },
-                    title: "ShefHub | " + req.session._id,
-                    users: users,
-                    template: 'follow',
-                    route: route
-                });
+            }
+        ], (err, users) => {
+            res.render('profile', {
+                user: { _id: req.session._id },
+                title: "ShefHub | " + req.session._id,
+                users: users,
+                template: 'follow',
+                route: route
             });
         });
     },
 
     getSearch: (req, res) => {
-        redirect(req, res, () => {
-            const { keyword } = req.query
+        const { keyword } = req.query
 
-            if (keyword) {
-                const pattern = new RegExp(keyword, 'i');
+        if (keyword) {
+            const pattern = new RegExp(keyword, 'i');
 
-                async.waterfall([
-                    function findPosts(callback) {
-                        Post.find({title: {$regex: pattern} },(err, results) => {
-                            callback(err, results);
-                        }).populate('user').lean();
-                    }
-                ], (err, posts) => {
-                    res.render('query', {
-                        title: 'Shefhub Search | ' + keyword,
-                        query: keyword,
-                        results: posts
-                    });
+            async.waterfall([
+                function findPosts(callback) {
+                    Post.find({title: {$regex: pattern} },(err, results) => {
+                        callback(err, results);
+                    }).populate('user').lean();
+                }
+            ], (err, posts) => {
+                res.render('query', {
+                    title: 'Shefhub Search | ' + keyword,
+                    query: keyword,
+                    results: posts
                 });
-            } else {
-                res.render('search', {
-                    title: 'ShefHub | Search Recipes'
-                });
-            }
-        });
+            });
+        } else {
+            res.render('search', {
+                title: 'ShefHub | Search Recipes'
+            });
+        }
     },
 
     getLogout: (req, res) => {
-        redirect(req, res, () => {
-            req.session.destroy();
-            res.clearCookie('user_sid');
-            res.redirect('/');
-        });
+        req.session.destroy();
+        res.clearCookie('user_sid');
+        res.redirect('/');
     },
 
     getCheckEmail: (req, res) => {
@@ -385,11 +372,8 @@ const user_controller = {
     },
 
     deleteAccount: (req, res) => {
-        redirect(req, res, () => {
-            const id = req.session._id;
-            User.findByIdAndDelete(id, (err, result) => {
-                res.send(result != null);
-            });
+        User.findByIdAndDelete(req.session._id, (err, result) => {
+            res.send(result != null);
         });
     }
 }
