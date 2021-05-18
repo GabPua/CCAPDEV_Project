@@ -54,14 +54,17 @@ $(document).ready(() => {
         $('html').addClass('is-clipped');
     });
 
-    $('.modal').on('click', '.delete, .cancel', () => {
-        // remove changes
+    img_modal.on('click', '.cancel', () => {
+        img_modal.find('figure').parent().remove(); // remove all
+    });
+
+    img_modal.on('click', '.delete, .is-success', () => {
         img_modal.removeClass('is-active');
         $('html').removeClass('is-clipped');
     });
 
     add_img_button.click(function () {
-        const new_pic = $("<input type='file' style='display: none'>");
+        const new_pic = $("<input type='file' style='display: none' name='pictures'>");
         add_img_button.before(new_pic);
         new_pic.trigger('click');
     });
@@ -100,7 +103,7 @@ $(document).ready(() => {
     // verify all input fields
     $('input:submit').click(event => {
         event.preventDefault();
-        const input = $('input:not([type=submit]):not([type=hidden])');
+        const input = $('input:not([type=submit]):not([type=hidden]):not([type=file])');
         const textarea = $('textarea');
 
         input.trigger('focusout');
