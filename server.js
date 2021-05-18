@@ -10,7 +10,7 @@ const fileUpload = require('express-fileupload');
 // get environment variables
 dotenv.config();
 const port = process.env.PORT || 3000;
-const hostname = process.env.HOSTNAME || 'localhost';
+const hostname = process.env.HOSTNAME || '0.0.0.0' || 'localhost';
 const dbUri = process.env.SERVER_DB_URI;
 const secret = process.env.SECRET;
 const options = {
