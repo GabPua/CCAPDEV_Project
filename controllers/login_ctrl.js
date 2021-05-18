@@ -4,7 +4,7 @@ const User = require('../models/user');
 const async = require('async');
 
 dotenv.config();
-const key = process.env.SECRET || 'hushPuppy123';
+const key = process.env.SECRET;
 
 const page_title = 'Shefhub | Login Page';
 
