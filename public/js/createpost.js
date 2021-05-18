@@ -13,7 +13,6 @@ $(document).ready(() => {
     t_hr = $('#total-hr');
     t_min = $('#total-min')
 
-    addImgField();
     updateTime();
     p_hr.change(() => updateTime('prep'));
     c_hr.change(() => updateTime('cook'));
@@ -68,7 +67,6 @@ $(document).ready(() => {
     });
 
     img_modal.on('change', 'input[type=file]', function () {
-        console.log('HELLO')
         const new_img = $("<img src='' alt='food'>");
 
         let input = this;
@@ -177,44 +175,6 @@ function setup(list, item) {
             item.remove();
         }
     });
-}
-
-function updateLabel(input) {
-    let url = input.val().split('\\').slice(-1)[0];
-    let ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-    const label = input.siblings('.file-name');
-
-    if (isValidImageFormat(ext)) {
-        updateInputFields(true, input, label, null, url);
-    } else {
-        updateInputFields(false, input, label, null, (ext)? 'Invalid file format' : 'Cannot be empty')
-        input.val('');
-    }
-}
-
-function addImgField() {
-    const img_list = $('#upload-images');
-    const newItem = $(
-        `<div class='image-item'>
-            <div class="file is-info has-name">
-                <label class="file-label">
-                    <input class="file-input" type="file" name="pictures">
-                    <span class="file-cta">
-                        <span class="file-icon">
-                            <i class="fas fa-upload"></i>
-                        </span>
-                        <span class="file-label">Upload image</span>
-                    </span>
-                    <span class="file-name"></span>
-                </label>
-            </div>
-            <button class='button is-danger is-light'>Remove</button>
-        </div>`);
-
-    const input = newItem.find('input[type="file"]');
-    input.change(() => updateLabel(input));
-
-    setup(img_list, newItem);
 }
 
 function addIngField(q = '', u= '', n= '') {

@@ -21,9 +21,11 @@
                 <section class='modal-card-body'>
                     <div class='center'>
                         {{#range 0 post.n_pictures}}
-                            <figure class='image is-128x128'>
-                                <img src='/public/img/{{../post._id}}_{{this}}.jpg' alt='{{this}}'>
-                            </figure>
+                            <div>
+                                <figure class='image is-128x128'>
+                                    <img src='/public/img/{{../post._id}}_{{this}}.jpg' alt='{{this}}'>
+                                </figure>
+                            </div>
                         {{/range}}
                         <div id='add-image-div'><p>+</p></div>
                     </div>
