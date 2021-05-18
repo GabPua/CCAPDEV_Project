@@ -182,7 +182,7 @@ app.use((req, res) => {
 });
 
 // initialize server
-app.listen(port, hostname,() => {
+app.listen(port, () => {
     console.log('Server running at: ');
     console.log('http://' + hostname + ':' + port + '\n');
 });
