@@ -12,7 +12,7 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 const hostname = process.env.HOSTNAME || 'localhost';
 const dbUri = process.env.SERVER_DB_URI;
-const secret = process.env.SECRET || 'hushPuppy123';
+const secret = process.env.SECRET;
 const options = {
     useUnifiedTopology: true,
     useNewUrlParser: true

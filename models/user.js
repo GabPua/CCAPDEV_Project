@@ -7,7 +7,7 @@ const async = require('async')
 const dotenv = require('dotenv')
 
 dotenv.config();
-const key = process.env.SECRET || 'hushPuppy1234';
+const key = process.env.SECRET;
 
 let userSchema = new mongoose.Schema({
     _id: {type: String, trim: true, lowercase: true, require: true},
