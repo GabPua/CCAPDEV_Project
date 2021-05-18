@@ -7,7 +7,7 @@ const dotenv = require('dotenv');
 const async = require('async');
 
 dotenv.config();
-const key = process.env.SECRET || 'hushPuppy123';
+const key = process.env.SECRET;
 
 const user_controller = {
     verifySession: (req, res, next) => {
