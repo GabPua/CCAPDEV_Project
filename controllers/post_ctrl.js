@@ -160,6 +160,7 @@ const post_controller = {
             });
         } else {
             res.render('create', {
+                title: 'Shefhub | Post Editor',
                 post: req.body,
                 err: err
             });
