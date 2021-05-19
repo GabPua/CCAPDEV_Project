@@ -11,6 +11,7 @@
         <p class='help' id='recipe-title-help'></p>
 
         <a class='button' id='edit-images'>Edit Images</a>
+        <input type='hidden' value='{{post.n_pictures}}' name='n_pictures'>
         <div class='modal' id='edit-image-modal'>
             <div class='modal-background'></div>
             <div class='modal-card'>
@@ -39,7 +40,9 @@
                 </footer>
             </div>
         </div>
-        <button class='button is-primary is-light' onclick='addImgField()'>Add Image</button>
+        {{#if err.picture}}
+            <p class='help is-danger'>{{err.picture}}</p>
+        {{/if}}
 
         <h3><label for='recipe-desc'>Description</label></h3>
         {{#if err.desc}}

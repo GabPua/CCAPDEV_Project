@@ -56,6 +56,7 @@ $(document).ready(() => {
 
     img_modal.on('click', '.cancel', () => {
         img_modal.find('figure').parent().remove(); // remove all
+        $('input[name=n_pictures]').val(0);
     });
 
     img_modal.on('click', '.delete, .is-success', () => {
@@ -90,10 +91,6 @@ $(document).ready(() => {
         const div = $('<div></div>');
         const figure = $('<figure class="image is-128x128"></figure>').append(new_img);
         add_img_button.before(div.append($(this), figure));
-    });
-
-    img_modal.on('click', 'figure', function () {
-        $(this).parent().remove();
     });
 
     $('button').click(event => {
