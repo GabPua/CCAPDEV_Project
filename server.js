@@ -6,6 +6,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const mongoStore = require('connect-mongodb-session')(session);
 const fileUpload = require('express-fileupload');
+const compression = require('compression');
 
 // get environment variables
 dotenv.config();
@@ -133,7 +134,8 @@ const app = express();
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.use(cookieParser());
-app.use(fileUpload());
+app.use(fileUpload({}));
+app.use(compression());
 
 // configure user session
 app.use(session({
@@ -148,11 +150,21 @@ app.use(session({
     store: store
 }));
 
+const YEAR = new Date().getFullYear().toString();
 app.use((req, res, next) => {
     // make session visible to all hbs pages
     res.locals.session = req.session;
+    res.locals.year = YEAR;
     next();
 });
+
+// expires headers
+app.use((req, res, next) => {
+    if (req.url.indexOf('/css/') !== -1 || req.url.indexOf('/js/')) {
+        res.setHeader('Cache-Control', 'public, max-age=345600'); // 4 days
+    }
+    next();
+})
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
