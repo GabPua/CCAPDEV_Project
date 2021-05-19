@@ -21,10 +21,14 @@ const post_controller = {
     },
 
     insertToDB: (req, res) => {
-        let {id, title, desc, quantity, unit, ingredient, direction} = req.body;
+        let {id, title, desc, quantity, unit, ingredient, direction, n_pictures} = req.body;
 
         if (!id) {
             id = new mongoose.Types.ObjectId();
+        }
+
+        if (!n_pictures) {
+            n_pictures = 0;
         }
 
         let {serving, prep_hr, prep_min, cook_hr, cook_min} = req.body;
@@ -98,7 +102,7 @@ const post_controller = {
                 direction: direction,
                 ingredient: ingredient_list,
                 date: new Date(),
-                n_pictures: 0
+                n_pictures: Number(n_pictures)
             };
 
             async.waterfall([
@@ -112,7 +116,7 @@ const post_controller = {
                 function uploadPics(result, callback) {
                     if (!Array.isArray(req.files.pictures)) {
                         let pic = req.files.pictures;
-                        let uploadPath = './public/img/' + result._id + '_0.jpg';
+                        let uploadPath = './public/img/' + result._id + '_' + post.n_pictures + '.jpg';
                         pic.mv(uploadPath, (err) => {
                             if (err) {
                                 console.log('Upload failed');

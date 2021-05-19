@@ -156,8 +156,8 @@ $(document).ready(function () {
     carousel.click(function () {
         let val = $(this).attr('aria-label').slice(-1);
 
-        carousel.toggleClass('is-current');
-        $(this).toggleClass('is-current');
+        carousel.removeClass('is-current');
+        $(this).addClass('is-current');
 
         let url = pic.attr('style');
         let newUrl = url.substr(0, url.length - 7) + val + '.jpg")';
