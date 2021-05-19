@@ -5,6 +5,7 @@ const Post = require('./recipe');
 const Comment = require('./comment');
 const async = require('async')
 const dotenv = require('dotenv')
+const crypto = require('crypto-js');
 
 dotenv.config();
 const key = process.env.SECRET;
@@ -19,14 +20,14 @@ let userSchema = new mongoose.Schema({
     picture_path: {type: String, require: false}
 });
 
-userSchema.pre('save', next => {
+userSchema.pre('save', function encryptPassword(next) {
     if (this.isModified('password')) {
         this.password = crypto.AES.encrypt(this.password, key).toString();
     }
     next();
 });
 
-userSchema.post(['deleteOne', 'findOneAndDelete'], (user) => {
+userSchema.post(['deleteOne', 'findOneAndDelete'], function deleteRelatedRecords(user) {
 
     async.series([
         function deleteFollows(callback) {
