@@ -124,7 +124,7 @@
 
                         <p><a href='/user/{{this.user._id}}'><strong>{{this.user._id}}</strong></a></p>
                         <p class='comment-body'>{{this.body}}</p>
-                        <p><small><a class='reply'>Reply</a> · {{timeDiff this.date}}</small></p>
+                        <p><small>{{#if session._id}}<a class='reply'>Reply</a> · {{/if}}{{timeDiff this.date}}</small></p>
                     </div>
 
                     {{#each this.replies}}
