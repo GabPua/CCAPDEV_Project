@@ -160,7 +160,7 @@ app.use((req, res, next) => {
 
 // expires headers
 app.use((req, res, next) => {
-    if (req.url.indexOf('/css/') !== -1 || req.url.indexOf('/js/')) {
+    if (req.url.indexOf('/css/') !== -1 || req.url.indexOf('/js/') !== -1) {
         res.setHeader('Cache-Control', 'public, max-age=345600'); // 4 days
     }
     next();
