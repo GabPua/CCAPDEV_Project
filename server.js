@@ -160,11 +160,11 @@ app.use((req, res, next) => {
 
 // expires headers
 app.use((req, res, next) => {
-    if (req.url.indexOf('/css/') !== -1 || req.url.indexOf('/js/') !== -1) {
+    if (req.url.indexOf('/css/') !== -1 || req.url.indexOf('/js/') !== -1 || req.url ==='/public/img/Vegetables.jpg') {
         res.setHeader('Cache-Control', 'public, max-age=345600'); // 4 days
     }
     next();
-})
+});
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

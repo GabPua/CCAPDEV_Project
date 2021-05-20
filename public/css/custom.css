@@ -219,7 +219,7 @@ header .navbar-link:not(.is-arrowless) {
 
 #about-us {
     max-width: 1000px;
-    padding: 5vh 2vw;
+    padding: 10vh 4vw;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -505,4 +505,10 @@ header .navbar-link:not(.is-arrowless) {
 }
 .media img.is-rounded {
     height: 100%;
+}
+
+#backend-libraries {
+    font-size: 15px;
+    margin-top: -10px;
+    margin-left: 60px;
 }
