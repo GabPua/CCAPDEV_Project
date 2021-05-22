@@ -60,7 +60,7 @@ $(document).ready(function() {
             $(this).addClass('is-active');
             count.html(num_votes - 2);
 
-            $.post('/vote/update', {recipe_id: recipe_id, vote_value: 1}, (success) => {
+            $.post('/vote/update', {recipe_id: recipe_id, vote_value: -1}, (success) => {
                 if (success)
                     console.log('Vote updated successfully');
                 else
@@ -70,7 +70,7 @@ $(document).ready(function() {
             $(this).addClass('is-active');
             count.html(num_votes - 1);
 
-            $.post('/vote/add', {recipe_id: recipe_id, vote_value: 1}, (success) => {
+            $.post('/vote/add', {recipe_id: recipe_id, vote_value: -1}, (success) => {
                 if (success)
                     console.log('Voted successfully');
                 else
