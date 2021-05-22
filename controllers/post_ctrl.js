@@ -28,7 +28,9 @@ const post_controller = {
         }
 
         if (!n_pictures) {
-            n_pictures = 0;
+            n_pictures = Number(0);
+        } else {
+            n_pictures = Number(n_pictures);
         }
 
         let {serving, prep_hr, prep_min, cook_hr, cook_min} = req.body;
@@ -53,7 +55,7 @@ const post_controller = {
             err.information = "Invalid inputs";
         }
 
-        if (!req.files || Object.keys(req.files).length === 0) {
+        if ((!req.files || Object.keys(req.files).length === 0) && n_pictures === 0) {
             err.picture = 'At least 1 image required';
         }
 
@@ -114,7 +116,9 @@ const post_controller = {
                 },
 
                 function uploadPics(result, callback) {
-                    if (!Array.isArray(req.files.pictures)) {
+                    if (post.n_pictures > 0 && (!req.files || Object.keys(req.files).length === 0)) {
+                        callback(null, result._id);
+                    } else if (!Array.isArray(req.files.pictures)) {
                         let pic = req.files.pictures;
                         let uploadPath = './public/img/' + result._id + '_' + post.n_pictures + '.jpg';
                         pic.mv(uploadPath, (err) => {
