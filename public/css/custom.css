@@ -426,7 +426,7 @@ header .navbar-link:not(.is-arrowless) {
     margin-bottom: 10px;
 }
 
-#newsfeed-end {
+.uh-oh-box {
     width: 60vw;
     flex-grow: 0;
     padding: 2rem;
