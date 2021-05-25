@@ -1,6 +1,6 @@
 # CCAPDEV_Project
 
-<h2>About</h2>
+## About
 
 <p>
     During the seemingly non-ending COVID-19 pandemic, people all around the world found themselves
@@ -9,36 +9,35 @@
     and what better way to pass the time than cooking?
 </p>
 <p>
-    <strong>ShefHub</strong> was created exactly for this reason. This site hosts
+    **ShefHub** was created exactly for this reason. This site hosts
     thousands of recipes contributed by a growing community of professional chefs, home cooks,
     and food enthusiasts. Whether you are learning to cook, mastering your technique, or
-    exploring different flavors, all of these recipes can help you attain your goal, so
-    <a href='/signup'>register</a> now!
+    exploring different flavors, all of these recipes can help you attain your goal.
 </p>
 
-<h2>Running the project</h2>
+## Running the project
 
 In the root directory, run `npm i`<br>
 When the node module have finished downloading, run `npm start`
 
-<h2>Dependencies</h2>
+## Dependencies
 
 <p>
-    The interface for this project was built using the <a href='https://bulma.io/'>Bulma css framework</a>.<br>
+    The interface for this project was built using the [Bulma CSS framework](https://bulma.io/).<br>
     For the backend, the following NPM packages used were:
-    <ul id='backend-libraries'>
-        <li><a href='https://npmjs.com/package/async'>async.js</a></li>
-        <li><a href='https://npmjs.com/package/compression'>compression</a></li>
-        <li><a href='https://npmjs.com/package/connect-mongodb-session'>connect-mongodb-session</a></li>
-        <li><a href='https://npmjs.com/package/cookie-parser'>cookie-parser</a></li>
-        <li><a href='https://npmjs.com/package/crypto-js'>crypto-js</a></li>
-        <li><a href='https://npmjs.com/package/dotenv'>dotenv</a></li>
-        <li><a href='https://npmjs.com/package/express'>express</a></li>
-        <li><a href='https://npmjs.com/package/express-fileupload'>express-fileupload</a></li>
-        <li><a href='https://npmjs.com/package/express-handlebars'>express-handlebars</a></li>
-        <li><a href='https://npmjs.com/package/express-session'>express-session</a></li>
-        <li><a href='https://npmjs.com/package/mongoose'>mongoose</a></li>
-        <li><a href='https://npmjs.com/package/mongoose-lean-virtuals'>mongoose-lean-virtuals</a></li>
-        <li><a href='https://npmjs.com/package/nodemon'>nodemon</a></li>
-    </ul>
+    -[async.js](https://npmjs.com/package/async)
+    -[compression](https://npmjs.com/package/compression)
+    -[connect-mongodb-session](https://npmjs.com/package/connect-mongodb-session)
+    -[cookie-parser](https://npmjs.com/package/cookie-parser)
+    -[crypto-js](https://npmjs.com/package/crypto-js)
+    -[dotenv](https://npmjs.com/package/dotenv)
+    -[express](https://npmjs.com/package/express)
+    -[express-fileupload](https://npmjs.com/package/express-fileupload)
+    -[express-handlebars](https://npmjs.com/package/express-handlebars)
+    -[express-session](https://npmjs.com/package/express-session)
+    -[micromark](https://npmjs.com/package/micromark)
+    -[micromark-extension-gfm](https://npmjs.com/package/micromark-extension-gfm)
+    -[mongoose](https://npmjs.com/package/mongoose)
+    -[mongoose-lean-virtuals](https://npmjs.com/package/mongoose-lean-virtuals)
+    -[nodemon](https://npmjs.com/package/nodemon)
 </p>
