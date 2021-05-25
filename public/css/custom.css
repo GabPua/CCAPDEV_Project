@@ -420,6 +420,10 @@ header .navbar-link:not(.is-arrowless) {
     margin-right: 10px;
 }
 
+#ingredient-list p {
+    display: inline;
+}
+
 #post-date {
     font-weight: normal;
     margin-left: 20px;

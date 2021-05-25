@@ -8,6 +8,10 @@ const mongoStore = require('connect-mongodb-session')(session);
 const fileUpload = require('express-fileupload');
 const compression = require('compression');
 
+// markdown
+const micromark = require('micromark');
+const gfm_syntax = require('micromark-extension-gfm');
+
 // get environment variables
 dotenv.config();
 const port = process.env.PORT || 3000;
@@ -125,6 +129,10 @@ const hbs = exphbs.create({
             }
 
             return accum;
+        },
+
+        parseMarkdown: (text) => {
+            return micromark(text, {extensions: [gfm_syntax()]});
         }
     }
 });
