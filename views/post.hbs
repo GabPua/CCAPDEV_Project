@@ -79,20 +79,20 @@
 
         <h3 class='title'>Description</h3>
         <p class='content'>
-            {{post.desc}}
+            {{{parseMarkdown post.desc}}}
         </p>
 
         <h3 class='title'>Ingredients</h3>
         <ul class='content' id='ingredient-list'>
             {{#each post.ingredient}}
-                <li><input type='checkbox' id='{{@index}}'><label for='{{@index}}'>{{this}}</label></li>
+                <li><input type='checkbox' id='{{@index}}'><label for='{{@index}}'>{{{parseMarkdown this}}}</label></li>
             {{/each}}
         </ul>
 
         <h3 class='title'>Directions</h3>
         <ol class='content'>
             {{#each post.direction}}
-                <li>{{this}}</li>
+                <li>{{{parseMarkdown this}}}</li>
             {{/each}}
         </ol>
 

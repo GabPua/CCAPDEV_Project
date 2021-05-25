@@ -178,7 +178,7 @@
                                 {{#if (isEqual user._id session._id)}}
                                     <textarea class='textarea' placeholder='(Optional)' name='desc' id='desc'>{{user.desc}}</textarea>
                                 {{else}}
-                                    <textarea class='textarea' name='desc' id='desc'>{{#if user.desc}}{{user.desc}}{{else}}N/A{{/if}}</textarea>
+                                    <div class='textarea' id='desc'>{{#if user.desc}}{{{parseMarkdown user.desc}}}{{else}}N/A{{/if}}</div>
                                 {{/if}}
 
                             </div>
