@@ -21,7 +21,7 @@ const login_controller = {
     },
 
     postLogin: (req, res) => {
-        const { _id, password } = req.body;
+        const { _id, password, remember } = req.body;
 
         async.waterfall([
             function findUser(callback) {
@@ -33,6 +33,12 @@ const login_controller = {
             if (isSuccess) {
                 req.session._id = _id.toLowerCase();
                 req.session.picture_path = picturePath;
+
+                // user does not want to be remembered
+                if (remember !== 'on') {
+                    req.session.cookie.expires = null;
+                }
+
                 res.redirect('/');
             } else {
                 res.render('login', {
