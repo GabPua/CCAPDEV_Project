@@ -512,3 +512,11 @@ header .navbar-link:not(.is-arrowless) {
     margin-top: -10px;
     margin-left: 60px;
 }
+
+#login-box .checkbox {
+    margin-bottom: 1.5rem;
+}
+
+#login-box .field:not(:last-child){
+    margin-bottom: 0.5rem;
+}
